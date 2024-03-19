@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include <algorithm>
 
-using namespace dae;
+using namespace engine;
 
 unsigned int Scene::m_idCounter = 0;
 

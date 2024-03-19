@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 
-namespace dae
+namespace engine
 {
 	class Scene final
 	{

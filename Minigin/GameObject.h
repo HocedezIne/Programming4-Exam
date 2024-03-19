@@ -1,6 +1,6 @@
 #pragma once
 
-namespace dae
+namespace engine
 {
 	class Texture2D;
 

@@ -3,21 +3,21 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 
-dae::GameObject::~GameObject() = default;
+engine::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+void engine::GameObject::Update(){}
 
-void dae::GameObject::Render() const
+void engine::GameObject::Render() const
 {
 
 }
 
-//void dae::GameObject::SetTexture(const std::string& filename)
+//void engine::GameObject::SetTexture(const std::string& filename)
 //{
 //
 //}
 //
-//void dae::GameObject::SetPosition(float x, float y)
+//void engine::GameObject::SetPosition(float x, float y)
 //{
 //
 //}
