@@ -51,6 +51,9 @@
     <ClInclude Include="InputManager.h">
       <Filter>InputClasses</Filter>
     </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>InputClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
