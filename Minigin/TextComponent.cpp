@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
+#include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "Font.h"

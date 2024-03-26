@@ -7,6 +7,7 @@ namespace engine
 {
 	class TransformComponent final : public Component
 	{
+	public:
 		TransformComponent(GameObject* owner, float x = 0, float y = 0, float z = 0);
 		TransformComponent(GameObject* owner, glm::vec3 pos);
 

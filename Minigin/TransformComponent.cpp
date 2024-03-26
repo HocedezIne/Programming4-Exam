@@ -1,5 +1,7 @@
 #include "TransformComponent.h"
 
+#include "GameObject.h"
+
 namespace engine
 {
 	TransformComponent::TransformComponent(GameObject*  owner, float x, float y, float z) : Component(owner)

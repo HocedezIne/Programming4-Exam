@@ -11,11 +11,12 @@ namespace engine
 
 	class TextComponent final: public Component, public IUpdatable
 	{
+	public:
 		void Update() override;
 		void SetText(const std::string& text);
 
 		TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font = nullptr);
-		virtual ~TextComponent() = default;
+		~TextComponent() = default;
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent(TextComponent&& other) = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;
