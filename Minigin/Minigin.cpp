@@ -95,6 +95,9 @@ void engine::Minigin::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
+
+		sceneManager.HandleDeletion();
+
 		renderer.Render();
 
 		std::this_thread::sleep_for(time.GetSleepTime());

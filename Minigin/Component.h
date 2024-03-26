@@ -1,12 +1,15 @@
 #pragma once
 
-#include "GameObject.h"
-
 namespace engine
 {
+	class GameObject;
+
 	class Component {
 	public:
 		virtual ~Component() = default;
+
+		void MarkDeletion() { m_DeleteFlag = true; };
+		bool IsMarkedForDeletion() const { return m_DeleteFlag; };
 		
 		Component(const Component& other) = delete;
 		Component(Component&& other) = delete;
@@ -20,6 +23,7 @@ namespace engine
 
 	private:
 		const GameObject* m_Owner;
+		bool m_DeleteFlag{ false };
 	};
 
 	// ------------------------------------------------

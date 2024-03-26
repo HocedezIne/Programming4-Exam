@@ -2,32 +2,69 @@
 #include <vector>
 #include <memory>
 
+#include "Component.h"
+
 namespace engine
 {
-	class Component;
-	class IUpdatable;
-	class IRenderable;
-
 	class GameObject final
 	{
 	public:
 		virtual void Update();
 		virtual void Render() const;
 
-		template<typename T>
-		void AddComponent(std::unique_ptr<T> comp);
+		void MarkDeletion() { m_DeleteFlag = true; };
+		bool IsMarkedForDeletion() const { return m_DeleteFlag; };
+		void HandleDeletion();
 
 		template<typename T>
-		void RemoveComponent(T* comp);
+		void AddComponent(std::unique_ptr<T> comp)
+		{
+			static_assert(std::is_base_of<Component, T>::value, "Item must derrive from Component class");
+
+			if (auto ucomp = dynamic_cast<IUpdatable*>(comp.get())) m_UpdatableComponents.push_back(ucomp);
+			if (auto rcomp = dynamic_cast<IRenderable*>(comp.get())) m_RenderableComponents.push_back(rcomp);
+
+			m_Components.push_back(std::move(comp));
+		};
 
 		template<typename T>
-		T* GetComponent() const;
+		void RemoveComponent(T* comp) 
+		{ 
+			for (const auto& ptr : m_Components)
+			{
+				if (ptr.get() == comp) 
+				{
+					comp->MarkDeletion();
+					break;
+				}
+			};
+		};
 
 		template<typename T>
-		bool HasComponent() const;
+		T* GetComponent() const
+		{
+			auto it = std::find_if(m_Components.begin(), m_Components.end(),
+				[typeName = typeid(T).name()](const auto& ptr) {
+					return ptr && typeid(*ptr) == typeid(T);
+				});
+
+			if (it != m_Components.end()) return dynamic_cast<T*>((*it).get());
+			return nullptr;
+		};
+
+		template<typename T>
+		bool HasComponent() const
+		{
+			auto it = std::find_if(m_Components.begin(), m_Components.end(),
+				[typeName = typeid(T).name()](const auto& ptr) {
+					return ptr && typeid(*ptr) == typeid(T);
+				});
+
+			return it != m_Components.end();
+		};
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -37,5 +74,7 @@ namespace engine
 		std::vector< std::unique_ptr<Component> > m_Components{};
 		std::vector<IUpdatable*> m_UpdatableComponents{};
 		std::vector<IRenderable*> m_RenderableComponents{};
+
+		bool m_DeleteFlag{ false };
 	};
 }

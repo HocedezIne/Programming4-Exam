@@ -14,11 +14,13 @@ namespace engine
 
 		void Update();
 		void Render();
+		void HandleDeletion();
+
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		~SceneManager();
 
-		std::vector<Scene*> m_scenes;
+		std::vector<Scene*> m_Scenes;
 	};
 }
