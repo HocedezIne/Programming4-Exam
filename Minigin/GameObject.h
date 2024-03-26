@@ -1,18 +1,30 @@
 #pragma once
+#include <vector>
+#include <memory>
 
 namespace engine
 {
-	class Texture2D;
+	class Component;
+	class IUpdatable;
+	class IRenderable;
 
-	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		virtual void Update();
 		virtual void Render() const;
 
-		//void SetTexture(const std::string& filename);
-		//void SetPosition(float x, float y);
+		template<typename T>
+		void AddComponent(std::unique_ptr<T> comp);
+
+		template<typename T>
+		void RemoveComponent(T* comp);
+
+		template<typename T>
+		T* GetComponent() const;
+
+		template<typename T>
+		bool HasComponent() const;
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -22,5 +34,8 @@ namespace engine
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		std::vector< std::unique_ptr<Component> > m_Components{};
+		std::vector<IUpdatable*> m_UpdatableComponents{};
+		std::vector<IRenderable*> m_RenderableComponents{};
 	};
 }

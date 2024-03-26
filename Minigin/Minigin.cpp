@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <thread>
+
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
