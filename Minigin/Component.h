@@ -32,10 +32,12 @@ namespace engine
 	class IUpdatable {
 	public:
 		virtual void Update() = 0;
+		virtual ~IUpdatable() = default;
 	};
 
 	class IRenderable {
 	public:
 		virtual void Render() const = 0;
+		virtual ~IRenderable() = default;
 	};
 }

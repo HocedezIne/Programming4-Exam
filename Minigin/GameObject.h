@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <glm/glm.hpp>
 
 #include "Component.h"
 
@@ -15,6 +16,13 @@ namespace engine
 		void MarkDeletion() { m_DeleteFlag = true; };
 		bool IsMarkedForDeletion() const { return m_DeleteFlag; };
 		void HandleDeletion();
+
+		void SetLocalPosition(const glm::vec3 pos) { m_LocalPosition = pos; SetPositionDirty(); };
+		const glm::vec3 GetLocalPosition() const { return m_LocalPosition; };
+		const glm::vec3 GetWorldPosition();
+		void UpdateWorldPosition();
+
+		void SetParent(GameObject* parent, bool keepWorldPosition);
 
 		template<typename T>
 		void AddComponent(std::unique_ptr<T> comp)
@@ -63,18 +71,31 @@ namespace engine
 			return it != m_Components.end();
 		};
 
-		GameObject() = default;
-		~GameObject();
+		GameObject(glm::vec3 pos = {}) : m_LocalPosition(pos), m_WorldPosition(m_LocalPosition) {};
+		~GameObject() = default;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		void SetPositionDirty() { m_PositionFlag = true; };
+
+		void AttachChild(GameObject* child) { m_Children.push_back(child); };
+		void DetachChild(GameObject* child) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end()); };
+		bool IsChild(GameObject* obj) const;
+
 		std::vector< std::unique_ptr<Component> > m_Components{};
 		std::vector<IUpdatable*> m_UpdatableComponents{};
 		std::vector<IRenderable*> m_RenderableComponents{};
 
+		std::vector<GameObject*> m_Children;
+		GameObject* m_Parent{ nullptr };
+
+		glm::vec3 m_LocalPosition{};
+		glm::vec3 m_WorldPosition{};
+
 		bool m_DeleteFlag{ false };
+		bool m_PositionFlag{ false };
 	};
 }

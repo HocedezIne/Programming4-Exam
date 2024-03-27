@@ -2,8 +2,6 @@
 
 namespace engine
 {
-	GameObject::~GameObject() = default;
-
 	void GameObject::Update()
 	{
 		for (const auto& comp : m_UpdatableComponents) comp->Update();
@@ -31,5 +29,48 @@ namespace engine
 			}
 			else ++it;
 		}
+	}
+
+	const glm::vec3 GameObject::GetWorldPosition()
+	{
+		if (m_PositionFlag) UpdateWorldPosition();
+		return m_WorldPosition;
+	}
+
+	void GameObject::UpdateWorldPosition()
+	{
+		if (m_PositionFlag)
+		{
+			if (m_Parent == nullptr) m_WorldPosition = m_LocalPosition;
+			else m_WorldPosition = m_Parent->GetWorldPosition() + m_LocalPosition;
+		}
+
+		m_PositionFlag = false;
+	}
+
+	bool GameObject::IsChild(GameObject* obj) const
+	{
+		for (const auto& child : m_Children)
+		{
+			if (obj == child) return true;
+		}
+
+		return false;
+	}
+
+	void GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
+	{
+		if (IsChild(parent) || parent == this || m_Parent == parent) return;
+
+		if (parent == nullptr) SetLocalPosition(GetWorldPosition());
+		else
+		{
+			if (keepWorldPosition) SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
+			SetPositionDirty();
+		}
+
+		if (m_Parent) m_Parent->DetachChild(this);
+		m_Parent = parent;
+		if (m_Parent) m_Parent->AttachChild(this);
 	}
 }
