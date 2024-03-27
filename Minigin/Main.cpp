@@ -35,15 +35,7 @@ void load()
 	go = std::make_unique<engine::GameObject>();
 	go->AddComponent<engine::TransformComponent>(std::make_unique<engine::TransformComponent>(go.get(), glm::vec3{ 80.f, 20.f, 0.f }));
 	go->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(go.get(), "Prog 4 Exam engine", font));
-	//scene.Add(std::move(go));
-
-	auto go2 = std::make_unique<engine::GameObject>();
-	go2->AddComponent<engine::TransformComponent>(std::make_unique<engine::TransformComponent>(go2.get(), glm::vec3{ 216.f, 180.f, 0.f }));
-	go2->AddComponent<engine::FPSComponent>(std::make_unique<engine::FPSComponent>(go2.get()));
-	go2->SetParent(go.get(), true);
 	scene.Add(std::move(go));
-	go2->SetParent(nullptr, false);
-	scene.Add(std::move(go2));
 }
 
 int main(int, char*[]) {
