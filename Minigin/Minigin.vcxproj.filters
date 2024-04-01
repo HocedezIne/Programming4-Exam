@@ -75,9 +75,6 @@
     <ClInclude Include="TextureComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Object Files\Components\Component Subclasses</Filter>
-    </ClInclude>
     <ClInclude Include="FPSComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
@@ -120,9 +117,6 @@
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
-      <Filter>Object Files\Components\Component Subclasses</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">

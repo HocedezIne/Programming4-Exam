@@ -188,7 +188,6 @@
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp" />
@@ -205,7 +204,6 @@
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

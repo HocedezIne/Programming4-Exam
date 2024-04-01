@@ -4,7 +4,6 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Texture2D.h"
-#include "TransformComponent.h"
 
 namespace engine
 {
@@ -12,7 +11,7 @@ namespace engine
 	{
 		if (m_Texture != nullptr)
 		{
-			const auto& pos = m_TransformComp->GetPosition();
+			const auto& pos = GetOwner()->GetWorldPosition();
 			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 		}
 	}
@@ -29,9 +28,6 @@ namespace engine
 
 	TextureComponent::TextureComponent(GameObject* owner, const std::string& fileName) : Component(owner)
 	{
-		if (!owner->HasComponent<TransformComponent>()) owner->AddComponent<TransformComponent>(std::make_unique<TransformComponent>(owner));
-		m_TransformComp = owner->GetComponent<TransformComponent>();
-
 		if (!fileName.empty()) m_Texture = ResourceManager::GetInstance().LoadTexture(fileName);
 	}
 }

@@ -19,10 +19,10 @@ namespace engine
 	protected:
 		Component(GameObject* owner) : m_Owner(owner) {};
 
-		const GameObject* GetOwner() const { return m_Owner; };
+		GameObject* GetOwner() const { return m_Owner; };
 
 	private:
-		const GameObject* m_Owner;
+		GameObject* m_Owner;
 		bool m_DeleteFlag{ false };
 	};
 

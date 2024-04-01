@@ -8,7 +8,6 @@
 namespace engine
 {
 	class Texture2D;
-	class TransformComponent;
 
 	class TextureComponent final : public Component, public IRenderable
 	{
@@ -27,6 +26,5 @@ namespace engine
 
 	private:
 		std::shared_ptr<Texture2D> m_Texture {nullptr};
-		TransformComponent* m_TransformComp;
 	};
 }

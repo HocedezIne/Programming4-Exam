@@ -89,7 +89,7 @@ namespace engine
 		std::vector<IUpdatable*> m_UpdatableComponents{};
 		std::vector<IRenderable*> m_RenderableComponents{};
 
-		std::vector<GameObject*> m_Children;
+		std::vector<GameObject*> m_Children{};
 		GameObject* m_Parent{ nullptr };
 
 		glm::vec3 m_LocalPosition{};
