@@ -79,7 +79,7 @@ namespace engine
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		void SetPositionDirty() { m_PositionFlag = true; };
+		void SetPositionDirty();
 
 		void AttachChild(GameObject* child) { m_Children.push_back(child); };
 		void DetachChild(GameObject* child) { m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end()); };

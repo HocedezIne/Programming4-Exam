@@ -48,11 +48,22 @@ namespace engine
 		m_PositionFlag = false;
 	}
 
+	void GameObject::SetPositionDirty()
+	{
+		m_PositionFlag = true;
+
+		for (auto& child : m_Children)
+		{
+			child->SetPositionDirty();
+		}
+	}
+
 	bool GameObject::IsChild(GameObject* obj) const
 	{
 		for (const auto& child : m_Children)
 		{
 			if (obj == child) return true;
+			if (child->IsChild(obj)) return true;
 		}
 
 		return false;
