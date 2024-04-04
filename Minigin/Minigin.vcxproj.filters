@@ -36,7 +36,7 @@
     <ClInclude Include="Singleton.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
+    <ClInclude Include="InputCommandLinker.h">
       <Filter>InputClasses</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
@@ -78,9 +78,18 @@
     <ClInclude Include="FPSComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
+    <ClInclude Include="InputCommands.h">
+      <Filter>InputClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>InputClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>InputClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InputManager.cpp">
+    <ClCompile Include="InputCommandLinker.cpp">
       <Filter>InputClasses</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
@@ -121,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>InputClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>InputClasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

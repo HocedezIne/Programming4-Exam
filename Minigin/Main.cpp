@@ -10,6 +10,7 @@
 #include "Minigin.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "InputCommandLinker.h"
 #include "GameObject.h"
 #include "Scene.h"
 

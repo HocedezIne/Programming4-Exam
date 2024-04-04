@@ -7,7 +7,7 @@
 #include <thread>
 
 #include "Minigin.h"
-#include "InputManager.h"
+#include "InputCommandLinker.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
@@ -84,7 +84,7 @@ void engine::Minigin::Run(const std::function<void()>& load)
 
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
+	auto& input = InputCommandLinker::GetInstance();
 	auto& time = Time::GetInstance();
 
 	// todo: this update loop could use some work.
