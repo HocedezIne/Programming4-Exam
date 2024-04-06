@@ -87,6 +87,15 @@
     <ClInclude Include="Keyboard.h">
       <Filter>InputClasses</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusComponent.h">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UILinkingComponent.h">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputCommandLinker.cpp">
@@ -136,6 +145,15 @@
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>InputClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusComponent.cpp">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="UILinkingComponent.cpp">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
