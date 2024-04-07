@@ -96,6 +96,9 @@
     <ClInclude Include="UILinkingComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
+    <ClInclude Include="TimerComponent.h">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputCommandLinker.cpp">
@@ -153,6 +156,9 @@
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
     <ClCompile Include="UILinkingComponent.cpp">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
   </ItemGroup>

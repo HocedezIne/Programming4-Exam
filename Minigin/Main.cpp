@@ -17,6 +17,7 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "FPSComponent.h"
+#include "TimerComponent.h"
 
 void load()
 {
@@ -32,8 +33,12 @@ void load()
 	scene.Add(std::move(go));
 
 	auto font = engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	go = std::make_unique<engine::GameObject>(glm::vec3{80.f, 20.f, 0.f});
+	go = std::make_unique<engine::GameObject>(glm::vec3{80.f, 50.f, 0.f});
 	go->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(go.get(), "Prog 4 Exam engine", font));
+	scene.Add(std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 20.f, 0.f });
+	go->AddComponent<engine::TimerComponent>(std::make_unique<engine::TimerComponent>(go.get(), 200, true));
 	scene.Add(std::move(go));
 }
 

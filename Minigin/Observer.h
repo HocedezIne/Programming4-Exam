@@ -7,7 +7,8 @@ namespace engine
 	enum class Event
 	{
 		PlayerDied,
-		EnemyDied
+		EnemyDied,
+		TimerFinished
 	};
 
 	class Subject;

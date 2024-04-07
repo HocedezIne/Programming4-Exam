@@ -7,7 +7,6 @@
 
 namespace engine
 {
-	typedef int(*DataGetterFunction)(const std::string&);
 	class StatusComponent;
 
 	class UILinkingComponent : public Component, public Observer
