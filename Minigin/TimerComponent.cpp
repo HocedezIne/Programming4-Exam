@@ -11,7 +11,7 @@ engine::TimerComponent::TimerComponent(GameObject* owner, int duration, bool vis
 {
 	if (visualizeTimer)
 	{
-		if (!owner->HasComponent<TextComponent>()) owner->AddComponent<TextComponent>(std::make_unique<TextComponent>(owner, "0 FPS"));
+		if (!owner->HasComponent<TextComponent>()) owner->AddComponent<TextComponent>(std::make_unique<TextComponent>(owner, "TIME "));
 		m_TextComp = owner->GetComponent<TextComponent>();
 	}
 }
@@ -29,9 +29,9 @@ void engine::TimerComponent::Update()
 
 		if (m_TextComp)
 		{
-			std::ostringstream fpsString;
-			fpsString << "TIME " << std::fixed << std::setprecision(0) << m_CurrentTime;
-			m_TextComp->SetText(fpsString.str());
+			std::ostringstream timeString;
+			timeString << "TIME " << std::fixed << std::setprecision(0) << std::setw(3) << m_CurrentTime;
+			m_TextComp->SetText(timeString.str());
 		}
 	}
 }
