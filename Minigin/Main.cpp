@@ -64,15 +64,9 @@ void load()
 	goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 	goUI->AddComponent<engine::UILinkingComponent>(std::make_unique<engine::UILinkingComponent>(goUI.get(), "SCORE", sc.get(), engine::StringFormat{ 2, '0', false}));
-	//scene.Add(std::move(goUI));
-
-	auto scorecmd = std::make_unique<engine::ScoreInputCommand>(100);
-	scorecmd->AddObserver(sc.get());
-	scorecmd->AddObserver(goUI->GetComponent<engine::UILinkingComponent>());
-	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed, std::move(scorecmd));
+	scene.Add(std::move(goUI));
 
 	go->AddComponent(std::move(sc));
-	scene.Add(std::move(goUI));
 	scene.Add(std::move(go));
 #pragma endregion playerBomberman
 }
