@@ -30,11 +30,11 @@ namespace engine
 		}
 	}
 
-	void Subject::NotifyObservers(void* caller, Event event, const std::any& args)
+	void Subject::NotifyObservers(Event event, void* caller, const std::any& args)
 	{
 		for (auto& observer : m_Observers)
 		{
-			observer->OnNotify(caller, event, args);
+			observer->OnNotify(event, caller, args);
 		}
 	}
 

@@ -25,7 +25,7 @@ namespace engine
 		UILinkingComponent& operator=(const UILinkingComponent& other) = delete;
 		UILinkingComponent& operator=(UILinkingComponent&& other) = delete;
 
-		virtual void OnNotify(void* caller, Event event, const std::any& args) override;
+		virtual void OnNotify(Event event, void* caller, const std::any& args) override;
 
 	private:
 		void ModifyText();

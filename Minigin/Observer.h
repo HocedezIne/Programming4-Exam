@@ -17,7 +17,7 @@ namespace engine
 	public:
 		virtual ~Observer();
 
-		virtual void OnNotify(void* caller, Event event, const std::any& args) = 0;
+		virtual void OnNotify(Event event, void* caller, const std::any& args) = 0;
 
 	private:
 		friend class Subject;
@@ -37,7 +37,7 @@ namespace engine
 		void RemoveObserver(Observer* observer);
 
 	protected:
-		void NotifyObservers(void* caller, Event event, const std::any& args);
+		void NotifyObservers(Event event, void* caller, const std::any& args);
 
 	private:
 		std::vector<Observer*> m_Observers;

@@ -17,10 +17,8 @@ namespace engine
 		ModifyText();
 	}
 
-	void UILinkingComponent::OnNotify(void* caller, Event event, const std::any& args)
+	void UILinkingComponent::OnNotify(Event event, void* /*caller*/, const std::any& /*args*/)
 	{
-		args; caller;
-
 		switch (event)
 		{
 		case Event::PlayerDied:

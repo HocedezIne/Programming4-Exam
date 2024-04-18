@@ -23,7 +23,7 @@ namespace engine
 		void UpdateData(const std::string& keyword, int value);
 		void RemoveDataMapping(const std::string& keyword);
 
-		virtual void OnNotify(void* caller, Event event, const std::any& args) override;
+		virtual void OnNotify(Event event, void* caller, const std::any& args) override;
 
 	private:
 		std::map<std::string, int> m_DataMap;

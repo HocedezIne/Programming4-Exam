@@ -23,7 +23,7 @@ void engine::TimerComponent::Update()
 		m_CurrentTime -= Time::GetInstance().GetDeltaTime();
 		if (m_CurrentTime <= 0.f)
 		{
-			NotifyObservers(this, Event::TimerFinished, std::any{});
+			NotifyObservers(Event::TimerFinished, this, std::any{});
 			m_CurrentTime = 0.f;
 		}
 

@@ -29,10 +29,8 @@ namespace engine
 		m_DataMap.erase(keyword);
 	}
 
-	void engine::StatusComponent::OnNotify(void* caller, Event event, const std::any& args)
+	void engine::StatusComponent::OnNotify(Event event, void* /*caller*/, const std::any& args)
 	{
-		caller;
-
 		switch (event)
 		{
 		case Event::PlayerDied:
