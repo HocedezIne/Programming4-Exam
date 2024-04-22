@@ -5,9 +5,16 @@
 
 namespace engine
 {
-	class Time final : public Singleton<Time>
+	class TimeService final : public Singleton<TimeService>
 	{
 	public:
+		~TimeService() = default;
+
+		//TimeService(const TimeService& other) = delete;
+		//TimeService(TimeService&& other) = delete;
+		//TimeService& operator=(const TimeService& other) = delete;
+		//TimeService& operator=(TimeService&& other) = delete;
+
 		void UpdateDeltaTime();
 
 		const std::chrono::nanoseconds GetSleepTime() const;
@@ -15,6 +22,8 @@ namespace engine
 
 
 	private:
+		//TimeService() = default;
+
 		const float m_TargetFrameTime{ 1.f/144.f };
 		float m_DeltaTime{};
 

@@ -39,7 +39,7 @@
     <ClInclude Include="InputCommandLinker.h">
       <Filter>InputClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="TimeService.h">
       <Filter>Helpers</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -104,7 +104,7 @@
     <ClCompile Include="InputCommandLinker.cpp">
       <Filter>InputClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="TimeService.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">

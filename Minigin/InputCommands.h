@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Time.h"
+#include "TimeService.h"
 
 namespace engine
 {
@@ -52,7 +52,7 @@ namespace engine
 		MoveInputCommand(MoveInputCommand&& other) = delete;
 		MoveInputCommand& operator=(MoveInputCommand&& other) = delete;
 
-		virtual void Execute() override { GetGameObject()->SetLocalPosition(GetGameObject()->GetLocalPosition() + (m_Direction * m_Speed * Time::GetInstance().GetDeltaTime())); };
+		virtual void Execute() override { GetGameObject()->SetLocalPosition(GetGameObject()->GetLocalPosition() + (m_Direction * m_Speed * TimeService::GetInstance().GetDeltaTime())); };
 		
 	private:
 		const glm::vec3 m_Direction;

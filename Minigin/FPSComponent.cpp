@@ -4,14 +4,14 @@
 #include <sstream>
 
 #include "GameObject.h"
-#include "Time.h"
+#include "TimeService.h"
 
 namespace engine
 {
 	void FPSComponent::Update()
 	{
 		++m_FrameCount;
-		m_TotalTime += Time::GetInstance().GetDeltaTime();
+		m_TotalTime += TimeService::GetInstance().GetDeltaTime();
 
 		if (m_TotalTime > 1.f)
 		{

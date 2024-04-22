@@ -4,7 +4,7 @@
 #include <sstream>
 
 #include "GameObject.h"
-#include "Time.h"
+#include "TimeService.h"
 
 engine::TimerComponent::TimerComponent(GameObject* owner, int duration, bool visualizeTimer) : Component(owner),
 	m_Duration(duration), m_CurrentTime(float(duration))
@@ -20,7 +20,7 @@ void engine::TimerComponent::Update()
 {
 	if (m_CurrentTime > 0.f)
 	{
-		m_CurrentTime -= Time::GetInstance().GetDeltaTime();
+		m_CurrentTime -= TimeService::GetInstance().GetDeltaTime();
 		if (m_CurrentTime <= 0.f)
 		{
 			NotifyObservers(Event::TimerFinished, this, std::any{});
