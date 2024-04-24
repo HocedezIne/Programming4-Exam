@@ -12,11 +12,6 @@ namespace engine
 	public:
 		~SceneManager();
 
-		//SceneManager(const SceneManager& other) = delete;
-		//SceneManager(SceneManager&& other) = delete;
-		//SceneManager& operator=(const SceneManager& other) = delete;
-		//SceneManager& operator=(SceneManager&& other) = delete;
-
 		Scene& CreateScene(const std::string& name);
 
 		void Update();
@@ -24,8 +19,6 @@ namespace engine
 		void HandleDeletion();
 
 	private:
-		//SceneManager() = default;
-
 		std::vector<Scene*> m_Scenes;
 	};
 }

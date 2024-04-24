@@ -21,11 +21,6 @@ namespace engine
 	public:
 		~InputCommandLinker() = default;
 
-		//InputCommandLinker(const InputCommandLinker& other) = delete;
-		//InputCommandLinker(InputCommandLinker&& other) = delete;
-		//InputCommandLinker& operator=(const InputCommandLinker& other) = delete;
-		//InputCommandLinker& operator=(InputCommandLinker&& other) = delete;
-
 		bool ProcessInput();
 
 		void AddKeyboardCommand(SDL_Scancode key, KeyState state, std::unique_ptr<InputCommand> command, unsigned int Id = 0);
@@ -35,8 +30,6 @@ namespace engine
 		void AddController();
 
 	private:
-		//InputCommandLinker() = default;
-
 		void ProcessKeyboardState();
 		void ProcessControllerStates();
 

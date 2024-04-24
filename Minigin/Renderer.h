@@ -13,11 +13,6 @@ namespace engine
 	public:
 		~Renderer() = default;
 
-		//Renderer(const Renderer& other) = delete;
-		//Renderer(Renderer&& other) = delete;
-		//Renderer& operator=(const Renderer& other) = delete;
-		//Renderer& operator=(Renderer&& other) = delete;
-
 		void Init(SDL_Window* window);
 		void Render() const;
 		void Destroy();
@@ -31,8 +26,6 @@ namespace engine
 		void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
 
 	private:
-		//Renderer() = default;
-
 		SDL_Renderer* m_renderer{};
 		SDL_Window* m_window{};
 		SDL_Color m_clearColor{};

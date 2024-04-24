@@ -2,12 +2,12 @@
 
 namespace engine
 {
-	void engine::StatusComponent::AddDataMapping(const std::string& keyword, int value)
+	void engine::StatusComponent::AddDataMapping(const std::string& keyword, std::any value)
 	{
-		m_DataMap.insert(std::pair<std::string, int>(keyword, value));
+		m_DataMap.insert(std::pair<std::string, std::any>(keyword, value));
 	}
 
-	int engine::StatusComponent::GetData(const std::string& keyword) const
+	std::any engine::StatusComponent::GetData(const std::string& keyword) const
 	{
 		auto index = m_DataMap.find(keyword);
 		if (index == m_DataMap.end()) return NULL;
@@ -15,7 +15,7 @@ namespace engine
 		return index->second;
 	}
 
-	void engine::StatusComponent::UpdateData(const std::string& keyword, int value)
+	void engine::StatusComponent::UpdateData(const std::string& keyword, std::any value)
 	{
 		auto index = m_DataMap.find(keyword);
 		if (index != m_DataMap.end())
@@ -34,10 +34,10 @@ namespace engine
 		switch (event)
 		{
 		case Event::PlayerDied:
-			UpdateData("LIVES", GetData("LIVES") - 1);
+			UpdateData("LIVES", std::any_cast<int>(GetData("LIVES")) - 1);
 			break;
 		case Event::EnemyDied:
-			UpdateData("SCORE", GetData("SCORE") + std::any_cast<int>(args));
+			UpdateData("SCORE", std::any_cast<int>(GetData("SCORE")) + std::any_cast<int>(args));
 		default:
 			break;
 		}

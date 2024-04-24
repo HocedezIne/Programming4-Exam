@@ -32,7 +32,7 @@ namespace engine
 
 	void UILinkingComponent::ModifyText()
 	{
-		std::string dataString{ std::to_string(m_StatusComp->GetData(m_Base)) };
+		std::string dataString{ std::to_string(std::any_cast<int>(m_StatusComp->GetData(m_Base))) };
 
 		std::ostringstream dataFormatString;
 		if (m_Format.showLabel) dataFormatString << m_Base << " ";
