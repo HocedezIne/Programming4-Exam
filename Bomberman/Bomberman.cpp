@@ -14,6 +14,8 @@
 #include "InputCommandLinker.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "ServiceLocator.h"
+#include "SoundSystemService.h"
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
@@ -33,6 +35,12 @@ void load()
 
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(173, 173, 173));
 	engine::InputCommandLinker::GetInstance().AddKeyboard();
+	
+#if NDEBUG
+	engine::ServiceLocator::GetInstance().RegisterSoundSystem(std::make_unique<engine::SoundSystemService>());
+#else
+	engine::ServiceLocator::RegisterSoundSystem(std::make_unique<engine::LoggingSoundSystemService>(std::make_unique<engine::SoundSystemService>()));
+#endif
 
 	auto font = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
 
@@ -69,6 +77,9 @@ void load()
 	go->AddComponent(std::move(sc));
 	scene.Add(std::move(go));
 #pragma endregion playerBomberman
+
+	auto& ss = engine::ServiceLocator::GetSoundSystem();
+	ss.PlaySound("../Data/LevelBackground.mp3", true);
 }
 
 int main(int, char* []) {

@@ -31,6 +31,9 @@
     <Filter Include="Object Files\Components\Component Subclasses">
       <UniqueIdentifier>{06ac49bc-b822-452d-9fa0-9826c16bd212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Services">
+      <UniqueIdentifier>{49887e9c-25da-428b-be41-59db99925812}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -38,9 +41,6 @@
     </ClInclude>
     <ClInclude Include="InputCommandLinker.h">
       <Filter>InputClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeService.h">
-      <Filter>Helpers</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Helpers\Resource helpers</Filter>
@@ -99,13 +99,19 @@
     <ClInclude Include="TimerComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
+    <ClInclude Include="TimeService.h">
+      <Filter>Helpers\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Helpers\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystemService.h">
+      <Filter>Helpers\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputCommandLinker.cpp">
       <Filter>InputClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="TimeService.cpp">
-      <Filter>Helpers</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Helpers\Resource helpers</Filter>
@@ -157,6 +163,15 @@
     </ClCompile>
     <ClCompile Include="TimerComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeService.cpp">
+      <Filter>Helpers\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Helpers\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystemService.cpp">
+      <Filter>Helpers\Services</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
