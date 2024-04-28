@@ -89,6 +89,8 @@ void load()
 
 	auto& ss = engine::ServiceLocator::GetSoundSystem();
 	ss.PlaySound("../Data/LevelBackground.mp3", true);
+	ss.StopSound("../Data/LevelBackground.mp3");
+	ss.PlaySound("../Data/LevelBackground.mp3", true);
 }
 
 int main(int, char* []) {

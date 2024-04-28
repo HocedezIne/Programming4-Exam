@@ -17,14 +17,13 @@ namespace engine
 			if (SDL_Init(SDL_INIT_AUDIO) < 0) std::cerr << "Error initializing SDL audio\n";
 			if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) std::cerr << "Error initializing SDL_mixer\n";
 
-			m_AudioPos = NULL;
-			m_AudioLen = 0;
+			Mix_AllocateChannels(m_NumChannels);
 
 			m_SoundThread = std::jthread(&Impl::SoundLoop, this);
-			//Mix_HookMusicFinished(Impl::AudioCallback, NULL);
 		};
 
 		~Impl() {
+			m_SoundQueue.enqueue(SoundEvent{ SoundAction::Quit, "", false });
 			m_SoundThread.join();
 
 			for (auto& sound : m_SoundEffects)
@@ -45,14 +44,19 @@ namespace engine
 			m_SoundQueue.enqueue(SoundEvent(SoundAction::Play, soundLabel, isMusic));
 		};
 
-		virtual void StopSound(const std::string& /*soundLabel*/) {};
+		virtual void StopSound(const std::string& soundLabel) {
+			m_SoundQueue.enqueue(SoundEvent{ SoundAction::Stop, soundLabel, false });
+		};
 
-		virtual void StopAllSound() {};
+		virtual void StopAllSound() { 
+			m_SoundQueue.enqueue(SoundEvent{ SoundAction::Stop, "", false });
+		};
 
 	private:
 		void SoundLoop()
 		{
-			while (!m_QuitSoundLoop)
+			bool active = true;
+			while (active)
 			{
 				SoundEvent event = m_SoundQueue.dequeue();
 
@@ -73,6 +77,26 @@ namespace engine
 					Mix_PlayChannel(event.isMusic ? 0 : -1, m_SoundEffects[event.label], 0);
 					break;
 				case SoundAction::Stop:
+					if (event.label == "")
+					{
+						Mix_HaltChannel(-1);
+					}
+					else 
+					{
+						bool found{ false };
+						for (int i{}; i < m_NumChannels && !found; ++i)
+						{
+							auto sound = Mix_GetChunk(i);
+							if (sound == m_SoundEffects[event.label])
+							{
+								Mix_HaltChannel(i);
+								found = true;
+							}
+						}
+					}
+					break;
+				case SoundAction::Quit:
+					active = false;
 					break;
 				default:
 					break;
@@ -80,27 +104,12 @@ namespace engine
 			}
 		}
 
-		void AudioCallback(void* /*data*/, uint8_t* stream, int len)
-		{
-			if (m_AudioLen = 0) return; // no more audio to play
-
-			len = std::min(len, m_AudioLen);
-
-			SDL_MixAudio(stream, m_AudioPos, len, SDL_MIX_MAXVOLUME);
-
-			m_AudioPos += len;
-			m_AudioLen -= len;
-		}
+		const int m_NumChannels{ 16 };
 
 		ThreadSafeQueue<SoundEvent> m_SoundQueue;
 
 		std::jthread m_SoundThread;
 		std::map<std::string, Mix_Chunk*> m_SoundEffects;
-
-		bool m_QuitSoundLoop{ false };
-
-		uint8_t* m_AudioPos;
-		int m_AudioLen;
 	};
 
 	SoundSystemService::SoundSystemService()

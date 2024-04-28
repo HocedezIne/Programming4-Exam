@@ -14,7 +14,8 @@ namespace engine
 	enum class SoundAction
 	{
 		Play,
-		Stop
+		Stop,
+		Quit
 	};
 
 	struct SoundEvent {
@@ -67,6 +68,7 @@ namespace engine
 		};
 		virtual void StopAllSound() override
 		{
+			m_RealSS->StopAllSound();
 			std::cout << "Stopped all playing sounds\n";
 		};
 
