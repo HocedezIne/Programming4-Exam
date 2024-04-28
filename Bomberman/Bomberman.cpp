@@ -12,6 +12,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "InputCommandLinker.h"
+#include "BombermanCommands.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "ServiceLocator.h"
@@ -44,12 +45,19 @@ void load()
 
 	auto font = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
 
-	auto go = std::make_unique<engine::GameObject>();
+	auto go = std::make_unique<engine::GameObject>(glm::vec3{0.f, 100.f,0.f});
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "playfield.png"));
 	scene.Add(std::move(go));
 
 	go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 20.f, 0.f });
 	go->AddComponent<engine::TimerComponent>(std::make_unique<engine::TimerComponent>(go.get(), 200, true));
+	scene.Add(std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3{10.f, 50.f, 0.f});
+	go->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(go.get(), "WASD to walk around"));
+	scene.Add(std::move(go));
+	go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 70.f, 0.f });
+	go->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(go.get(), "C to drop a bomb"));
 	scene.Add(std::move(go));
 
 #pragma region playerBomberman
@@ -59,6 +67,7 @@ void load()
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(go.get(), glm::vec3{ -1.f,0.f,0.f }, 50.f));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(go.get(), glm::vec3{ 0.f,1.f,0.f }, 50.f));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(go.get(), glm::vec3{ 1.f,0.f,0.f }, 50.f));
+	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>( go.get() ));
 
 	auto sc = std::make_unique<engine::StatusComponent>(go.get());
 	sc->AddDataMapping("LEFT", 3);

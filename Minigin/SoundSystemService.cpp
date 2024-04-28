@@ -20,11 +20,12 @@ namespace engine
 			m_AudioPos = NULL;
 			m_AudioLen = 0;
 
-			//m_SoundThread = std::jthread(&Impl::SoundLoop, this);
+			m_SoundThread = std::jthread(&Impl::SoundLoop, this);
 			//Mix_HookMusicFinished(Impl::AudioCallback, NULL);
 		};
+
 		~Impl() {
-			//m_SoundThread.join();
+			m_SoundThread.join();
 
 			for (auto& sound : m_SoundEffects)
 			{
@@ -41,49 +42,43 @@ namespace engine
 
 		virtual void PlaySound(const std::string& soundLabel, bool isMusic)
 		{
-			if (m_SoundEffects.find(soundLabel) == m_SoundEffects.end())
-			{
-				Mix_Chunk* sound = Mix_LoadWAV(soundLabel.c_str());
-				if (!sound)
-				{
-					std::cerr << "Couldn't load sound: " << soundLabel << std::endl;
-					return;
-				}
-				else m_SoundEffects[soundLabel] = sound;
-			}
-			
-			Mix_PlayChannel(isMusic ? 0 : -1, m_SoundEffects[soundLabel], 0);
+			m_SoundQueue.enqueue(SoundEvent(SoundAction::Play, soundLabel, isMusic));
 		};
 
-		virtual void StopSound(const std::string& /*soundLabel*/)
-		{
-		
-		};
+		virtual void StopSound(const std::string& /*soundLabel*/) {};
 
-		virtual void StopAllSound()
-		{
-		
-		};
+		virtual void StopAllSound() {};
 
 	private:
-		//void SoundLoop()
-		//{
-		//	while (!m_QuitSoundLoop)
-		//	{
-		//		while (SDL_PollEvent(&m_Event))
-		//		{
-		//			switch (m_Event.type)
-		//			{
-		//			case SDL_QUIT:
-		//				m_QuitSoundLoop = true;
-		//				break;
-		//				case 
-		//			default:
-		//				break;
-		//			}
-		//		}
-		//	}
-		//}
+		void SoundLoop()
+		{
+			while (!m_QuitSoundLoop)
+			{
+				SoundEvent event = m_SoundQueue.dequeue();
+
+				switch (event.action)
+				{
+				case SoundAction::Play:
+					if (m_SoundEffects.find(event.label) == m_SoundEffects.end())
+					{
+						Mix_Chunk* sound = Mix_LoadWAV(event.label.c_str());
+						if (!sound)
+						{
+							std::cerr << "Couldn't load sound: " << event.label << std::endl;
+							return;
+						}
+						else m_SoundEffects[event.label] = sound;
+					}
+
+					Mix_PlayChannel(event.isMusic ? 0 : -1, m_SoundEffects[event.label], 0);
+					break;
+				case SoundAction::Stop:
+					break;
+				default:
+					break;
+				}
+			}
+		}
 
 		void AudioCallback(void* /*data*/, uint8_t* stream, int len)
 		{
@@ -97,10 +92,11 @@ namespace engine
 			m_AudioLen -= len;
 		}
 
-		//std::jthread m_SoundThread;
+		ThreadSafeQueue<SoundEvent> m_SoundQueue;
+
+		std::jthread m_SoundThread;
 		std::map<std::string, Mix_Chunk*> m_SoundEffects;
 
-		SDL_Event m_Event{};
 		bool m_QuitSoundLoop{ false };
 
 		uint8_t* m_AudioPos;
@@ -114,7 +110,6 @@ namespace engine
 
 	SoundSystemService::~SoundSystemService()
 	{
-		m_Impl->StopAllSound();
 		delete m_Impl;
 		m_Impl = nullptr;
 	}
