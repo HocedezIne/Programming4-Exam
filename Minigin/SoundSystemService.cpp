@@ -1,6 +1,7 @@
 #include "SoundSystemService.h"
 
 #include "Singleton.h"
+#include "ThreadSafeQueue.h"
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -106,9 +107,9 @@ namespace engine
 
 		const int m_NumChannels{ 16 };
 
-		ThreadSafeQueue<SoundEvent> m_SoundQueue;
-
+		engine::ThreadSafeQueue<SoundEvent> m_SoundQueue;
 		std::jthread m_SoundThread;
+
 		std::map<std::string, Mix_Chunk*> m_SoundEffects;
 	};
 

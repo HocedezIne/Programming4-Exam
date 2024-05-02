@@ -108,6 +108,12 @@
     <ClInclude Include="SoundSystemService.h">
       <Filter>Helpers\Services</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadSafeQueue.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidorComponent.h">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputCommandLinker.cpp">
@@ -172,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="SoundSystemService.cpp">
       <Filter>Helpers\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="CollidorComponent.cpp">
+      <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

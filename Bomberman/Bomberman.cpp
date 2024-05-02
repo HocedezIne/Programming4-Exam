@@ -24,6 +24,7 @@
 #include "TimerComponent.h"
 #include "StatusComponent.h"
 #include "UILinkingComponent.h"
+#include "CollidorComponent.h"
 
 void load()
 {
@@ -63,6 +64,7 @@ void load()
 #pragma region playerBomberman
 	go = std::make_unique<engine::GameObject>(glm::vec3(100.f, 200.f, 0.f));
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "bomberman.png"));
+	go->AddComponent<engine::CollidorComponent>(std::make_unique<engine::CollidorComponent>(go.get(), go->GetComponent<engine::TextureComponent>()->GetTextureSize()));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(go.get(), glm::vec3{ 0.f,-1.f,0.f }, 50.f));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(go.get(), glm::vec3{ -1.f,0.f,0.f }, 50.f));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(go.get(), glm::vec3{ 0.f,1.f,0.f }, 50.f));
@@ -87,9 +89,12 @@ void load()
 	scene.Add(std::move(go));
 #pragma endregion playerBomberman
 
+	go = std::make_unique<engine::GameObject>(glm::vec3(200.f, 200.f, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "balloom.png"));
+	go->AddComponent<engine::CollidorComponent>(std::make_unique<engine::CollidorComponent>(go.get(), go->GetComponent<engine::TextureComponent>()->GetTextureSize()));
+	scene.Add(std::move(go));
+
 	auto& ss = engine::ServiceLocator::GetSoundSystem();
-	ss.PlaySound("../Data/LevelBackground.mp3", true);
-	ss.StopSound("../Data/LevelBackground.mp3");
 	ss.PlaySound("../Data/LevelBackground.mp3", true);
 }
 

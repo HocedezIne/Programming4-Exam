@@ -26,6 +26,11 @@ namespace engine
 		m_Texture = texture;
 	}
 
+	const glm::vec2 TextureComponent::GetTextureSize() const
+	{
+		return m_Texture->GetSize();
+	}
+
 	TextureComponent::TextureComponent(GameObject* owner, const std::string& fileName) : Component(owner)
 	{
 		if (!fileName.empty()) m_Texture = ResourceManager::GetInstance().LoadTexture(fileName);

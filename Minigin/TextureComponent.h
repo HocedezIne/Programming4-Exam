@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <glm/glm.hpp>
 
 #include "Component.h"
 
@@ -16,6 +17,8 @@ namespace engine
 		
 		void SetTexture(const std::string& fileName);
 		void SetTexture(std::shared_ptr<Texture2D> texture);
+
+		const glm::vec2 GetTextureSize() const;
 
 		TextureComponent(GameObject* owner, const std::string& fileName = {});
 		~TextureComponent() = default;

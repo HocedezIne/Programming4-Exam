@@ -193,6 +193,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CollidorComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />
@@ -214,11 +215,13 @@
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />
+    <ClInclude Include="ThreadSafeQueue.h" />
     <ClInclude Include="TimeService.h" />
     <ClInclude Include="TimerComponent.h" />
     <ClInclude Include="UILinkingComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollidorComponent.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
