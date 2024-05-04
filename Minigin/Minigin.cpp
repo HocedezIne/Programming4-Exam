@@ -87,7 +87,6 @@ void engine::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputCommandLinker::GetInstance();
 	auto& time = TimeService::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
 	while (doContinue)
 	{
@@ -95,6 +94,7 @@ void engine::Minigin::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
+		sceneManager.LateUpdate();
 
 		sceneManager.HandleDeletion();
 

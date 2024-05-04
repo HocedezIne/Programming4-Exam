@@ -11,6 +11,7 @@ namespace engine
 	{
 	public:
 		virtual void Update();
+		virtual void LateUpdate();
 		virtual void Render() const;
 
 		void MarkDeletion() { m_DeleteFlag = true; };
@@ -30,6 +31,7 @@ namespace engine
 			static_assert(std::is_base_of<Component, T>::value, "Item must derrive from Component class");
 
 			if (auto ucomp = dynamic_cast<IUpdatable*>(comp.get())) m_UpdatableComponents.push_back(ucomp);
+			if (auto ucomp = dynamic_cast<ILateUpdatable*>(comp.get())) m_LateUpdatableComponents.push_back(ucomp);
 			if (auto rcomp = dynamic_cast<IRenderable*>(comp.get())) m_RenderableComponents.push_back(rcomp);
 
 			m_Components.push_back(std::move(comp));
@@ -87,6 +89,7 @@ namespace engine
 
 		std::vector< std::unique_ptr<Component> > m_Components{};
 		std::vector<IUpdatable*> m_UpdatableComponents{};
+		std::vector<ILateUpdatable*> m_LateUpdatableComponents{};
 		std::vector<IRenderable*> m_RenderableComponents{};
 
 		std::vector<GameObject*> m_Children{};

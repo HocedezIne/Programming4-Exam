@@ -13,6 +13,7 @@ namespace engine
 		void RemoveAll();
 
 		void Update();
+		void LateUpdate();
 		void Render() const;
 		void HandleDeletion();
 
