@@ -15,7 +15,6 @@ namespace engine
 		Scene& CreateScene(const std::string& name);
 
 		void Update();
-		void LateUpdate();
 		void Render();
 		void HandleDeletion();
 

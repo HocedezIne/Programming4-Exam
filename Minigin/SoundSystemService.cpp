@@ -32,7 +32,6 @@ namespace engine
 				Mix_FreeChunk(sound.second);
 			}
 			Mix_CloseAudio();
-			SDL_Quit();
 		};
 
 		Impl(const Impl& other) = default;

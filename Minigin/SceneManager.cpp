@@ -9,14 +9,6 @@ void engine::SceneManager::Update()
 	}
 }
 
-void engine::SceneManager::LateUpdate()
-{
-	for (auto& scene : m_Scenes)
-	{
-		scene->LateUpdate();
-	}
-}
-
 void engine::SceneManager::Render()
 {
 	for (const auto& scene : m_Scenes)

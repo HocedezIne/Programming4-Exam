@@ -40,10 +40,4 @@ namespace engine
 		virtual void Render() const = 0;
 		virtual ~IRenderable() = default;
 	};
-
-	class ILateUpdatable {
-	public:
-		virtual void LateUpdate() = 0;
-		virtual ~ILateUpdatable() = default;
-	};
 }

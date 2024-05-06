@@ -94,7 +94,6 @@ void engine::Minigin::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
-		sceneManager.LateUpdate();
 
 		sceneManager.HandleDeletion();
 

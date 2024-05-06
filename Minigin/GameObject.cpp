@@ -7,11 +7,6 @@ namespace engine
 		for (const auto& comp : m_UpdatableComponents) comp->Update();
 	}
 
-	void GameObject::LateUpdate()
-	{
-		for (const auto& comp : m_LateUpdatableComponents) comp->LateUpdate();
-	}
-
 	void GameObject::Render() const
 	{
 		for (const auto& comp : m_RenderableComponents) comp->Render();
@@ -26,8 +21,6 @@ namespace engine
 			{
 				if (IUpdatable* ucomp = dynamic_cast<IUpdatable*>(it->get())) 
 					m_UpdatableComponents.erase(std::remove(m_UpdatableComponents.begin(), m_UpdatableComponents.end(), (ucomp)), m_UpdatableComponents.end());
-				if (ILateUpdatable* ucomp = dynamic_cast<ILateUpdatable*>(it->get())) 
-					m_LateUpdatableComponents.erase(std::remove(m_LateUpdatableComponents.begin(), m_LateUpdatableComponents.end(), (ucomp)), m_LateUpdatableComponents.end());
 				if (IRenderable* rcomp = dynamic_cast<IRenderable*>(it->get())) 
 					m_RenderableComponents.erase(std::remove(m_RenderableComponents.begin(), m_RenderableComponents.end(), (rcomp)), m_RenderableComponents.end());
 
