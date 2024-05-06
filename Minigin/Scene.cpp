@@ -14,6 +14,11 @@ void Scene::Add(std::unique_ptr<GameObject> object)
 	m_Objects.emplace_back(std::move(object));
 }
 
+void Scene::AddCollidableObject(GameObject* object)
+{
+	m_CollidableObjects.emplace_back(object->GetComponent<ColliderComponent>());
+}
+
 void Scene::Remove(std::unique_ptr<GameObject> object)
 {
 	object->MarkDeletion();
@@ -29,6 +34,14 @@ void Scene::Update()
 	for(auto& object : m_Objects)
 	{
 		object->Update();
+	}
+
+	for (int currentIdx{}; currentIdx < int(m_CollidableObjects.size()-1); ++currentIdx)
+	{
+		for (int checkIdx{ currentIdx + 1 }; checkIdx < int(m_CollidableObjects.size()); ++checkIdx) 
+		{
+			m_CollidableObjects[currentIdx]->CheckCollision(m_CollidableObjects[checkIdx]);
+		}
 	}
 }
 

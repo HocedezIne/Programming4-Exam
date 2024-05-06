@@ -111,7 +111,7 @@
     <ClInclude Include="ThreadSafeQueue.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="CollidorComponent.h">
+    <ClInclude Include="ColliderComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,7 +179,7 @@
     <ClCompile Include="SoundSystemService.cpp">
       <Filter>Helpers\Services</Filter>
     </ClCompile>
-    <ClCompile Include="CollidorComponent.cpp">
+    <ClCompile Include="ColliderComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
   </ItemGroup>

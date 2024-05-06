@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneManager.h"
 #include "GameObject.h"
+#include "ColliderComponent.h"
 
 namespace engine
 {
@@ -9,6 +10,7 @@ namespace engine
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(std::unique_ptr<GameObject> object);
+		void AddCollidableObject(GameObject* object);
 		void Remove(std::unique_ptr<GameObject> object);
 		void RemoveAll();
 
@@ -28,6 +30,8 @@ namespace engine
 
 		std::string m_Name;
 		std::vector < std::unique_ptr<GameObject>> m_Objects{};
+
+		std::vector <ColliderComponent*> m_CollidableObjects{};
 
 		static unsigned int m_IdCounter; 
 	};
