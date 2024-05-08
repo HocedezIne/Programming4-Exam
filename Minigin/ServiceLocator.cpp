@@ -2,5 +2,5 @@
 
 namespace engine
 {
-	std::unique_ptr<SoundSystemService> ServiceLocator::audioserviceInstance = std::make_unique<NullSoundSystemService>();
+	std::unique_ptr<SoundSystemServiceBase> ServiceLocator::audioserviceInstance = std::make_unique<NullSoundSystemService>();
 }

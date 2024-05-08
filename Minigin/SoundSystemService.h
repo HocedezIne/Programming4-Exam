@@ -24,33 +24,44 @@ namespace engine
 		bool isMusic;
 	};
 
-	class SoundSystemService
+	class SoundSystemServiceBase
+	{
+	public:
+		SoundSystemServiceBase() = default;
+		virtual ~SoundSystemServiceBase() = default;
+
+		virtual void PlaySound(const std::string& soundLabel, bool isMusic) = 0;
+		virtual void StopSound(const std::string& soundLabel) = 0;
+		virtual void StopAllSound() = 0;
+	};
+
+	class SoundSystemService final : public SoundSystemServiceBase
 	{
 	public:
 		SoundSystemService();
-		virtual ~SoundSystemService();
+		~SoundSystemService();
 
-		virtual void PlaySound(const std::string& soundLabel, bool isMusic);
-		virtual void StopSound(const std::string& soundLabel);
-		virtual void StopAllSound();
+		virtual void PlaySound(const std::string& soundLabel, bool isMusic) override;
+		virtual void StopSound(const std::string& soundLabel) override;
+		virtual void StopAllSound() override;
 
 	private:
 		class Impl;
 		Impl* m_Impl;
 	};
 
-	class NullSoundSystemService final : public SoundSystemService
+	class NullSoundSystemService final : public SoundSystemServiceBase
 	{
 	public:
-		NullSoundSystemService() : SoundSystemService() {};
-		~NullSoundSystemService() = default;
+		NullSoundSystemService() : SoundSystemServiceBase() {};
+		virtual ~NullSoundSystemService() = default;
 
 		virtual void PlaySound(const std::string&, bool ) override {};
 		virtual void StopSound(const std::string& ) override {};
 		virtual void StopAllSound() override {};
 	};
 
-	class LoggingSoundSystemService final : public SoundSystemService
+	class LoggingSoundSystemService final : public SoundSystemServiceBase
 	{
 	public:
 		LoggingSoundSystemService(std::unique_ptr<SoundSystemService> ss) : m_RealSS(std::move(ss)) {};
