@@ -32,10 +32,6 @@ void load()
 	engine::ServiceLocator::GetInstance().RegisterSoundSystem(std::make_unique<engine::SoundSystemService>());
 #else
 	engine::ServiceLocator::RegisterSoundSystem(std::make_unique<engine::LoggingSoundSystemService>(std::make_unique<engine::SoundSystemService>()));
-
-	auto fps = std::make_unique<engine::GameObject>(glm::vec3{ 175.f, 20.f, 0.f });
-	fps->AddComponent<engine::FPSComponent>(std::make_unique<engine::FPSComponent>(fps.get()));
-	LevelScene.Add(std::move(fps));
 #endif
 
 #pragma region LevelLoading
@@ -97,17 +93,18 @@ void load()
 	controlsMenu.Add(std::move(controls));
 #pragma endregion Controls
 
+
+	auto& LevelScene = engine::SceneManager::GetInstance().CreateScene("Demo level");
+	engine::InputCommandLinker::GetInstance().AddKeyboard();
+
+	auto font = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
+
 #if NDEBUG
 #else
 	auto fps = std::make_unique<engine::GameObject>(glm::vec3{ 175.f, 20.f, 0.f });
 	fps->AddComponent<engine::FPSComponent>(std::make_unique<engine::FPSComponent>(fps.get()));
 	LevelScene.Add(std::move(fps));
 #endif
-
-	auto& LevelScene = engine::SceneManager::GetInstance().CreateScene("Demo level");
-	engine::InputCommandLinker::GetInstance().AddKeyboard();
-
-	auto font = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
 
 #pragma region Level
 	auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{0.f, 100.f,0.f});
