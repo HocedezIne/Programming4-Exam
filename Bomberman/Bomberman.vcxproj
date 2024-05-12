@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp" />
+    <ClCompile Include="BombermanGameStateImplementations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanCommands.h" />

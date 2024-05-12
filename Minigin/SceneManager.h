@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "Singleton.h"
+#include <map>
 
 namespace engine
 {
@@ -14,11 +15,14 @@ namespace engine
 
 		Scene& CreateScene(const std::string& name);
 
+		void SetCurrentScene(const std::string& name);
+
 		void Update();
 		void Render();
 		void HandleDeletion();
 
 	private:
-		std::vector<Scene*> m_Scenes;
+		Scene* currentScene{nullptr};
+		std::map<std::string, Scene*> m_Scenes;
 	};
 }

@@ -74,7 +74,7 @@ namespace engine
 						else m_SoundEffects[event.label] = sound;
 					}
 
-					Mix_PlayChannel(event.isMusic ? 0 : -1, m_SoundEffects[event.label], 0);
+					Mix_PlayChannel(event.isMusic ? 0 : -1, m_SoundEffects[event.label], event.isMusic ? -1 : 0);
 					break;
 				case SoundAction::Stop:
 					if (event.label == "")

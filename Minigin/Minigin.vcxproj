@@ -199,6 +199,8 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameStateInterface.h" />
+    <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="InputCommands.h" />
     <ClInclude Include="InputCommandLinker.h" />
     <ClInclude Include="Keyboard.h" />
@@ -226,6 +228,7 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="InputCommandLinker.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Minigin.cpp" />

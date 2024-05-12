@@ -66,12 +66,20 @@ namespace engine
 				break;
 			case CollisionMode::Dynamic:
 				glm::vec3 movement{};
-				
-				if (otherPosition.x < Position.x) movement.x = Position.x - other->m_BoundingDimensions.x - otherPosition.x;
-				else movement.x = Position.x + m_BoundingDimensions.x - otherPosition.x;
 
-				if (otherPosition.y < Position.y) movement.y = Position.y - other->m_BoundingDimensions.y - otherPosition.y;
-				else movement.y = Position.y + m_BoundingDimensions.y - otherPosition.y;
+				if (otherPosition.x + other->m_BoundingDimensions.x > Position.x ||
+					Position.x + m_BoundingDimensions.x > otherPosition.x)
+				{
+					if (otherPosition.x < Position.x) movement.x = Position.x - other->m_BoundingDimensions.x - otherPosition.x;
+					else movement.x = Position.x + m_BoundingDimensions.x - otherPosition.x;
+				}	
+
+				if (otherPosition.y + other->m_BoundingDimensions.y > Position.y ||
+					Position.y + m_BoundingDimensions.y > otherPosition.y)
+				{
+					if (otherPosition.y < Position.y) movement.y = Position.y - other->m_BoundingDimensions.y - otherPosition.y;
+					else movement.y = Position.y + m_BoundingDimensions.y - otherPosition.y;
+				}
 
 				other->GetOwner()->SetLocalPosition(otherPosition + movement);
 				break;

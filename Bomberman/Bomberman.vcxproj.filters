@@ -13,6 +13,9 @@
     <ClCompile Include="Bomberman.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
+    <ClCompile Include="BombermanGameStateImplementations.cpp">
+      <Filter>Engine Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanCommands.h">

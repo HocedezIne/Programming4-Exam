@@ -29,6 +29,9 @@ namespace engine
 		void AddKeyboard();
 		void AddController();
 
+		bool IsKeyDown(SDL_Scancode key);
+		bool IsButtonDown(Controller::Button button);
+
 	private:
 		void ProcessKeyboardState();
 		void ProcessControllerStates();

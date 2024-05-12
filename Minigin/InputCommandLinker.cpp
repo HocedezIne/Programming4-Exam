@@ -40,6 +40,28 @@ void engine::InputCommandLinker::AddController()
 	m_Controllers.push_back(std::make_unique<Controller>(int(m_Controllers.size())));
 }
 
+bool engine::InputCommandLinker::IsKeyDown(SDL_Scancode key)
+{
+	for (int i{}; i < int(m_Keyboards.size()); ++i)
+	{
+		if (m_Keyboards[i]->PressedThisFrame(key))
+			return true;
+	}
+
+	return false;
+}
+
+bool engine::InputCommandLinker::IsButtonDown(Controller::Button button)
+{
+	for (int i{}; i < int(m_Controllers.size()); ++i)
+	{
+		if (m_Controllers[i]->PressedThisFrame(button))
+			return true;
+	}
+
+	return false;
+}
+
 void engine::InputCommandLinker::ProcessKeyboardState()
 {
 	for (int idx{}; idx < int(m_Keyboards.size()); ++idx)
