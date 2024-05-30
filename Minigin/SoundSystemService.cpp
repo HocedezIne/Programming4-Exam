@@ -19,6 +19,7 @@ namespace engine
 			if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) std::cerr << "Error initializing SDL_mixer\n";
 
 			Mix_AllocateChannels(m_NumChannels);
+			Mix_Volume(-1, 40);
 
 			m_SoundThread = std::jthread(&Impl::SoundLoop, this);
 		};
@@ -51,6 +52,22 @@ namespace engine
 		virtual void StopAllSound() { 
 			m_SoundQueue.enqueue(SoundEvent{ SoundAction::Stop, "", false });
 		};
+
+		virtual int GetVolume() const
+		{
+			return Mix_Volume(-1, -1);
+		}
+
+		virtual void SetVolume(int value)
+		{
+			value = SDL_clamp(value, 0, MIX_MAX_VOLUME);
+			Mix_Volume(-1, value);
+		}
+
+		virtual void MuteVolume()
+		{
+			Mix_Volume(-1, 0);
+		}
 
 	private:
 		void SoundLoop()
@@ -136,5 +153,20 @@ namespace engine
 	void SoundSystemService::StopAllSound()
 	{
 		m_Impl->StopAllSound();
+	}
+
+	int SoundSystemService::GetVolume() const
+	{
+		return m_Impl->GetVolume();
+	}
+
+	void SoundSystemService::SetVolume(int value)
+	{
+		m_Impl->SetVolume(value);
+	}
+
+	void SoundSystemService::MuteVolume()
+	{
+		m_Impl->MuteVolume();
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "TimeService.h"
+#include "ServiceLocator.h"
 
 namespace engine
 {
@@ -52,10 +53,51 @@ namespace engine
 		MoveInputCommand(MoveInputCommand&& other) = delete;
 		MoveInputCommand& operator=(MoveInputCommand&& other) = delete;
 
-		virtual void Execute() override { GetGameObject()->SetLocalPosition(GetGameObject()->GetLocalPosition() + (m_Direction * m_Speed * TimeService::GetInstance().GetDeltaTime())); };
+		virtual void Execute() override 
+		{ 
+			GetGameObject()->SetLocalPosition(GetGameObject()->GetLocalPosition() + (m_Direction * m_Speed * TimeService::GetInstance().GetDeltaTime())); 
+		};
 		
 	private:
 		const glm::vec3 m_Direction;
 		const float m_Speed;
+	};
+
+	class AlterVolumeCommand final : public InputCommand
+	{
+	public:
+		AlterVolumeCommand(int amount) : InputCommand(), m_Amount(amount) {};
+		virtual ~AlterVolumeCommand() = default;
+
+		AlterVolumeCommand(const AlterVolumeCommand& other) = delete;
+		AlterVolumeCommand& operator=(const AlterVolumeCommand& other) = delete;
+		AlterVolumeCommand(AlterVolumeCommand&& other) = delete;
+		AlterVolumeCommand& operator=(AlterVolumeCommand&& other) = delete;
+
+		virtual void Execute() override
+		{
+			int currentVolume{ ServiceLocator::GetInstance().GetSoundSystem().GetVolume()};
+			ServiceLocator::GetInstance().GetSoundSystem().SetVolume( currentVolume + m_Amount);
+		}
+
+	private:
+		int m_Amount;
+	};
+
+	class MuteVolumeCommand final : public InputCommand
+	{
+	public:
+		MuteVolumeCommand() : InputCommand() {};
+		virtual ~MuteVolumeCommand() = default;
+
+		MuteVolumeCommand(const MuteVolumeCommand& other) = delete;
+		MuteVolumeCommand& operator=(const MuteVolumeCommand& other) = delete;
+		MuteVolumeCommand(MuteVolumeCommand&& other) = delete;
+		MuteVolumeCommand& operator=(MuteVolumeCommand&& other) = delete;
+
+		virtual void Execute() override
+		{
+			ServiceLocator::GetInstance().GetSoundSystem().MuteVolume();
+		}
 	};
 }

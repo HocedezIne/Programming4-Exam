@@ -210,6 +210,9 @@ void load()
 	auto& generalScene = engine::sceneManager::CreateScene("");
 	auto gameStateHolder = std::make_unique<engine::GameObject>();
 	gameStateHolder->AddComponent(std::make_unique<GameStateManagingComponent>(gameStateHolder.get()));
+	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_M, engine::KeyState::Pressed, std::make_unique<engine::MuteVolumeCommand>());
+	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_COMMA, engine::KeyState::Pressed, std::make_unique<engine::AlterVolumeCommand>(-5));
+	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_PERIOD, engine::KeyState::Pressed, std::make_unique<engine::AlterVolumeCommand>(5));
 	generalScene.Add(std::move(gameStateHolder));
 }
 
