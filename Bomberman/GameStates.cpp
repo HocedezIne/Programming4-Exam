@@ -1,5 +1,6 @@
 #include "GameStates.h"
 #include "InputCommandLinker.h"
+#include "BombermanCommands.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ServiceLocator.h"
@@ -58,11 +59,35 @@ void LevelState::OnEnter()
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(173, 173, 173));
 	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Demo level"].get();
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelBackground.mp3", true);
+
+	// add player commands
+	auto obj = engine::sceneManager::currentScene->GetObject("player1");
+	if (obj != nullptr)
+	{
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ -1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(obj));
+	}
 }
 
 void LevelState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+
+	// remove player commands
+	auto obj = engine::sceneManager::currentScene->GetObject("player1");
+	if (obj != nullptr)
+	{
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed);
+	}
 }
 
 void LevelState::OnNotify(engine::Event event, void* /*caller*/, const std::any& /*args*/)

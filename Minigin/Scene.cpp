@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include <algorithm>
+#include <stdexcept>
 
 using namespace engine;
 
@@ -9,19 +10,32 @@ Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene() = default;
 
-void Scene::Add(std::unique_ptr<GameObject> object)
+void Scene::Add(std::string name, std::unique_ptr<GameObject> object, bool isCollidable)
 {
-	m_Objects.emplace_back(std::move(object));
+	auto it = std::find_if(m_Objects.begin(), m_Objects.end(),
+		[&name](const auto& pair) { return pair.first == name; });
+
+	if (it == m_Objects.end())
+	{
+		if (isCollidable) m_CollidableObjects.emplace_back(object.get()->GetComponent<ColliderComponent>());
+		m_Objects.emplace_back(name, std::move(object));
+	}
+	else throw std::invalid_argument("Scene already has bbject with name " + name + "\n");
 }
 
-void Scene::AddCollidableObject(GameObject* object)
+GameObject* Scene::GetObject(std::string name) const
 {
-	m_CollidableObjects.emplace_back(object->GetComponent<ColliderComponent>());
+	auto obj = std::find_if(m_Objects.begin(), m_Objects.end(),
+		[&name](const auto& pair) { return pair.first == name; });
+	if (obj != m_Objects.end()) return obj->second.get();
+	else return nullptr;
 }
 
-void Scene::Remove(std::unique_ptr<GameObject> object)
+void Scene::Remove(std::string& name)
 {
-	object->MarkDeletion();
+	auto obj = std::find_if(m_Objects.begin(), m_Objects.end(),
+		[&name](const auto& pair) { return pair.first == name; });
+	if (obj != m_Objects.end()) obj->second->MarkDeletion();
 }
 
 void Scene::RemoveAll()
@@ -33,7 +47,7 @@ void Scene::Update()
 {
 	for(auto& object : m_Objects)
 	{
-		object->Update();
+		object.second->Update();
 	}
 
 	for (int currentIdx{}; currentIdx < int(m_CollidableObjects.size()-1); ++currentIdx)
@@ -49,7 +63,7 @@ void Scene::Render() const
 {
 	for (const auto& object : m_Objects)
 	{
-		object->Render();
+		object.second->Render();
 	}
 }
 
@@ -58,10 +72,10 @@ void Scene::HandleDeletion()
 	auto it = m_Objects.begin();
 	while (it != m_Objects.end())
 	{
-		if ((*it)->IsMarkedForDeletion()) it = m_Objects.erase(it);
+		if ((*it).second->IsMarkedForDeletion()) it = m_Objects.erase(it);
 		else
 		{
-			(*it)->HandleDeletion();
+			(*it).second->HandleDeletion();
 			++it;
 		}
 	}

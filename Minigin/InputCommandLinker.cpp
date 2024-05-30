@@ -29,6 +29,20 @@ void engine::InputCommandLinker::AddControllerCommand(Controller::Button button,
 	m_ControllerCommands.insert(std::make_pair(cbs, std::move(command)));
 }
 
+void engine::InputCommandLinker::RemoveKeyboardCommand(SDL_Scancode key, KeyState state, unsigned int Id)
+{
+	KeyboardButtonState kbs = std::make_pair(std::make_pair(Id, key), state);
+	auto range = m_KeyboardCommands.equal_range(kbs);
+	m_KeyboardCommands.erase(range.first, range.second);
+}
+
+void engine::InputCommandLinker::RemoveControllerCommand(Controller::Button button, KeyState state, unsigned int Id)
+{
+	ControllerButtonState cbs = std::make_pair(std::make_pair(Id, button), state);
+	auto range = m_ControllerCommands.equal_range(cbs);
+	m_ControllerCommands.erase(range.first, range.second);
+}
+
 
 void engine::InputCommandLinker::AddKeyboard()
 {

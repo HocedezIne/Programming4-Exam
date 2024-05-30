@@ -25,6 +25,8 @@ namespace engine
 
 		void AddKeyboardCommand(SDL_Scancode key, KeyState state, std::unique_ptr<InputCommand> command, unsigned int Id = 0);
 		void AddControllerCommand(Controller::Button button, KeyState state, std::unique_ptr<InputCommand> command, unsigned int Id = 0);
+		void RemoveKeyboardCommand(SDL_Scancode key, KeyState state, unsigned int Id = 0);
+		void RemoveControllerCommand(Controller::Button button, KeyState state, unsigned int Id = 0);
 
 		void AddKeyboard();
 		void AddController();

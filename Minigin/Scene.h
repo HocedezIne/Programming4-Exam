@@ -9,9 +9,9 @@ namespace engine
 	{
 		friend Scene& sceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(std::unique_ptr<GameObject> object);
-		void AddCollidableObject(GameObject* object);
-		void Remove(std::unique_ptr<GameObject> object);
+		void Add(std::string name, std::unique_ptr<GameObject> object, bool isCollidable = false);
+		void Remove(std::string& name);
+		GameObject* GetObject(std::string name) const;
 		void RemoveAll();
 
 		void Update();
@@ -29,7 +29,7 @@ namespace engine
 		explicit Scene(const std::string& name);
 
 		std::string m_Name;
-		std::vector < std::unique_ptr<GameObject>> m_Objects{};
+		std::vector< std::pair<std::string, std::unique_ptr<GameObject>> > m_Objects{};
 
 		std::vector <ColliderComponent*> m_CollidableObjects{};
 
