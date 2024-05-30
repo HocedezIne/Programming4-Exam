@@ -5,24 +5,20 @@
 #include "Singleton.h"
 #include <map>
 
+
 namespace engine
 {
 	class Scene;
-	class SceneManager final : public Singleton<SceneManager>
+	namespace sceneManager
 	{
-	public:
-		~SceneManager();
+
+		extern Scene* currentScene;
+		extern std::map<std::string, std::unique_ptr<Scene>> sceneMap;
 
 		Scene& CreateScene(const std::string& name);
-
-		void SetCurrentScene(const std::string& name);
-
-		void Update();
-		void Render();
+		void UpdateScenes();
+		void RenderScenes();
 		void HandleDeletion();
+	}
 
-	private:
-		Scene* currentScene{nullptr};
-		std::map<std::string, Scene*> m_Scenes;
-	};
 }

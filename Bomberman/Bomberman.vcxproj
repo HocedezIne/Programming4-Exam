@@ -164,10 +164,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp" />
-    <ClCompile Include="BombermanGameStateImplementations.cpp" />
+    <ClCompile Include="GameStates.cpp" />
+    <ClCompile Include="GameStateManagingComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanCommands.h" />
+    <ClInclude Include="GameStates.h" />
+    <ClInclude Include="StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

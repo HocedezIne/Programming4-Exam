@@ -24,6 +24,7 @@ namespace engine
 		ColliderComponent& operator=(ColliderComponent&& other) = delete;
 
 		void CheckCollision(ColliderComponent* other);
+		void ResolveCollision(ColliderComponent* other);
 
 	private:
 		glm::vec2 m_BoundingDimensions{ 0,0 };

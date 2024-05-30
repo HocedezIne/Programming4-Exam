@@ -114,12 +114,6 @@
     <ClInclude Include="ColliderComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateInterface.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateManager.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputCommandLinker.cpp">
@@ -187,9 +181,6 @@
     </ClCompile>
     <ClCompile Include="ColliderComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateManager.cpp">
-      <Filter>Engine Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

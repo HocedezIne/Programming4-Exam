@@ -7,7 +7,6 @@
 #include <thread>
 
 #include "Minigin.h"
-#include "GameStateManager.h"
 #include "InputCommandLinker.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -82,14 +81,10 @@ engine::Minigin::~Minigin()
 void engine::Minigin::Run(const std::function<void()>& load)
 {
 	load();
-	auto& gameStateManager = GameStateManager::GetInstance();
-	auto& sceneManager = SceneManager::GetInstance();
+
 	auto& input = InputCommandLinker::GetInstance();
 	auto& renderer = Renderer::GetInstance();
 	auto& time = TimeService::GetInstance();
-
-
-	gameStateManager.Init();
 
 	bool doContinue = true;
 	while (doContinue)
@@ -97,11 +92,9 @@ void engine::Minigin::Run(const std::function<void()>& load)
 		time.UpdateDeltaTime();
 
 		doContinue = input.ProcessInput();
-		gameStateManager.HandleInput();
 
-		sceneManager.Update();
-		sceneManager.HandleDeletion();
-		gameStateManager.Update();
+		sceneManager::UpdateScenes();
+		sceneManager::HandleDeletion();
 
 		renderer.Render();
 

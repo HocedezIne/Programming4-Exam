@@ -17,6 +17,7 @@
 #include "Scene.h"
 #include "ServiceLocator.h"
 #include "SoundSystemService.h"
+#include "GameStateManagingComponent.h"
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
@@ -35,14 +36,14 @@ void load()
 #endif
 
 #pragma region LevelLoading
-	auto& levelLoadingScene = engine::SceneManager::GetInstance().CreateScene("Level loading");
+	auto& levelLoadingScene = engine::sceneManager::CreateScene("Level loading");
 	auto text = std::make_unique<engine::GameObject>(glm::vec3{235, 225, 0});
 	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "Demo level"));
 	levelLoadingScene.Add(std::move(text));
 #pragma endregion LevelLoading
 
 #pragma region StartMenu
-	auto& startScene = engine::SceneManager::GetInstance().CreateScene("Start menu");
+	auto& startScene = engine::sceneManager::CreateScene("Start menu");
 	auto logo = std::make_unique<engine::GameObject>(glm::vec3{ 64,0,0 });
 	logo->AddComponent(std::make_unique<engine::TextureComponent>(logo.get(), "StartMenu.png"));
 	startScene.Add(std::move(logo));
@@ -77,7 +78,7 @@ void load()
 #pragma endregion StartMenu
 
 #pragma region Controls
-	auto& controlsMenu = engine::SceneManager::GetInstance().CreateScene("Controls menu");
+	auto& controlsMenu = engine::sceneManager::CreateScene("Controls menu");
 	auto fontBig = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 24);
 	auto controls = std::make_unique<engine::GameObject>(glm::vec3{ 200.f, 25.f, 0.f });
 	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "Controls", fontBig));
@@ -94,7 +95,7 @@ void load()
 #pragma endregion Controls
 
 
-	auto& LevelScene = engine::SceneManager::GetInstance().CreateScene("Demo level");
+	auto& LevelScene = engine::sceneManager::CreateScene("Demo level");
 	engine::InputCommandLinker::GetInstance().AddKeyboard();
 
 	auto font = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
@@ -205,6 +206,11 @@ void load()
 	go->AddComponent<engine::ColliderComponent>(std::make_unique<engine::ColliderComponent>(go.get(), go->GetComponent<engine::TextureComponent>()->GetTextureSize(), engine::CollisionMode::Overlap));
 	LevelScene.AddCollidableObject(go.get());
 	LevelScene.Add(std::move(go));
+
+	auto& generalScene = engine::sceneManager::CreateScene("");
+	auto gameStateHolder = std::make_unique<engine::GameObject>();
+	gameStateHolder->AddComponent(std::make_unique<GameStateManagingComponent>(gameStateHolder.get()));
+	generalScene.Add(std::move(gameStateHolder));
 }
 
 int main(int, char* []) {

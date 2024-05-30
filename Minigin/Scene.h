@@ -7,7 +7,7 @@ namespace engine
 {
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
+		friend Scene& sceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(std::unique_ptr<GameObject> object);
 		void AddCollidableObject(GameObject* object);

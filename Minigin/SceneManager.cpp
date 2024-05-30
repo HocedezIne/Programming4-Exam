@@ -1,44 +1,37 @@
 #include "SceneManager.h"
 #include "Scene.h"
-#include <stdexcept>
 
-void engine::SceneManager::Update()
-{
-	currentScene->Update();
-}
-
-void engine::SceneManager::Render()
-{
-	currentScene->Render();
-}
-
-void engine::SceneManager::HandleDeletion()
-{
-	currentScene->HandleDeletion();
-}
-
-engine::Scene& engine::SceneManager::CreateScene(const std::string& name)
-{
-	const auto& scene = new Scene(name);
-	m_Scenes[name] = scene;
-	return *scene;
-}
-
-engine::SceneManager::~SceneManager()
-{
-	for (auto& scenePair : m_Scenes)
+namespace engine {
+	namespace sceneManager
 	{
-		delete scenePair.second;
-		scenePair.second = nullptr;
-	}
-}
+		Scene* currentScene{ nullptr };
+		std::map<std::string, std::unique_ptr<Scene>> sceneMap;
 
-void engine::SceneManager::SetCurrentScene(const std::string& name)
-{
-	if (m_Scenes.find(name) != m_Scenes.end())
-	{
-		currentScene = m_Scenes[name];
+		Scene& CreateScene(const std::string& name)
+		{
+			auto sceneptr = new Scene(name);
+			std::unique_ptr<Scene> scene(sceneptr);
+			sceneMap[name] = std::move(scene);
+			auto ptr = sceneMap[name].get();
+			return *ptr;
+		}
+
+		void UpdateScenes()
+		{
+			if (sceneMap.find("") != sceneMap.end()) sceneMap[""]->Update();
+			currentScene->Update();
+		}
+
+		void RenderScenes()
+		{
+			if (sceneMap.find("") != sceneMap.end()) sceneMap[""]->Render();
+			currentScene->Render();
+		}
+
+		void HandleDeletion()
+		{
+			if (sceneMap.find("") != sceneMap.end()) sceneMap[""]->HandleDeletion();
+			currentScene->HandleDeletion();
+		}
 	}
-	else
-		throw std::invalid_argument("Scene name is unknown\n");
 }

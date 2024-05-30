@@ -11,7 +11,6 @@ namespace engine
 
 	void ColliderComponent::CheckCollision(ColliderComponent* other)
 	{
-		// check collision
 		if (other->m_BoundingDimensions == glm::vec2{ 0,0 }) return;
 
 		auto Position = GetOwner()->GetWorldPosition();
@@ -23,6 +22,14 @@ namespace engine
 		if (otherPosition.y + other->m_BoundingDimensions.y <= Position.y ||
 			Position.y + m_BoundingDimensions.y <= otherPosition.y)
 			return;
+
+		ResolveCollision(other);
+	}
+
+	void ColliderComponent::ResolveCollision(ColliderComponent* other)
+	{
+		auto Position = GetOwner()->GetWorldPosition();
+		auto otherPosition = other->GetOwner()->GetWorldPosition();
 
 		// handle collision
 		switch (m_CollisionMode)
@@ -72,7 +79,7 @@ namespace engine
 				{
 					if (otherPosition.x < Position.x) movement.x = Position.x - other->m_BoundingDimensions.x - otherPosition.x;
 					else movement.x = Position.x + m_BoundingDimensions.x - otherPosition.x;
-				}	
+				}
 
 				if (otherPosition.y + other->m_BoundingDimensions.y > Position.y ||
 					Position.y + m_BoundingDimensions.y > otherPosition.y)
