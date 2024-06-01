@@ -4,18 +4,21 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ServiceLocator.h"
+#include "CollisionSystem.h"
 #include "Renderer.h"
 #include "TimeService.h"
+#include "StatusComponent.h"
 
 #pragma region StartMenuState
 GameStateInterface* StartMenuState::HandleInput()
 {
 	auto& input = engine::InputCommandLinker::GetInstance();
 
-	if (input.IsKeyDown(SDL_SCANCODE_Z) )
-		return new LevelLoadingState();
-	if (input.IsKeyDown(SDL_SCANCODE_X))
-		return new ControlsMenuState();
+	if (input.IsKeyDown(SDL_SCANCODE_RETURN))
+	{
+		if(m_Cursor->GetLocalPosition() == m_Start) return new LevelLoadingState();
+		else if(m_Cursor->GetLocalPosition() == m_Controls) return new ControlsMenuState();
+	}
 
 	return nullptr;
 }
@@ -30,6 +33,11 @@ void StartMenuState::OnEnter()
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
 	engine::sceneManager::currentScene =  engine::sceneManager::sceneMap["Start menu"].get();
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/StartMenu.mp3", true);
+
+	m_Cursor = engine::sceneManager::currentScene->GetObject("cursor");
+	assert(m_Cursor);
+	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Pressed, std::make_unique<engine::SnapToInputCommand>(m_Cursor, m_Start));
+	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Pressed, std::make_unique<engine::SnapToInputCommand>(m_Cursor, m_Controls));
 }
 
 void StartMenuState::OnExit()
@@ -42,9 +50,9 @@ void StartMenuState::OnExit()
 GameStateInterface* LevelState::HandleInput()
 {
 	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_F1))
-	{
 		return new LevelLoadingState();
-	}
+	if (m_PlayerDied)
+		return new LevelLostState();
 
 	return nullptr;
 }
@@ -59,6 +67,7 @@ void LevelState::OnEnter()
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(173, 173, 173));
 	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Demo level"].get();
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelBackground.mp3", true);
+	collisionSystem::collisionHandler.AddObserver(this);
 
 	// add player commands
 	auto obj = engine::sceneManager::currentScene->GetObject("player1");
@@ -94,12 +103,12 @@ void LevelState::OnNotify(engine::Event event, void* /*caller*/, const std::any&
 {
 	if (event == engine::Event::PlayerDied)
 	{
-
+		m_PlayerDied = true;
 	}
 }
 #pragma endregion LevelState
 
-#pragma region LevelLoading
+#pragma region LevelLoadingState
 GameStateInterface* LevelLoadingState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
@@ -124,12 +133,65 @@ void LevelLoadingState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
 }
-#pragma endregion LevelLoading
+#pragma endregion LevelLoadingState
 
-#pragma region ControlsMenu
+#pragma region LevelLostState
+GameStateInterface* LevelLostState::HandleInput()
+{
+	if (m_TimeToStateSwitch <= 0.f)
+		if (std::any_cast<int>(engine::sceneManager::currentScene->GetObject("player1")->GetComponent<engine::StatusComponent>()->GetData("LIVES")) > 0)
+			return new LevelLoadingState();
+		else
+			return new GameOverState();
+
+	return nullptr;
+}
+
+void LevelLostState::Update()
+{
+	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+	if((m_TimeToStateSwitch-3.f) < 1e-5f) engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelLost.mp3", true);
+}
+
+void LevelLostState::OnEnter()
+{
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDeath.wav", true);
+}
+
+void LevelLostState::OnExit()
+{
+	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+}
+#pragma endregion LevelLostState
+
+#pragma region GameOverState
+GameStateInterface* GameOverState::HandleInput()
+{
+	return nullptr;
+}
+
+void GameOverState::Update()
+{
+
+}
+
+void GameOverState::OnEnter()
+{
+	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
+	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Game over"].get();
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/GameOver.mp3", true);
+}
+
+void GameOverState::OnExit()
+{
+
+}
+#pragma endregion GameOverState
+
+#pragma region ControlsMenuState
 GameStateInterface* ControlsMenuState::HandleInput()
 {
-	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_X))
+	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_RETURN))
 	{
 		return new StartMenuState();
 	}
@@ -151,4 +213,4 @@ void ControlsMenuState::OnExit()
 {
 		
 }
-#pragma endregion ControlsMenu
+#pragma endregion ControlsMenuState

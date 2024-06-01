@@ -63,6 +63,28 @@ namespace engine
 		const float m_Speed;
 	};
 
+	class SnapToInputCommand final : public GameObjectInputCommand
+	{
+	public:
+		SnapToInputCommand(GameObject* go, const glm::vec3 pos) : GameObjectInputCommand(go),
+			m_Position(pos) {};
+
+		virtual ~SnapToInputCommand() = default;
+
+		SnapToInputCommand(const SnapToInputCommand& other) = delete;
+		SnapToInputCommand& operator=(const SnapToInputCommand& other) = delete;
+		SnapToInputCommand(SnapToInputCommand&& other) = delete;
+		SnapToInputCommand& operator=(SnapToInputCommand&& other) = delete;
+
+		virtual void Execute() override
+		{
+			GetGameObject()->SetLocalPosition(m_Position);
+		};
+
+	private:
+		const glm::vec3 m_Position;
+	};
+
 	class AlterVolumeCommand final : public InputCommand
 	{
 	public:

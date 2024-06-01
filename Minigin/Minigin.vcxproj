@@ -193,7 +193,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />
@@ -221,7 +220,6 @@
     <ClInclude Include="UILinkingComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />

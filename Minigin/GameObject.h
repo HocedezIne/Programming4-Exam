@@ -17,8 +17,9 @@ namespace engine
 		bool IsMarkedForDeletion() const { return m_DeleteFlag; };
 		void HandleDeletion();
 
-		void SetLocalPosition(const glm::vec3 pos) { m_LocalPosition = pos; SetPositionDirty(); };
+		void SetLocalPosition(const glm::vec3 pos);
 		const glm::vec3 GetLocalPosition() const { return m_LocalPosition; };
+		const glm::vec3 GetPreviousLocalPosition() const { return m_PrevLocalPosition; };
 		const glm::vec3 GetWorldPosition();
 		void UpdateWorldPosition();
 
@@ -93,6 +94,7 @@ namespace engine
 		GameObject* m_Parent{ nullptr };
 
 		glm::vec3 m_LocalPosition{};
+		glm::vec3 m_PrevLocalPosition{};
 		glm::vec3 m_WorldPosition{};
 
 		bool m_DeleteFlag{ false };

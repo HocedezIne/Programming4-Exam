@@ -11,6 +11,9 @@
     <Filter Include="States">
       <UniqueIdentifier>{1c6747f5-17ec-4064-89b9-3981786efe51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CollisionSystem">
+      <UniqueIdentifier>{1f3118fa-a399-4883-aed3-bbe10ac3c895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
@@ -22,6 +25,12 @@
     <ClCompile Include="GameStateManagingComponent.h">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>CollisionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>CollisionSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanCommands.h">
@@ -32,6 +41,12 @@
     </ClInclude>
     <ClInclude Include="StateManager.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.h">
+      <Filter>CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>CollisionSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

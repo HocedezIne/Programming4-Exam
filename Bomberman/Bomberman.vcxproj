@@ -164,11 +164,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp" />
+    <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="GameStateManagingComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombermanCommands.h" />
+    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="StateManager.h" />
   </ItemGroup>

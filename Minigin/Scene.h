@@ -1,7 +1,6 @@
 #pragma once
 #include "SceneManager.h"
 #include "GameObject.h"
-#include "ColliderComponent.h"
 
 namespace engine
 {
@@ -9,7 +8,7 @@ namespace engine
 	{
 		friend Scene& sceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(std::string name, std::unique_ptr<GameObject> object, bool isCollidable = false);
+		void Add(std::string name, std::unique_ptr<GameObject> object);
 		void Remove(std::string& name);
 		GameObject* GetObject(std::string name) const;
 		void RemoveAll();
@@ -30,8 +29,6 @@ namespace engine
 
 		std::string m_Name;
 		std::vector< std::pair<std::string, std::unique_ptr<GameObject>> > m_Objects{};
-
-		std::vector <ColliderComponent*> m_CollidableObjects{};
 
 		static unsigned int m_IdCounter; 
 	};

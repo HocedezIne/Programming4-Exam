@@ -84,4 +84,11 @@ namespace engine
 		m_Parent = parent;
 		if (m_Parent) m_Parent->AttachChild(this);
 	}
+
+	void GameObject::SetLocalPosition(const glm::vec3 pos)
+	{
+		m_PrevLocalPosition = m_LocalPosition;
+		m_LocalPosition = pos;
+		m_PositionFlag = true;
+	}
 }
