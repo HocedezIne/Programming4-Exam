@@ -34,7 +34,7 @@ namespace engine
 		switch (event)
 		{
 		case Event::PlayerDied:
-			UpdateData("LIVES", std::any_cast<int>(GetData("LIVES")) - 1);
+			UpdateData("LEFT", std::any_cast<int>(GetData("LEFT")) - 1);
 			break;
 		case Event::EnemyDied:
 			UpdateData("SCORE", std::any_cast<int>(GetData("SCORE")) + std::any_cast<int>(args));

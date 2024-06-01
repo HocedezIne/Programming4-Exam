@@ -21,6 +21,8 @@ namespace collisionSystem
 			switch (otherCollider->m_CollisionType)
 			{
 			case CollisionType::Enemy:
+			case CollisionType::Explosion:
+				currCollider->GetOwner()->DoesUpdate(false);
 				NotifyObservers(engine::Event::PlayerDied, nullptr, std::any{});
 				break;
 
@@ -30,11 +32,22 @@ namespace collisionSystem
 
 			case CollisionType::Block:
 				PlayerBlockResolve(currCollider, otherCollider);
+				break;
 
 			default:
 				break;
 			}
 				
+			break;
+
+		case CollisionType::Enemy:
+			// TODO
+			break;
+
+		case CollisionType::Explosion:
+			// if overlapping with wall/block -> delete obj
+			// if overlapping with breakable block -> delete that block
+			// if overlapping with enenmy -> enemyDied event -> delete enemy
 			break;
 
 		default:

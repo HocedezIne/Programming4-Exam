@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BombController.cpp" />
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
@@ -170,10 +171,12 @@
     <ClCompile Include="GameStateManagingComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BombermanCommands.h" />
+    <ClInclude Include="BombCommand.h" />
+    <ClInclude Include="BombController.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="GameStates.h" />
+    <ClInclude Include="RespawnBombermanCommand.h" />
     <ClInclude Include="StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

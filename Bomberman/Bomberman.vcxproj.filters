@@ -31,9 +31,12 @@
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>CollisionSystem</Filter>
     </ClCompile>
+    <ClCompile Include="BombController.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BombermanCommands.h">
+    <ClInclude Include="BombCommand.h">
       <Filter>Engine Extensions</Filter>
     </ClInclude>
     <ClInclude Include="GameStates.h">
@@ -47,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="ColliderComponent.h">
       <Filter>CollisionSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnBombermanCommand.h">
+      <Filter>Engine Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="BombController.h">
+      <Filter>Game Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

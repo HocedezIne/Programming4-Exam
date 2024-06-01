@@ -10,6 +10,7 @@ namespace engine
 	class GameObject final
 	{
 	public:
+		void DoesUpdate(bool value) { m_UpdateFlag = value; };
 		virtual void Update();
 		virtual void Render() const;
 
@@ -24,6 +25,7 @@ namespace engine
 		void UpdateWorldPosition();
 
 		void SetParent(GameObject* parent, bool keepWorldPosition);
+		std::vector<GameObject*> GetChildren() { return m_Children; };
 
 		template<typename T>
 		void AddComponent(std::unique_ptr<T> comp)
@@ -99,5 +101,6 @@ namespace engine
 
 		bool m_DeleteFlag{ false };
 		bool m_PositionFlag{ false };
+		bool m_UpdateFlag{ true };
 	};
 }

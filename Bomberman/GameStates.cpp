@@ -1,6 +1,7 @@
 #include "GameStates.h"
 #include "InputCommandLinker.h"
-#include "BombermanCommands.h"
+#include "BombCommand.h"
+#include "RespawnBombermanCommand.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ServiceLocator.h"
@@ -73,11 +74,15 @@ void LevelState::OnEnter()
 	auto obj = engine::sceneManager::currentScene->GetObject("player1");
 	if (obj != nullptr)
 	{
+		// reset player
+		obj->SetLocalPosition(glm::vec3{ 16, 112, 0.f });
+		obj->DoesUpdate(true);
+
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ -1.f,0.f,0.f }, 50.f));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,1.f,0.f }, 50.f));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 1.f,0.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj, 16));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(obj));
 	}
 }
@@ -139,7 +144,7 @@ void LevelLoadingState::OnExit()
 GameStateInterface* LevelLostState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		if (std::any_cast<int>(engine::sceneManager::currentScene->GetObject("player1")->GetComponent<engine::StatusComponent>()->GetData("LIVES")) > 0)
+		if (std::any_cast<int>(engine::sceneManager::currentScene->GetObject("player1")->GetComponent<engine::StatusComponent>()->GetData("LEFT")) > 0)
 			return new LevelLoadingState();
 		else
 			return new GameOverState();

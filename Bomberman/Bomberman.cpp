@@ -12,12 +12,12 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "InputCommandLinker.h"
-#include "BombermanCommands.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "ServiceLocator.h"
 #include "SoundSystemService.h"
 #include "GameStateManagingComponent.h"
+#include "CollisionSystem.h"
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
@@ -119,7 +119,7 @@ void load()
 #endif
 
 #pragma region Level
-	auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{0.f, 100.f,0.f});
+	auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{0.f, 96.f,0.f});
 	lvlbg->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(lvlbg.get(), "playfield.png"));
 	
 	// outer bounds
@@ -187,15 +187,18 @@ void load()
 	auto sc = std::make_unique<engine::StatusComponent>(go.get());
 	sc->AddDataMapping("LEFT", 3);
 	sc->AddDataMapping("SCORE", 0);
+	collisionSystem::collisionHandler.AddObserver(sc.get());
 
 	auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 	goUI->AddComponent<engine::UILinkingComponent>(std::make_unique<engine::UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
+	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<engine::UILinkingComponent>());
 	LevelScene.Add("player1 lives", std::move(goUI));
 
 	goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 	goUI->AddComponent<engine::UILinkingComponent>(std::make_unique<engine::UILinkingComponent>(goUI.get(), "SCORE", sc.get(), engine::StringFormat{ 2, '0', false }));
+	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<engine::UILinkingComponent>());
 	LevelScene.Add("player1 score", std::move(goUI));
 
 	go->AddComponent(std::move(sc));

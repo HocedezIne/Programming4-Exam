@@ -4,7 +4,7 @@ namespace engine
 {
 	void GameObject::Update()
 	{
-		for (const auto& comp : m_UpdatableComponents) comp->Update();
+		if(m_UpdateFlag) for (const auto& comp : m_UpdatableComponents) comp->Update();
 	}
 
 	void GameObject::Render() const

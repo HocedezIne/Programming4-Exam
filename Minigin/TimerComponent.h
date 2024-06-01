@@ -9,7 +9,7 @@ namespace engine
 	class TimerComponent : public Component, public IUpdatable, public Subject
 	{
 	public:
-		TimerComponent(GameObject* owner, int duration, bool visualizeTimer = false);
+		TimerComponent(GameObject* owner, int durationInSeconds, bool visualizeTimer = false);
 		~TimerComponent() = default;
 		TimerComponent(const TimerComponent& other) = delete;
 		TimerComponent(TimerComponent&& other) = delete;
