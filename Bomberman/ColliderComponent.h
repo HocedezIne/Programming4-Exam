@@ -11,6 +11,7 @@ enum class CollisionType
 	Wall,
 	Block,
 	Explosion,
+	Destructable,
 	PowerUp
 };
 

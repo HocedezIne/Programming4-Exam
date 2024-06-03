@@ -42,7 +42,7 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 					auto go = std::make_unique<engine::GameObject>(pos);
 					go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "explosion " + textureDirection + ".png"));
 					go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-						go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Explosion));
+						go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Explosion));
 					go->SetParent(obj, false);
 					engine::sceneManager::currentScene->Add("explosion " + std::to_string(idx) + "." + std::to_string(direction), std::move(go));
 				}

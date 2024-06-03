@@ -211,6 +211,12 @@ void load()
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
 	LevelScene.Add("balloom", std::move(go));
 
+	go = std::make_unique<engine::GameObject>(glm::vec3(bgPos.x + 16 * 6, bgPos.y + 16 * 3, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "destructible.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
+	LevelScene.Add("destructible", std::move(go));
+
 	auto& generalScene = engine::sceneManager::CreateScene("");
 	auto gameStateHolder = std::make_unique<engine::GameObject>();
 	gameStateHolder->AddComponent(std::make_unique<GameStateManagingComponent>(gameStateHolder.get()));

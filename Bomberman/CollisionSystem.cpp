@@ -31,6 +31,7 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Block:
+			case CollisionType::Destructable:
 				PlayerBlockResolve(currCollider, otherCollider);
 				break;
 
@@ -41,13 +42,35 @@ namespace collisionSystem
 			break;
 
 		case CollisionType::Enemy:
-			// TODO
+
+			switch (otherCollider->m_CollisionType)
+			{
+			case CollisionType::Explosion:
+				currCollider->GetOwner()->DoesUpdate(false);
+				NotifyObservers(engine::Event::EnemyDied, nullptr, 200);
+				otherCollider->GetOwner()->MarkDeletion();
+				break;
+			}
+
 			break;
 
 		case CollisionType::Explosion:
 			// if overlapping with wall/block -> delete obj
 			// if overlapping with breakable block -> delete that block
 			// if overlapping with enenmy -> enemyDied event -> delete enemy
+
+			switch (otherCollider->m_CollisionType)
+			{
+			case CollisionType::Wall:
+			case CollisionType::Block:
+				currCollider->GetOwner()->MarkDeletion();
+				break;
+
+			case CollisionType::Destructable:
+				otherCollider->GetOwner()->MarkDeletion();
+				break;
+			}
+
 			break;
 
 		default:
