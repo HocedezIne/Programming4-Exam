@@ -15,12 +15,13 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 	switch (event)
 	{
 	case engine::Event::TimerFinished: {
-		engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanExplosion.wav", false);
 		auto obj = static_cast<engine::GameObject*>(caller);
 		
 		if (obj->GetChildren().empty())
 		{
-			obj->GetComponent<engine::TextureComponent>()->SetTexture("balloom.png");
+			engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanExplosion.wav", false);
+
+			obj->GetComponent<engine::TextureComponent>()->SetTexture("explosion center.png");
 			obj->GetComponent<engine::TimerComponent>()->Reset();
 
 			// create explosion
@@ -32,13 +33,14 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 					switch (direction)
 					{
 					case 0: pos = glm::vec3{ m_GridSize * idx, 0, 0 }; break;
-					case 1: pos = glm::vec3{ -m_GridSize * idx, 0, 0 }; break;
-					case 2: pos = glm::vec3{ 0, m_GridSize * idx, 0 }; break;
+					case 1: pos = glm::vec3{ 0, m_GridSize * idx, 0 }; break;
+					case 2: pos = glm::vec3{ -m_GridSize * idx, 0, 0 }; break;
 					case 3: pos = glm::vec3{ 0, -m_GridSize * idx, 0 }; break;
 					}
 
+					std::string textureDirection = (direction % 2 == 0) ? "horizontal" : "vertical";
 					auto go = std::make_unique<engine::GameObject>(pos);
-					go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "balloom.png"));
+					go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "explosion " + textureDirection + ".png"));
 					go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 						go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Explosion));
 					go->SetParent(obj, false);
@@ -48,12 +50,7 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 		}
 		else
 		{
-			for (auto child : obj->GetChildren())
-			{
-				child->MarkDeletion();
-			}
 			obj->MarkDeletion();
-
 			--m_LiveBombs;
 		}
 		

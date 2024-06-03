@@ -61,7 +61,19 @@ void Scene::HandleDeletion()
 	auto it = m_Objects.begin();
 	while (it != m_Objects.end())
 	{
-		if ((*it).second->IsMarkedForDeletion()) it = m_Objects.erase(it);
+		if ((*it).second->IsMarkedForDeletion())
+		{
+			if (!(*it).second->GetChildren().empty())
+			{
+				for (auto& child : (*it).second->GetChildren())
+				{
+					child->SetParent(nullptr, true);
+					child->MarkDeletion();
+				}
+			}
+			(*it).second->SetParent(nullptr, true);
+			it = m_Objects.erase(it);
+		}
 		else
 		{
 			(*it).second->HandleDeletion();
