@@ -18,6 +18,7 @@
 #include "SoundSystemService.h"
 #include "GameStateManagingComponent.h"
 #include "CollisionSystem.h"
+#include "EnemyController.h"
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
@@ -188,6 +189,7 @@ void load()
 	sc->AddDataMapping("LEFT", 3);
 	sc->AddDataMapping("SCORE", 0);
 	collisionSystem::collisionHandler.AddObserver(sc.get());
+	enemyController::EnemyController::GetInstance().AddObserver(sc.get());
 
 	auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
@@ -198,18 +200,14 @@ void load()
 	goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 	goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "SCORE", sc.get(), StringFormat{ 2, '0', false }));
-	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
+	enemyController::EnemyController::GetInstance().AddObserver(goUI->GetComponent<UILinkingComponent>());
 	LevelScene.Add("player1 score", std::move(goUI));
 
-	go->AddComponent(std::move(sc));
+	go->AddComponent<StatusComponent>(std::move(sc));
 	LevelScene.Add("player1", std::move(go));
 #pragma endregion playerBomberman
 
-	go = std::make_unique<engine::GameObject>(glm::vec3(bgPos.x + 16*13, bgPos.y + 16*7, 0.f));
-	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "balloom.png"));
-	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
-	LevelScene.Add("balloom", std::move(go));
+	enemyController::EnemyController::GetInstance().AddBalloomEnemy(13, 7, bgPos);
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(bgPos.x + 16 * 6, bgPos.y + 16 * 3, 0.f));
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "destructible.png"));

@@ -7,7 +7,7 @@
 class BombController : public engine::Singleton<BombController>, public engine::Observer
 {
 public:
-	virtual void OnNotify(engine::Event event, void* caller, const std::any& args);
+	virtual void OnNotify(engine::Event event, void* caller, const std::any& args) override;
 
 	void AddBomb(const glm::vec3 pos);
 

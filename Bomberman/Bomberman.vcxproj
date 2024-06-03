@@ -167,6 +167,7 @@
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="GameStateManagingComponent.h" />
     <ClCompile Include="StatusComponent.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="BombController.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="EnemyController.h" />
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
     <ClInclude Include="StateManager.h" />

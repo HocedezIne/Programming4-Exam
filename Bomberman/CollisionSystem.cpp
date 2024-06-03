@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "StatusComponent.h"
+#include "EnemyController.h"
 
 namespace collisionSystem
 {
@@ -46,9 +48,7 @@ namespace collisionSystem
 			switch (otherCollider->m_CollisionType)
 			{
 			case CollisionType::Explosion:
-				currCollider->GetOwner()->DoesUpdate(false);
-				NotifyObservers(engine::Event::EnemyDied, nullptr, 200);
-				otherCollider->GetOwner()->MarkDeletion();
+				enemyController::EnemyController::GetInstance().KillEnemy(currCollider->GetOwner());
 				break;
 			}
 

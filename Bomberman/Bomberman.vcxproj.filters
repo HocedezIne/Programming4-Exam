@@ -46,6 +46,9 @@
     <ClCompile Include="UILinkingComponent.cpp">
       <Filter>Engine Extensions\Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyController.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameStates.h">
@@ -74,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="UILinkingComponent.h">
       <Filter>Engine Extensions\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyController.h">
+      <Filter>Game Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
