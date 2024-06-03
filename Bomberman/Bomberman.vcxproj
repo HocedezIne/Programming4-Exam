@@ -169,6 +169,8 @@
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="GameStateManagingComponent.h" />
+    <ClCompile Include="StatusComponent.cpp" />
+    <ClCompile Include="UILinkingComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BombCommand.h" />
@@ -178,6 +180,8 @@
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="StatusComponent.h" />
+    <ClInclude Include="UILinkingComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -184,21 +184,21 @@ void load()
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(), 
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 	
-	auto sc = std::make_unique<engine::StatusComponent>(go.get());
+	auto sc = std::make_unique<StatusComponent>(go.get());
 	sc->AddDataMapping("LEFT", 3);
 	sc->AddDataMapping("SCORE", 0);
 	collisionSystem::collisionHandler.AddObserver(sc.get());
 
 	auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
-	goUI->AddComponent<engine::UILinkingComponent>(std::make_unique<engine::UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
-	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<engine::UILinkingComponent>());
+	goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
+	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
 	LevelScene.Add("player1 lives", std::move(goUI));
 
 	goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 20.f, 0.f));
 	goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
-	goUI->AddComponent<engine::UILinkingComponent>(std::make_unique<engine::UILinkingComponent>(goUI.get(), "SCORE", sc.get(), engine::StringFormat{ 2, '0', false }));
-	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<engine::UILinkingComponent>());
+	goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "SCORE", sc.get(), StringFormat{ 2, '0', false }));
+	collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
 	LevelScene.Add("player1 score", std::move(goUI));
 
 	go->AddComponent(std::move(sc));

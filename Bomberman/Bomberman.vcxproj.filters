@@ -14,6 +14,12 @@
     <Filter Include="CollisionSystem">
       <UniqueIdentifier>{1f3118fa-a399-4883-aed3-bbe10ac3c895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Extensions\Components">
+      <UniqueIdentifier>{ce07c2d5-4a3f-499a-89cb-ce26ac612100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Extensions\Commands">
+      <UniqueIdentifier>{02cc4b01-0379-43ac-b5b0-651f5100cb5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
@@ -34,11 +40,14 @@
     <ClCompile Include="BombController.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
+    <ClCompile Include="StatusComponent.cpp">
+      <Filter>Engine Extensions\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UILinkingComponent.cpp">
+      <Filter>Engine Extensions\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BombCommand.h">
-      <Filter>Engine Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="GameStates.h">
       <Filter>States</Filter>
     </ClInclude>
@@ -51,11 +60,20 @@
     <ClInclude Include="ColliderComponent.h">
       <Filter>CollisionSystem</Filter>
     </ClInclude>
-    <ClInclude Include="RespawnBombermanCommand.h">
-      <Filter>Engine Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="BombController.h">
       <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnBombermanCommand.h">
+      <Filter>Engine Extensions\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="BombCommand.h">
+      <Filter>Engine Extensions\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusComponent.h">
+      <Filter>Engine Extensions\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UILinkingComponent.h">
+      <Filter>Engine Extensions\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

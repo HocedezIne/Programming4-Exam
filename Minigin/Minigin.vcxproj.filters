@@ -90,9 +90,6 @@
     <ClInclude Include="Observer.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="UILinkingComponent.h">
-      <Filter>Object Files\Components\Component Subclasses</Filter>
-    </ClInclude>
     <ClInclude Include="TimerComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
@@ -107,9 +104,6 @@
     </ClInclude>
     <ClInclude Include="ThreadSafeQueue.h">
       <Filter>Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="StatusComponent.h">
-      <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +152,6 @@
     <ClCompile Include="Observer.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="UILinkingComponent.cpp">
-      <Filter>Object Files\Components\Component Subclasses</Filter>
-    </ClCompile>
     <ClCompile Include="TimerComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
@@ -172,9 +163,6 @@
     </ClCompile>
     <ClCompile Include="SoundSystemService.cpp">
       <Filter>Helpers\Services</Filter>
-    </ClCompile>
-    <ClCompile Include="StatusComponent.cpp">
-      <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
