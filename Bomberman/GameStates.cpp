@@ -52,7 +52,7 @@ void StartMenuState::OnExit()
 GameStateInterface* LevelState::HandleInput()
 {
 	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_F1) || m_Won)
-		return new LevelLoadingState();
+		return new LevelWonState();
 	if (m_Lost)
 		return new LevelLostState();
 
@@ -166,7 +166,7 @@ void LevelLostState::Update()
 
 void LevelLostState::OnEnter()
 {
-	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDeath.wav", true);
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDeath.wav", false);
 }
 
 void LevelLostState::OnExit()
@@ -174,6 +174,31 @@ void LevelLostState::OnExit()
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
 }
 #pragma endregion LevelLostState
+
+#pragma region LevelWonState
+GameStateInterface* LevelWonState::HandleInput()
+{
+	if (m_TimeToStateSwitch <= 0.f)
+		return new LevelLoadingState();
+
+	return nullptr;
+}
+
+void LevelWonState::Update()
+{
+	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+}
+
+void LevelWonState::OnEnter()
+{
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelFinished.mp3", true);
+}
+
+void LevelWonState::OnExit()
+{
+	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+}
+#pragma endregion LevelWonState
 
 #pragma region GameOverState
 GameStateInterface* GameOverState::HandleInput()

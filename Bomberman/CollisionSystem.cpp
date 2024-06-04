@@ -39,6 +39,7 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Door:
+				currCollider->GetOwner()->DoesUpdate(false);
 				NotifyObservers(engine::Event::PlayerOnExit, nullptr, std::any{});
 
 			default:
@@ -72,9 +73,12 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Door:
-				otherCollider->GetOwner()->GetComponent<StatusComponent>()->UpdateData("BLOCKED", false);
-				if(enemyController::EnemyController::GetInstance().GetCount() == 0)
+				bool blocked = std::any_cast<bool>(otherCollider->GetOwner()->GetComponent<StatusComponent>()->GetData("BLOCKED"));
+				if (enemyController::EnemyController::GetInstance().GetCount() == 0 && blocked)
+				{
 					engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);
+					otherCollider->GetOwner()->GetComponent<StatusComponent>()->UpdateData("BLOCKED", false);
+				}
 				break;
 			}
 

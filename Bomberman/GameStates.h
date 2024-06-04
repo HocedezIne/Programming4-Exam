@@ -66,6 +66,18 @@ private:
 	float m_TimeToStateSwitch{ 4.f };
 };
 
+class LevelWonState : public GameStateInterface
+{
+public:
+	virtual GameStateInterface* HandleInput() override;
+	virtual void Update() override;
+	virtual void OnEnter() override;
+	virtual void OnExit() override;
+
+private:
+	float m_TimeToStateSwitch{ 3.f };
+};
+
 class ControlsMenuState : public GameStateInterface
 {
 public:
