@@ -75,7 +75,7 @@ void LevelState::OnEnter()
 	if (obj != nullptr)
 	{
 		// reset player
-		obj->SetLocalPosition(glm::vec3{ 16, 112, 0.f });
+		obj->SetLocalPosition(glm::vec3{ 16, 16, 0.f });
 		obj->DoesUpdate(true);
 
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,-1.f,0.f }, 50.f));

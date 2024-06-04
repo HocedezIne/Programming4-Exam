@@ -15,6 +15,7 @@ public:
 	RespawnBombermanCommand& operator=(RespawnBombermanCommand&& other) = delete;
 
 	virtual void Execute() override {
-		GetGameObject()->SetLocalPosition(glm::vec3{ 16, 112, 0.f });
+
+		GetGameObject()->SetLocalPosition(glm::vec3{ 16, 16, 0.f });
 	};
 };

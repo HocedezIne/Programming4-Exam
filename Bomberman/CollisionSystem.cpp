@@ -80,8 +80,8 @@ namespace collisionSystem
 
 	void CollisionHandler::PlayerBlockResolve(ColliderComponent* currCollider, ColliderComponent* otherCollider)
 	{
-		auto currPos = currCollider->GetOwner()->GetLocalPosition();
-		auto otherPos = otherCollider->GetOwner()->GetLocalPosition();
+		auto currPos = currCollider->GetOwner()->GetWorldPosition();
+		auto otherPos = otherCollider->GetOwner()->GetWorldPosition();
 		glm::vec3 movement{};
 		
 		if (currPos.x + currCollider->m_BoundingDimensions.x > otherPos.x ||
@@ -98,7 +98,8 @@ namespace collisionSystem
 			else movement.y = otherPos.y + otherCollider->m_BoundingDimensions.y - currPos.y;
 		}
 		
-		currCollider->GetOwner()->SetLocalPosition(currPos + movement);
+		auto localPos = currCollider->GetOwner()->GetLocalPosition();
+		currCollider->GetOwner()->SetLocalPosition(localPos + movement);
 	}
 
 	void CollisionHandler::PlayerWallResolve(ColliderComponent* currCollider)

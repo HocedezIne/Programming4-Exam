@@ -11,11 +11,12 @@
 
 namespace enemyController
 {
-	void EnemyController::AddBalloomEnemy(int column, int row, glm::vec3 levelPosition)
+	void EnemyController::AddBalloomEnemy(int column, int row)
 	{
 		auto levelScene = engine::sceneManager::sceneMap["Demo level"].get();
+		auto levelBg = levelScene->GetObject("bg");
 
-		auto go = std::make_unique<engine::GameObject>(glm::vec3(levelPosition.x + 16 * column, levelPosition.y + 16 * row, 0.f));
+		auto go = std::make_unique<engine::GameObject>(glm::vec3(16 * column, 16 * row, 0.f));
 		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "balloom.png"));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
@@ -24,8 +25,9 @@ namespace enemyController
 		sc->AddDataMapping("POINTS", 100);
 		go->AddComponent<StatusComponent>(std::move(sc));
 
+		go->SetParent(levelBg, false);
 		levelScene->Add("balloom " + std::to_string(m_Count), std::move(go));
-		
+
 		++m_Count;
 	}
 
