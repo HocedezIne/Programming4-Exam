@@ -9,6 +9,7 @@
 #include "Renderer.h"
 #include "TimeService.h"
 #include "StatusComponent.h"
+#include "EnemyController.h"
 
 #pragma region StartMenuState
 GameStateInterface* StartMenuState::HandleInput()
@@ -50,9 +51,9 @@ void StartMenuState::OnExit()
 #pragma region LevelState
 GameStateInterface* LevelState::HandleInput()
 {
-	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_F1))
+	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_F1) || m_Won)
 		return new LevelLoadingState();
-	if (m_PlayerDied)
+	if (m_Lost)
 		return new LevelLostState();
 
 	return nullptr;
@@ -108,7 +109,12 @@ void LevelState::OnNotify(engine::Event event, void* /*caller*/, const std::any&
 {
 	if (event == engine::Event::PlayerDied)
 	{
-		m_PlayerDied = true;
+		m_Lost = true;
+	}
+	if (event == engine::Event::PlayerOnExit)
+	{
+		if (enemyController::EnemyController::GetInstance().GetCount() == 0)
+			m_Won = true;
 	}
 }
 #pragma endregion LevelState

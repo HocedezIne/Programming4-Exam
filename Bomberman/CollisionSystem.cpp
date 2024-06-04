@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "ServiceLocator.h"
 #include "GameObject.h"
 #include "StatusComponent.h"
 #include "EnemyController.h"
@@ -37,6 +38,9 @@ namespace collisionSystem
 				PlayerBlockResolve(currCollider, otherCollider);
 				break;
 
+			case CollisionType::Door:
+				NotifyObservers(engine::Event::PlayerOnExit, nullptr, std::any{});
+
 			default:
 				break;
 			}
@@ -55,9 +59,6 @@ namespace collisionSystem
 			break;
 
 		case CollisionType::Explosion:
-			// if overlapping with wall/block -> delete obj
-			// if overlapping with breakable block -> delete that block
-			// if overlapping with enenmy -> enemyDied event -> delete enemy
 
 			switch (otherCollider->m_CollisionType)
 			{
@@ -68,6 +69,12 @@ namespace collisionSystem
 
 			case CollisionType::Destructable:
 				otherCollider->GetOwner()->MarkDeletion();
+				break;
+
+			case CollisionType::Door:
+				otherCollider->GetOwner()->GetComponent<StatusComponent>()->UpdateData("BLOCKED", false);
+				if(enemyController::EnemyController::GetInstance().GetCount() == 0)
+					engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);
 				break;
 			}
 

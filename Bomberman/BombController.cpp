@@ -67,6 +67,8 @@ void BombController::AddBomb(const glm::vec3 pos)
 	{
 		++m_LiveBombs;
 
+		engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDropsBomb.wav", false);
+
 		// create bomb
 		auto scene = engine::sceneManager::currentScene;
 		auto bombwrapper = std::make_unique<engine::GameObject>();

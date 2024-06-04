@@ -50,7 +50,8 @@ public:
 	virtual void OnNotify(engine::Event event, void* caller, const std::any& args) override;
 
 private:
-	bool m_PlayerDied{ false };
+	bool m_Lost{ false };
+	bool m_Won{ false };
 };
 
 class LevelLostState : public GameStateInterface

@@ -12,6 +12,8 @@ namespace enemyController
 		void AddBalloomEnemy(int column, int row);
 		void KillEnemy(engine::GameObject* enemy);
 
+		int GetCount() const { return m_Count; };
+
 	private:
 		int m_Count{};
 	};

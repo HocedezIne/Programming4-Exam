@@ -12,7 +12,8 @@ enum class CollisionType
 	Block,
 	Explosion,
 	Destructable,
-	PowerUp
+	Door,
+	PowerUp,
 };
 
 namespace collisionSystem {

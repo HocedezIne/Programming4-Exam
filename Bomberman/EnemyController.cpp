@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "CollisionSystem.h"
+#include "ServiceLocator.h"
 
 #include "GameObject.h"
 #include "TextureComponent.h"
@@ -39,5 +40,13 @@ namespace enemyController
 			enemy->GetComponent<StatusComponent>()->GetData("POINTS"));
 
 		enemy->MarkDeletion();
+
+		if (m_Count == 0)
+		{
+			auto data = engine::sceneManager::sceneMap["Demo level"].get()->GetObject("door")->GetComponent<StatusComponent>()->GetData("BLOCKED");
+			auto result = std::any_cast<bool>(data);
+			if(result == false)
+				engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);
+		}
 	}
 }

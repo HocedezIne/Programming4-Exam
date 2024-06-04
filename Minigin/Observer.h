@@ -8,7 +8,8 @@ namespace engine
 	{
 		PlayerDied,
 		EnemyDied,
-		TimerFinished
+		TimerFinished,
+		PlayerOnExit
 	};
 
 	class Subject;
