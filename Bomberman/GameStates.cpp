@@ -8,7 +8,7 @@
 #include "CollisionSystem.h"
 #include "Renderer.h"
 #include "TimeService.h"
-#include "StatusComponent.h"
+#include "DataComponent.h"
 #include "EnemyController.h"
 #include "TextComponent.h"
 #include "GameObject.h"
@@ -119,7 +119,7 @@ void LevelState::OnNotify(engine::Event event, void* caller, const std::any& /*a
 	if (event == engine::Event::PlayerOnExit)
 	{
 		auto door = static_cast<engine::GameObject*>(caller);
-		auto isDoorBlocked = std::any_cast<bool>(door->GetComponent<StatusComponent>()->GetData("BLOCKED"));
+		auto isDoorBlocked = std::any_cast<bool>(door->GetComponent<DataComponent>()->GetData("BLOCKED"));
 		if (enemyController::EnemyController::GetInstance().GetCount() == 0 && !isDoorBlocked)
 			m_Won = true;
 	}
@@ -161,7 +161,7 @@ void LevelLoadingState::OnExit()
 GameStateInterface* LevelLostState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		if (std::any_cast<int>(engine::sceneManager::currentScene->GetObject("player1")->GetComponent<StatusComponent>()->GetData("LEFT")) > 0)
+		if (std::any_cast<int>(engine::sceneManager::currentScene->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
 			return new LevelLoadingState();
 		else
 			return new GameOverState();

@@ -5,7 +5,7 @@
 #include "TextComponent.h"
 #include "Observer.h"
 
-class StatusComponent;
+class DataComponent;
 
 struct StringFormat {
 	int width{ 1 };
@@ -16,7 +16,7 @@ struct StringFormat {
 class UILinkingComponent : public engine::Component, public engine::IUpdatable, public engine::Observer
 {
 public:
-	UILinkingComponent(engine::GameObject* owner, std::string base, StatusComponent* sc, StringFormat format = {});
+	UILinkingComponent(engine::GameObject* owner, std::string base, DataComponent* sc, StringFormat format = {});
 	~UILinkingComponent() = default;
 	UILinkingComponent(const UILinkingComponent& other) = delete;
 	UILinkingComponent(UILinkingComponent&& other) = delete;
@@ -30,7 +30,7 @@ private:
 	std::string m_Base;
 
 	engine::TextComponent* m_TextComp;
-	StatusComponent* m_StatusComp;
+	DataComponent* m_StatusComp;
 
 	StringFormat m_Format;
 

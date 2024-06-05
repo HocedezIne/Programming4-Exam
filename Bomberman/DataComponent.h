@@ -6,15 +6,15 @@
 #include "Component.h"
 #include "Observer.h"
 
-class StatusComponent : public engine::Component, public engine::Observer
+class DataComponent : public engine::Component, public engine::Observer
 {
 public:
-	StatusComponent(engine::GameObject* owner) : engine::Component(owner) {};
-	~StatusComponent() = default;
-	StatusComponent(const StatusComponent& other) = delete;
-	StatusComponent(StatusComponent&& other) = delete;
-	StatusComponent& operator=(const StatusComponent& other) = delete;
-	StatusComponent& operator=(StatusComponent&& other) = delete;
+	DataComponent(engine::GameObject* owner) : engine::Component(owner) {};
+	~DataComponent() = default;
+	DataComponent(const DataComponent& other) = delete;
+	DataComponent(DataComponent&& other) = delete;
+	DataComponent& operator=(const DataComponent& other) = delete;
+	DataComponent& operator=(DataComponent&& other) = delete;
 
 	void AddDataMapping(const std::string& keyword, std::any value);
 	std::any GetData(const std::string& keyword) const;

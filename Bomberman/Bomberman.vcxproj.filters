@@ -40,7 +40,7 @@
     <ClCompile Include="BombController.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
-    <ClCompile Include="StatusComponent.cpp">
+    <ClCompile Include="DataComponent.cpp">
       <Filter>Engine Extensions\Components</Filter>
     </ClCompile>
     <ClCompile Include="UILinkingComponent.cpp">
@@ -75,7 +75,7 @@
     <ClInclude Include="BombCommand.h">
       <Filter>Engine Extensions\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="StatusComponent.h">
+    <ClInclude Include="DataComponent.h">
       <Filter>Engine Extensions\Components</Filter>
     </ClInclude>
     <ClInclude Include="UILinkingComponent.h">

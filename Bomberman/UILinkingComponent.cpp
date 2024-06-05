@@ -3,10 +3,10 @@
 #include <iomanip>
 #include <sstream>
 
-#include "StatusComponent.h"
+#include "DataComponent.h"
 #include "GameObject.h"
 
-UILinkingComponent::UILinkingComponent(engine::GameObject* owner, std::string base, StatusComponent* sc, StringFormat format) : 
+UILinkingComponent::UILinkingComponent(engine::GameObject* owner, std::string base, DataComponent* sc, StringFormat format) : 
 	engine::Component(owner),
 	m_Base(base), m_StatusComp(sc), m_Format(format)
 {

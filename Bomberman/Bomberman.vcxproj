@@ -171,7 +171,7 @@
     <ClCompile Include="EnemyStateInterface.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="StateComponent.h" />
-    <ClCompile Include="StatusComponent.cpp" />
+    <ClCompile Include="DataComponent.cpp" />
     <ClCompile Include="UILinkingComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +184,7 @@
     <ClInclude Include="EnemyStateInterface.h" />
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
-    <ClInclude Include="StatusComponent.h" />
+    <ClInclude Include="DataComponent.h" />
     <ClInclude Include="UILinkingComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

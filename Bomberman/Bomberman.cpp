@@ -24,7 +24,7 @@
 #include "TextComponent.h"
 #include "FPSComponent.h"
 #include "TimerComponent.h"
-#include "StatusComponent.h"
+#include "DataComponent.h"
 #include "UILinkingComponent.h"
 #include "ColliderComponent.h"
 
@@ -187,7 +187,7 @@ void load()
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(), 
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 	
-	auto sc = std::make_unique<StatusComponent>(go.get());
+	auto sc = std::make_unique<DataComponent>(go.get());
 	sc->AddDataMapping("LEFT", 3);
 	sc->AddDataMapping("SCORE", 0);
 	collisionSystem::collisionHandler.AddObserver(sc.get());
@@ -205,7 +205,7 @@ void load()
 	enemyController::EnemyController::GetInstance().AddObserver(goUI->GetComponent<UILinkingComponent>());
 	LevelScene.Add("player1 score", std::move(goUI));
 
-	go->AddComponent<StatusComponent>(std::move(sc));
+	go->AddComponent<DataComponent>(std::move(sc));
 	go->SetParent(bgptr, false);
 	LevelScene.Add("player1", std::move(go));
 #pragma endregion playerBomberman
@@ -223,9 +223,9 @@ void load()
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "door.png"));
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Door));
-	sc = std::make_unique<StatusComponent>(go.get());
+	sc = std::make_unique<DataComponent>(go.get());
 	sc->AddDataMapping("BLOCKED", true);
-	go->AddComponent<StatusComponent>(std::move(sc));
+	go->AddComponent<DataComponent>(std::move(sc));
 	go->SetParent(bgptr, false);
 	LevelScene.Add("door", std::move(go));
 

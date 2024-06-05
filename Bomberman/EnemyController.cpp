@@ -7,7 +7,7 @@
 
 #include "GameObject.h"
 #include "TextureComponent.h"
-#include "StatusComponent.h"
+#include "DataComponent.h"
 #include "ColliderComponent.h"
 
 #include "StateComponent.h"
@@ -26,9 +26,9 @@ namespace enemyController
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
 		go->AddComponent<StateComponent<EnemyStateInterface>>(std::make_unique<StateComponent<EnemyStateInterface>>(go.get(), new BalloomWalking(go.get())));
 
-		auto sc = std::make_unique<StatusComponent>(go.get());
+		auto sc = std::make_unique<DataComponent>(go.get());
 		sc->AddDataMapping("POINTS", 100);
-		go->AddComponent<StatusComponent>(std::move(sc));
+		go->AddComponent<DataComponent>(std::move(sc));
 
 		go->SetParent(levelBg, false);
 		levelScene->Add("balloom " + std::to_string(m_Count), std::move(go));
@@ -41,13 +41,13 @@ namespace enemyController
 		--m_Count;
 
 		NotifyObservers(engine::Event::EnemyDied, nullptr,
-			enemy->GetComponent<StatusComponent>()->GetData("POINTS"));
+			enemy->GetComponent<DataComponent>()->GetData("POINTS"));
 
 		enemy->MarkDeletion();
 
 		if (m_Count == 0)
 		{
-			auto data = engine::sceneManager::sceneMap["Demo level"].get()->GetObject("door")->GetComponent<StatusComponent>()->GetData("BLOCKED");
+			auto data = engine::sceneManager::sceneMap["Demo level"].get()->GetObject("door")->GetComponent<DataComponent>()->GetData("BLOCKED");
 			auto result = std::any_cast<bool>(data);
 			if(result == false)
 				engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);

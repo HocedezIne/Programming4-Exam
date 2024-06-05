@@ -4,7 +4,7 @@
 
 #include "ServiceLocator.h"
 #include "GameObject.h"
-#include "StatusComponent.h"
+#include "DataComponent.h"
 #include "EnemyController.h"
 
 namespace collisionSystem
@@ -76,12 +76,12 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Door:
-				bool blocked = std::any_cast<bool>(otherCollider->GetOwner()->GetComponent<StatusComponent>()->GetData("BLOCKED"));
+				bool blocked = std::any_cast<bool>(otherCollider->GetOwner()->GetComponent<DataComponent>()->GetData("BLOCKED"));
 				if (enemyController::EnemyController::GetInstance().GetCount() == 0 && blocked)
 				{
 					engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);
-					otherCollider->GetOwner()->GetComponent<StatusComponent>()->UpdateData("BLOCKED", false);
 				}
+				otherCollider->GetOwner()->GetComponent<DataComponent>()->UpdateData("BLOCKED", false);
 				break;
 			}
 
