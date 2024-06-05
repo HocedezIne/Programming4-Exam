@@ -56,7 +56,7 @@ namespace collisionSystem
 
 			case CollisionType::Wall:
 			case CollisionType::Block:
-				NotifyObservers(engine::Event::EnemyWalkedIntoWall, nullptr, std::any{});
+				NotifyObservers(engine::Event::EnemyWalkedIntoWall, currCollider->GetOwner(), std::any{});
 				break;
 			}
 

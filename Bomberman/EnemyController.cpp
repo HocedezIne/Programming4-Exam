@@ -10,6 +10,9 @@
 #include "StatusComponent.h"
 #include "ColliderComponent.h"
 
+#include "StateComponent.h"
+#include "BalloomBehaviour.h"
+
 namespace enemyController
 {
 	void EnemyController::AddBalloomEnemy(int column, int row)
@@ -21,7 +24,8 @@ namespace enemyController
 		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "balloom.png"));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
-		
+		go->AddComponent<StateComponent<EnemyStateInterface>>(std::make_unique<StateComponent<EnemyStateInterface>>(go.get(), new BalloomWalking(go.get())));
+
 		auto sc = std::make_unique<StatusComponent>(go.get());
 		sc->AddDataMapping("POINTS", 100);
 		go->AddComponent<StatusComponent>(std::move(sc));

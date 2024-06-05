@@ -16,7 +16,7 @@ protected:
 	static int m_CurrentLevel;
 };
 
-class StartMenuState : public GameStateInterface
+class StartMenuState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;
@@ -30,7 +30,7 @@ private:
 	const glm::vec3 m_Controls{ 320, 304, 0 };
 };
 
-class LevelLoadingState : public GameStateInterface
+class LevelLoadingState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;
@@ -42,7 +42,7 @@ private:
 	float m_TimeToStateSwitch{ 3.f };
 };
 
-class LevelState : public GameStateInterface, public engine::Observer
+class LevelState final : public GameStateInterface, public engine::Observer
 {
 public:
 	virtual GameStateInterface* HandleInput() override;
@@ -57,7 +57,7 @@ private:
 	bool m_Won{ false };
 };
 
-class LevelLostState : public GameStateInterface
+class LevelLostState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;
@@ -69,7 +69,7 @@ private:
 	float m_TimeToStateSwitch{ 4.f };
 };
 
-class LevelWonState : public GameStateInterface
+class LevelWonState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;
@@ -81,7 +81,7 @@ private:
 	float m_TimeToStateSwitch{ 3.f };
 };
 
-class ControlsMenuState : public GameStateInterface
+class ControlsMenuState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;
@@ -90,7 +90,7 @@ public:
 	virtual void OnExit() override;
 };
 
-class GameOverState : public GameStateInterface
+class GameOverState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;

@@ -168,17 +168,20 @@
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="EnemyController.cpp" />
+    <ClCompile Include="EnemyStateInterface.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="StateComponent.h" />
     <ClCompile Include="StatusComponent.cpp" />
     <ClCompile Include="UILinkingComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BalloomBehaviour.h" />
     <ClInclude Include="BombCommand.h" />
     <ClInclude Include="BombController.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="EnemyController.h" />
+    <ClInclude Include="EnemyStateInterface.h" />
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
     <ClInclude Include="StatusComponent.h" />
