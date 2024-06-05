@@ -169,7 +169,7 @@
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="GameStates.cpp" />
-    <ClCompile Include="GameStateManagingComponent.h" />
+    <ClCompile Include="StateComponent.h" />
     <ClCompile Include="StatusComponent.cpp" />
     <ClCompile Include="UILinkingComponent.cpp" />
   </ItemGroup>
@@ -181,7 +181,6 @@
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
-    <ClInclude Include="StateManager.h" />
     <ClInclude Include="StatusComponent.h" />
     <ClInclude Include="UILinkingComponent.h" />
   </ItemGroup>

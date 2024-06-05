@@ -10,6 +10,10 @@
 #include "TimeService.h"
 #include "StatusComponent.h"
 #include "EnemyController.h"
+#include "TextComponent.h"
+#include "GameObject.h"
+
+int GameStateInterface::m_CurrentLevel = 1;
 
 #pragma region StartMenuState
 GameStateInterface* StartMenuState::HandleInput()
@@ -105,15 +109,18 @@ void LevelState::OnExit()
 	}
 }
 
-void LevelState::OnNotify(engine::Event event, void* /*caller*/, const std::any& /*args*/)
+void LevelState::OnNotify(engine::Event event, void* caller, const std::any& /*args*/)
 {
 	if (event == engine::Event::PlayerDied)
 	{
+		engine::sceneManager::currentScene->GetObject("player1")->DoesUpdate(false);
 		m_Lost = true;
 	}
 	if (event == engine::Event::PlayerOnExit)
 	{
-		if (enemyController::EnemyController::GetInstance().GetCount() == 0)
+		auto door = static_cast<engine::GameObject*>(caller);
+		auto isDoorBlocked = std::any_cast<bool>(door->GetComponent<StatusComponent>()->GetData("BLOCKED"));
+		if (enemyController::EnemyController::GetInstance().GetCount() == 0 && !isDoorBlocked)
 			m_Won = true;
 	}
 }
@@ -136,7 +143,11 @@ void LevelLoadingState::Update()
 void LevelLoadingState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
+
 	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Level loading"].get();
+	auto text = engine::sceneManager::sceneMap["Level loading"].get()->GetObject("level text");
+	text->GetComponent<engine::TextComponent>()->SetText("STAGE " + std::to_string(m_CurrentLevel));
+
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelStart.mp3", true);
 }
 
@@ -192,6 +203,7 @@ void LevelWonState::Update()
 void LevelWonState::OnEnter()
 {
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelFinished.mp3", true);
+	++m_CurrentLevel;
 }
 
 void LevelWonState::OnExit()

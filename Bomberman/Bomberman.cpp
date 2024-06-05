@@ -16,7 +16,7 @@
 #include "Scene.h"
 #include "ServiceLocator.h"
 #include "SoundSystemService.h"
-#include "GameStateManagingComponent.h"
+#include "StateComponent.h"
 #include "CollisionSystem.h"
 #include "EnemyController.h"
 
@@ -238,7 +238,7 @@ void load()
 
 	auto& generalScene = engine::sceneManager::CreateScene("");
 	auto gameStateHolder = std::make_unique<engine::GameObject>();
-	gameStateHolder->AddComponent(std::make_unique<GameStateManagingComponent>(gameStateHolder.get()));
+	gameStateHolder->AddComponent(std::make_unique<StateComponent<GameStateInterface>>(gameStateHolder.get(), new StartMenuState()));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_M, engine::KeyState::Pressed, std::make_unique<engine::MuteVolumeCommand>());
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_COMMA, engine::KeyState::Pressed, std::make_unique<engine::AlterVolumeCommand>(-5));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_PERIOD, engine::KeyState::Pressed, std::make_unique<engine::AlterVolumeCommand>(5));

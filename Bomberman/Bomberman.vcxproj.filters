@@ -20,16 +20,16 @@
     <Filter Include="Engine Extensions\Commands">
       <UniqueIdentifier>{02cc4b01-0379-43ac-b5b0-651f5100cb5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\Game">
+      <UniqueIdentifier>{e55cacac-c39c-422f-bb43-5e8c5adb1c58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\Enemy">
+      <UniqueIdentifier>{f302f537-4a00-496e-8bbf-7a88ad1beabf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
       <Filter>Game Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStates.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateManagingComponent.h">
-      <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="ColliderComponent.cpp">
       <Filter>CollisionSystem</Filter>
@@ -49,14 +49,14 @@
     <ClCompile Include="EnemyController.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameStates.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="StateComponent.h">
+      <Filter>States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameStates.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="StateManager.h">
-      <Filter>States</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionSystem.h">
       <Filter>CollisionSystem</Filter>
     </ClInclude>
@@ -80,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="EnemyController.h">
       <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStates.h">
+      <Filter>States\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -25,7 +25,6 @@ namespace collisionSystem
 			{
 			case CollisionType::Enemy:
 			case CollisionType::Explosion:
-				currCollider->GetOwner()->DoesUpdate(false);
 				NotifyObservers(engine::Event::PlayerDied, nullptr, std::any{});
 				break;
 
@@ -39,8 +38,7 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Door:
-				currCollider->GetOwner()->DoesUpdate(false);
-				NotifyObservers(engine::Event::PlayerOnExit, nullptr, std::any{});
+				NotifyObservers(engine::Event::PlayerOnExit, otherCollider->GetOwner(), std::any{});
 
 			default:
 				break;
@@ -54,6 +52,11 @@ namespace collisionSystem
 			{
 			case CollisionType::Explosion:
 				enemyController::EnemyController::GetInstance().KillEnemy(currCollider->GetOwner());
+				break;
+
+			case CollisionType::Wall:
+			case CollisionType::Block:
+				NotifyObservers(engine::Event::EnemyWalkedIntoWall, nullptr, std::any{});
 				break;
 			}
 
