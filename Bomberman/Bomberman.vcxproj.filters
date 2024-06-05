@@ -26,6 +26,9 @@
     <Filter Include="States\Enemy">
       <UniqueIdentifier>{f302f537-4a00-496e-8bbf-7a88ad1beabf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HighscoreSaving">
+      <UniqueIdentifier>{6bd02d88-69ee-4711-9c9e-85168321a2b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="BalloomBehaviour.h">
       <Filter>States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="HighscoreData.h">
+      <Filter>HighscoreSaving</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -183,6 +183,7 @@
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="EnemyStateInterface.h" />
     <ClInclude Include="GameStates.h" />
+    <ClInclude Include="HighscoreData.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
     <ClInclude Include="DataComponent.h" />
     <ClInclude Include="UILinkingComponent.h" />

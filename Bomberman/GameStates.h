@@ -14,6 +14,7 @@ public:
 
 protected:
 	static int m_CurrentLevel;
+	static const int m_TotalLevels;
 };
 
 class StartMenuState final : public GameStateInterface
@@ -91,6 +92,30 @@ public:
 };
 
 class GameOverState final : public GameStateInterface
+{
+public:
+	virtual GameStateInterface* HandleInput() override;
+	virtual void Update() override;
+	virtual void OnEnter() override;
+	virtual void OnExit() override;
+
+private:
+	float m_TimeToStateSwitch{ 7.f };
+};
+
+class GameWonState final : public GameStateInterface
+{
+public:
+	virtual GameStateInterface* HandleInput() override;
+	virtual void Update() override;
+	virtual void OnEnter() override;
+	virtual void OnExit() override;
+
+private:
+	float m_TimeToStateSwitch{ 12.f };
+};
+
+class HighScoreState final : public GameStateInterface
 {
 public:
 	virtual GameStateInterface* HandleInput() override;

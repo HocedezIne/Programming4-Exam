@@ -28,6 +28,8 @@
 #include "UILinkingComponent.h"
 #include "ColliderComponent.h"
 
+#include "HighscoreData.h"
+
 void load()
 {
 #if NDEBUG
@@ -49,6 +51,13 @@ void load()
 	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "GAME OVER"));
 	gameOverScene.Add("game over text", std::move(text));
 #pragma endregion GameOver
+
+#pragma region GameWon
+	auto& gameWonScene = engine::sceneManager::CreateScene("Game won");
+	text = std::make_unique<engine::GameObject>(glm::vec3{ 200, 225, 0 });
+	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "GAME COMPLETE"));
+	gameWonScene.Add("game won text", std::move(text));
+#pragma endregion GameWon
 
 #pragma region StartMenu
 	auto& startScene = engine::sceneManager::CreateScene("Start menu");
@@ -73,7 +82,7 @@ void load()
 	startScene.Add("top", std::move(textLine));
 
 	auto highScore = std::make_unique<engine::GameObject>(glm::vec3{ 416, 336, 0 });
-	highScore->AddComponent(std::make_unique<engine::TextComponent>(highScore.get(), "00"));
+	highScore->AddComponent(std::make_unique<engine::TextComponent>(highScore.get(), highscoreData::GetHighscoreString() ));
 	startScene.Add("score", std::move(highScore));
 
 	textLine = std::make_unique<engine::GameObject>(glm::vec3{ 100, 368, 0 });
@@ -211,6 +220,7 @@ void load()
 #pragma endregion playerBomberman
 
 	enemyController::EnemyController::GetInstance().AddBalloomEnemy(13, 7);
+	enemyController::EnemyController::GetInstance().AddBalloomEnemy(5, 11);
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(16 * 6, 16 * 3, 0.f));
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "destructible.png"));

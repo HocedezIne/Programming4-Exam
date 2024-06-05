@@ -14,6 +14,7 @@
 #include "GameObject.h"
 
 int GameStateInterface::m_CurrentLevel = 1;
+const int GameStateInterface::m_TotalLevels = 3;
 
 #pragma region StartMenuState
 GameStateInterface* StartMenuState::HandleInput()
@@ -190,7 +191,13 @@ void LevelLostState::OnExit()
 GameStateInterface* LevelWonState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		return new LevelLoadingState();
+	{
+		if (m_CurrentLevel == (m_TotalLevels+1))
+			return new GameWonState();
+		else
+			return new LevelLoadingState();
+	}
+		
 
 	return nullptr;
 }
@@ -215,12 +222,15 @@ void LevelWonState::OnExit()
 #pragma region GameOverState
 GameStateInterface* GameOverState::HandleInput()
 {
+	if (m_TimeToStateSwitch <= 0.f)
+		return nullptr;
+
 	return nullptr;
 }
 
 void GameOverState::Update()
 {
-
+	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
 }
 
 void GameOverState::OnEnter()
@@ -235,6 +245,33 @@ void GameOverState::OnExit()
 
 }
 #pragma endregion GameOverState
+
+#pragma region GameWonState
+GameStateInterface* GameWonState::HandleInput()
+{
+	if (m_TimeToStateSwitch <= 0.f)
+		return nullptr;
+
+	return nullptr;
+}
+
+void GameWonState::Update()
+{
+	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+}
+
+void GameWonState::OnEnter()
+{
+	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
+	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Game won"].get();
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/GameWon.mp3", true);
+}
+
+void GameWonState::OnExit()
+{
+
+}
+#pragma endregion GameWonState
 
 #pragma region ControlsMenuState
 GameStateInterface* ControlsMenuState::HandleInput()
