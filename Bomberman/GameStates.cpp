@@ -223,7 +223,7 @@ void LevelWonState::OnExit()
 GameStateInterface* GameOverState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		return nullptr;
+		return new HighScoreState();
 
 	return nullptr;
 }
@@ -242,7 +242,7 @@ void GameOverState::OnEnter()
 
 void GameOverState::OnExit()
 {
-
+	engine::ServiceLocator::GetSoundSystem().StopAllSound();
 }
 #pragma endregion GameOverState
 
@@ -250,7 +250,7 @@ void GameOverState::OnExit()
 GameStateInterface* GameWonState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		return nullptr;
+		return new HighScoreState();
 
 	return nullptr;
 }
@@ -269,7 +269,7 @@ void GameWonState::OnEnter()
 
 void GameWonState::OnExit()
 {
-
+	engine::ServiceLocator::GetSoundSystem().StopAllSound();
 }
 #pragma endregion GameWonState
 
@@ -299,3 +299,33 @@ void ControlsMenuState::OnExit()
 		
 }
 #pragma endregion ControlsMenuState
+
+#pragma region HighScoreState
+GameStateInterface* HighScoreState::HandleInput()
+{
+	auto& input = engine::InputCommandLinker::GetInstance();
+
+	if (input.IsKeyDown(SDL_SCANCODE_RETURN))
+	{
+		return new StartMenuState();
+	}
+
+	return nullptr;
+}
+
+void HighScoreState::Update()
+{
+
+}
+
+void HighScoreState::OnEnter()
+{
+	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
+	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Highscore menu"].get();
+}
+
+void HighScoreState::OnExit()
+{
+	
+}
+#pragma endregion HighScoreState

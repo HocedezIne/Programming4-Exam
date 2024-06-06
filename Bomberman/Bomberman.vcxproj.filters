@@ -99,5 +99,8 @@
     <ClInclude Include="HighscoreData.h">
       <Filter>HighscoreSaving</Filter>
     </ClInclude>
+    <ClInclude Include="DollBehaviour.h">
+      <Filter>States\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
