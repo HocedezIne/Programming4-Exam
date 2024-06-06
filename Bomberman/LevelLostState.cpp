@@ -21,12 +21,12 @@ GameStateInterface* LevelLostState::HandleInput()
 void LevelLostState::Update()
 {
 	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
-	if ((m_TimeToStateSwitch - 3.f) < 1e-5f) engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelLost.mp3", true);
+	if ((m_TimeToStateSwitch - 3.f) < 1e-5f) engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelLost.mp3", true);
 }
 
 void LevelLostState::OnEnter()
 {
-	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDeath.wav", false);
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDeath.wav", false);
 }
 
 void LevelLostState::OnExit()

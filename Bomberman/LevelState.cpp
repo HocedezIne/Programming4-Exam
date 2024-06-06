@@ -37,7 +37,7 @@ void LevelState::OnEnter()
 	engine::sceneManager::currentScene->EnableUpdates(true);
 	engine::sceneManager::currentScene->GetObject("timer")->GetComponent<engine::TimerComponent>()->Reset();
 
-	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelBackground.mp3", true);
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelBackground.mp3", true);
 	collisionSystem::collisionHandler.AddObserver(this);
 
 	// add player commands

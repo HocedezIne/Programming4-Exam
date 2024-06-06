@@ -19,7 +19,7 @@ namespace engine
 		m_TextureComp = owner->GetComponent<TextureComponent>();
 
 		if (font != nullptr) m_Font = font;
-		else m_Font = ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
+		else m_Font = ResourceManager::GetInstance().LoadFont("Fonts/nes-arcade-font-monospace.otf", 16);
 	}
 
 	void TextComponent::Update()

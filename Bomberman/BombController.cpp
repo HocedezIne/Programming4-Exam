@@ -19,9 +19,9 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 		
 		if (obj->GetChildren().empty())
 		{
-			engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanExplosion.wav", false);
+			engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanExplosion.wav", false);
 
-			obj->GetComponent<engine::TextureComponent>()->SetTexture("explosion center.png");
+			obj->GetComponent<engine::TextureComponent>()->SetTexture("Images/explosion center.png");
 			obj->GetComponent<engine::TimerComponent>()->Reset();
 
 			// create explosion
@@ -40,7 +40,7 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 
 					std::string textureDirection = (direction % 2 == 0) ? "horizontal" : "vertical";
 					auto go = std::make_unique<engine::GameObject>(pos);
-					go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "explosion " + textureDirection + ".png"));
+					go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/explosion " + textureDirection + ".png"));
 					go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 						go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Explosion));
 					go->SetParent(obj, false);
@@ -53,9 +53,12 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 			obj->MarkDeletion();
 			--m_LiveBombs;
 		}
-		
 		break;
 	}
+
+	case engine::Event::PowerUpCollected:
+		break;
+
 	default:
 		break;
 	}
@@ -67,14 +70,14 @@ void BombController::AddBomb(const glm::vec3 pos)
 	{
 		++m_LiveBombs;
 
-		engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDropsBomb.wav", false);
+		engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDropsBomb.wav", false);
 
 		// create bomb
 		auto scene = engine::sceneManager::currentScene;
 		auto bombwrapper = std::make_unique<engine::GameObject>();
 
 		auto bomb = std::make_unique<engine::GameObject>(pos);
-		bomb->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(bomb.get(), "bomb.png"));
+		bomb->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(bomb.get(), "Images/bomb.png"));
 		bomb->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(bomb.get(),
 			bomb->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Block));
 		auto timer = std::make_unique<engine::TimerComponent>(bomb.get(), 3);

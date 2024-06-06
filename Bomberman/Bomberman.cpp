@@ -62,11 +62,11 @@ void load()
 #pragma region StartMenu
 	auto& startScene = engine::sceneManager::CreateScene("Start menu");
 	auto logo = std::make_unique<engine::GameObject>(glm::vec3{ 64.f,0.f,0.f });
-	logo->AddComponent(std::make_unique<engine::TextureComponent>(logo.get(), "StartMenu.png"));
+	logo->AddComponent(std::make_unique<engine::TextureComponent>(logo.get(), "Images/StartMenu.png"));
 	startScene.Add("logo", std::move(logo));
 
 	auto cursor = std::make_unique<engine::GameObject>(glm::vec3{ 144.f, 304.f, 0.f });
-	cursor->AddComponent(std::make_unique<engine::TextureComponent>(cursor.get(), "arrow right.png"));
+	cursor->AddComponent(std::make_unique<engine::TextureComponent>(cursor.get(), "Images/arrow right.png"));
 	startScene.Add("cursor", std::move(cursor));
 
 	auto textLine = std::make_unique<engine::GameObject>(glm::vec3{ 160.f, 304.f, 0.f });
@@ -100,7 +100,7 @@ void load()
 
 #pragma region Controls
 	auto& controlsMenu = engine::sceneManager::CreateScene("Controls menu");
-	auto fontBig = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 24);
+	auto fontBig = engine::ResourceManager::GetInstance().LoadFont("Fonts/nes-arcade-font-monospace.otf", 24);
 	auto controls = std::make_unique<engine::GameObject>(glm::vec3{ 200.f, 25.f, 0.f });
 	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "Controls", fontBig));
 	controlsMenu.Add("controls", std::move(controls));
@@ -151,7 +151,7 @@ void load()
 	auto& LevelScene = engine::sceneManager::CreateScene("Demo level");
 	engine::InputCommandLinker::GetInstance().AddKeyboard();
 
-	auto font = engine::ResourceManager::GetInstance().LoadFont("nes-arcade-font-monospace.otf", 16);
+	auto font = engine::ResourceManager::GetInstance().LoadFont("Fonts/nes-arcade-font-monospace.otf", 16);
 
 #if NDEBUG
 #else
@@ -172,7 +172,7 @@ void load()
 	LevelScene.Add("respawn", std::move(go));
 
 	auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{0.f, 96.f,0.f});
-	lvlbg->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(lvlbg.get(), "playfield.png"));
+	lvlbg->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(lvlbg.get(), "Images/playfield.png"));
 	
 	// outer bounds
 	{
@@ -223,7 +223,7 @@ void load()
 
 #pragma region playerBomberman
 	go = std::make_unique<engine::GameObject>(glm::vec3{ 16, 16, 0.f });
-	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "bomberman.png"));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png"));
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(), 
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 	
@@ -255,14 +255,25 @@ void load()
 	enemyController::EnemyController::GetInstance().AddDollEnemy(3, 9);
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
-	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "destructible.png"));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
 	go->SetParent(bgptr, false);
 	LevelScene.Add("destructible1", std::move(go));
 
+	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/flames up.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::PowerUp));
+	sc = std::make_unique<DataComponent>(go.get());
+	sc->AddDataMapping("BLOCKED", true);
+	sc->AddDataMapping("TYPE", "FLAMES UP");
+	go->AddComponent<DataComponent>(std::move(sc));
+	go->SetParent(bgptr, false);
+	LevelScene.Add("powerup flames", std::move(go));
+
 	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 10, 16.f * 5, 0.f));
-	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "door.png"));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/door.png"));
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Door));
 	sc = std::make_unique<DataComponent>(go.get());
@@ -272,7 +283,7 @@ void load()
 	LevelScene.Add("door", std::move(go));
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 10, 16.f * 5, 0.f));
-	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "destructible.png"));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
 	go->SetParent(bgptr, false);

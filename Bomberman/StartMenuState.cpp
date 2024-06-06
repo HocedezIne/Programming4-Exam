@@ -31,7 +31,7 @@ void StartMenuState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
 	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Start menu"].get();
-	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/StartMenu.mp3", true);
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/StartMenu.mp3", true);
 
 	engine::sceneManager::currentScene->GetObject("score")->GetComponent<engine::TextComponent>()->SetText(highscoreData::GetHighscoreString());
 

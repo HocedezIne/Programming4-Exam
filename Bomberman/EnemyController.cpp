@@ -23,7 +23,7 @@ namespace enemyController
 		auto levelBg = levelScene->GetObject("bg");
 
 		auto go = std::make_unique<engine::GameObject>(glm::vec3(16 * column, 16 * row, 0.f));
-		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), name + ".png"));
+		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + name + ".png"));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
 		go->AddComponent<StateComponent<EnemyStateInterface>>(std::make_unique<StateComponent<EnemyStateInterface>>(go.get(), new StartState(go.get()) ));
@@ -62,7 +62,7 @@ namespace enemyController
 			auto data = engine::sceneManager::sceneMap["Demo level"].get()->GetObject("door")->GetComponent<DataComponent>()->GetData("BLOCKED");
 			auto result = std::any_cast<bool>(data);
 			if(result == false)
-				engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);
+				engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDoorUnlock.wav", false);
 		}
 	}
 }

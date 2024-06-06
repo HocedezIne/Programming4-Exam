@@ -102,10 +102,10 @@ void HighScoreState::OnEnter()
 		if (m_ScoreData[rank - 1].second == "???")
 		{
 			auto upcursor = std::make_unique<engine::GameObject>(glm::vec3{ 516.f, yPos - 24.f, 0.f });
-			upcursor->AddComponent(std::make_unique<engine::TextureComponent>(upcursor.get(), "arrow up.png"));
+			upcursor->AddComponent(std::make_unique<engine::TextureComponent>(upcursor.get(), "Images/arrow up.png"));
 
 			auto downcursor = std::make_unique<engine::GameObject>(glm::vec3{ 0.f, 48.f, 0.f });
-			downcursor->AddComponent(std::make_unique<engine::TextureComponent>(downcursor.get(), "arrow down.png"));
+			downcursor->AddComponent(std::make_unique<engine::TextureComponent>(downcursor.get(), "Images/arrow down.png"));
 			downcursor->SetParent(upcursor.get(), false);
 			engine::sceneManager::currentScene->Add("downcursor", std::move(downcursor));
 
@@ -113,10 +113,10 @@ void HighScoreState::OnEnter()
 			engine::sceneManager::currentScene->Add("upcursor", std::move(upcursor));
 
 			auto leftcursor = std::make_unique<engine::GameObject>(glm::vec3{ 492.f, yPos, 0.f });
-			leftcursor->AddComponent(std::make_unique<engine::TextureComponent>(leftcursor.get(), "arrow left.png"));
+			leftcursor->AddComponent(std::make_unique<engine::TextureComponent>(leftcursor.get(), "Images/arrow left.png"));
 			engine::sceneManager::currentScene->Add("leftcursor", std::move(leftcursor));
 			auto rightcursor = std::make_unique<engine::GameObject>(glm::vec3{ 572.f, yPos, 0.f });
-			rightcursor->AddComponent(std::make_unique<engine::TextureComponent>(rightcursor.get(), "arrow right.png"));
+			rightcursor->AddComponent(std::make_unique<engine::TextureComponent>(rightcursor.get(), "Images/arrow right.png"));
 			engine::sceneManager::currentScene->Add("rightcursor", std::move(rightcursor));
 
 			auto name = std::make_unique<engine::GameObject>(glm::vec3{ 516.f, yPos,0.f });

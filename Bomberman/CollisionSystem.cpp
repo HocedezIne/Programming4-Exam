@@ -79,7 +79,7 @@ namespace collisionSystem
 				bool blocked = std::any_cast<bool>(otherCollider->GetOwner()->GetComponent<DataComponent>()->GetData("BLOCKED"));
 				if (enemyController::EnemyController::GetInstance().GetCount() == 0 && blocked)
 				{
-					engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/BombermanDoorUnlock.wav", false);
+					engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDoorUnlock.wav", false);
 				}
 				otherCollider->GetOwner()->GetComponent<DataComponent>()->UpdateData("BLOCKED", false);
 				break;

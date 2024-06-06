@@ -10,7 +10,8 @@ namespace engine
 		EnemyDied,
 		TimerFinished,
 		PlayerOnExit,
-		EnemyWalkedIntoWall
+		EnemyWalkedIntoWall,
+		PowerUpCollected
 	};
 
 	class Subject;

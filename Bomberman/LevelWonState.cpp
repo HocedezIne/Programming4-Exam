@@ -26,7 +26,7 @@ void LevelWonState::Update()
 
 void LevelWonState::OnEnter()
 {
-	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/LevelFinished.mp3", true);
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelFinished.mp3", true);
 	++m_CurrentLevel;
 }
 
