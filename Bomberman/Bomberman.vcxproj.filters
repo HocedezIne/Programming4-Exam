@@ -64,6 +64,33 @@
     <ClCompile Include="HighscoreData.cpp">
       <Filter>HighscoreSaving</Filter>
     </ClCompile>
+    <ClCompile Include="StartMenuState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoadingState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLostState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelWonState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWonState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlsMenuState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionSystem.h">
