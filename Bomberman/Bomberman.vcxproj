@@ -170,6 +170,7 @@
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="EnemyStateInterface.cpp" />
     <ClCompile Include="GameStates.cpp" />
+    <ClCompile Include="HighscoreData.cpp" />
     <ClCompile Include="StateComponent.h" />
     <ClCompile Include="DataComponent.cpp" />
     <ClCompile Include="UILinkingComponent.cpp" />

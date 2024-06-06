@@ -66,7 +66,7 @@ void load()
 	startScene.Add("logo", std::move(logo));
 
 	auto cursor = std::make_unique<engine::GameObject>(glm::vec3{ 144.f, 304.f, 0.f });
-	cursor->AddComponent(std::make_unique<engine::TextComponent>(cursor.get(), ">"));
+	cursor->AddComponent(std::make_unique<engine::TextureComponent>(cursor.get(), "arrow right.png"));
 	startScene.Add("cursor", std::move(cursor));
 
 	auto textLine = std::make_unique<engine::GameObject>(glm::vec3{ 160.f, 304.f, 0.f });
@@ -82,7 +82,7 @@ void load()
 	startScene.Add("top", std::move(textLine));
 
 	auto highScore = std::make_unique<engine::GameObject>(glm::vec3{ 416.f, 336.f, 0.f });
-	highScore->AddComponent(std::make_unique<engine::TextComponent>(highScore.get(), highscoreData::GetHighscoreString() ));
+	highScore->AddComponent(std::make_unique<engine::TextComponent>(highScore.get(), "0"));
 	startScene.Add("score", std::move(highScore));
 
 	textLine = std::make_unique<engine::GameObject>(glm::vec3{ 100.f, 368.f, 0.f });
@@ -126,9 +126,13 @@ void load()
 	player1text->AddComponent(std::make_unique<engine::TextComponent>(player1text.get(), "PLAYER 1 SCORE"));
 	highscoreScene.Add("player1text", std::move(player1text));
 
-	auto player2text = std::make_unique<engine::GameObject>(glm::vec3{ 150.f, 106.f,0.f });
-	player2text->AddComponent(std::make_unique<engine::TextComponent>(player2text.get(), "PLAYER 2 SCORE"));
-	highscoreScene.Add("player2text", std::move(player2text));
+	auto player1score = std::make_unique<engine::GameObject>(glm::vec3{ 450.f, 82.f,0.f });
+	player1score->AddComponent(std::make_unique<engine::TextComponent>(player1score.get(), ""));
+	highscoreScene.Add("player1score", std::move(player1score));
+
+	//auto player2text = std::make_unique<engine::GameObject>(glm::vec3{ 150.f, 106.f,0.f });
+	//player2text->AddComponent(std::make_unique<engine::TextComponent>(player2text.get(), "PLAYER 2 SCORE"));
+	//highscoreScene.Add("player2text", std::move(player2text));
 
 	auto rank = std::make_unique<engine::GameObject>(glm::vec3{ 100.f, 138.f,0.f });
 	rank->AddComponent(std::make_unique<engine::TextComponent>(rank.get(), "RANK"));

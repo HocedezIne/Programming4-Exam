@@ -4,7 +4,7 @@ namespace engine
 {
 	void GameObject::Update()
 	{
-		if(m_UpdateFlag) for (const auto& comp : m_UpdatableComponents) comp->Update();
+		for (const auto& comp : m_UpdatableComponents) comp->Update();
 	}
 
 	void GameObject::Render() const
@@ -89,6 +89,6 @@ namespace engine
 	{
 		m_PrevLocalPosition = m_LocalPosition;
 		m_LocalPosition = pos;
-		m_PositionFlag = true;
+		SetPositionDirty();
 	}
 }

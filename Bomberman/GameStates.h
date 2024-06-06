@@ -1,4 +1,7 @@
 #pragma once
+
+#include <string>
+
 #include "GameObject.h"
 #include "Observer.h"
 
@@ -26,7 +29,7 @@ public:
 	virtual void OnExit() override;
 
 private:
-	engine::GameObject* m_Cursor;
+	engine::GameObject* m_Cursor{};
 	const glm::vec3 m_Start{ 144, 304, 0 };
 	const glm::vec3 m_Controls{ 320, 304, 0 };
 };
@@ -122,4 +125,10 @@ public:
 	virtual void Update() override;
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
+
+private:
+	std::vector<std::pair<uint16_t, std::string>> m_ScoreData;
+	engine::GameObject* m_Cursors{};
+	engine::GameObject* m_Name{};
+	uint8_t m_CurrScoreIdx{};
 };

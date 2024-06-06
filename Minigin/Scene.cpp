@@ -17,7 +17,7 @@ void Scene::Add(std::string name, std::unique_ptr<GameObject> object)
 
 	if (it == m_Objects.end())
 		m_Objects.emplace_back(name, std::move(object));
-	else throw std::invalid_argument("Scene already has bbject with name " + name + "\n");
+	else throw std::invalid_argument("Scene already has object with name " + name + "\n");
 }
 
 GameObject* Scene::GetObject(std::string name) const
@@ -28,7 +28,7 @@ GameObject* Scene::GetObject(std::string name) const
 	else return nullptr;
 }
 
-void Scene::Remove(std::string& name)
+void Scene::Remove(std::string name)
 {
 	auto obj = std::find_if(m_Objects.begin(), m_Objects.end(),
 		[&name](const auto& pair) { return pair.first == name; });
@@ -42,9 +42,12 @@ void Scene::RemoveAll()
 
 void Scene::Update()
 {
-	for(auto& object : m_Objects)
+	if (m_EnableUpdates)
 	{
-		object.second->Update();
+		for (auto& object : m_Objects)
+		{
+			object.second->Update();
+		}
 	}
 }
 

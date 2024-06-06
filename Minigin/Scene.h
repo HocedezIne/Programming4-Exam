@@ -9,11 +9,12 @@ namespace engine
 		friend Scene& sceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(std::string name, std::unique_ptr<GameObject> object);
-		void Remove(std::string& name);
+		void Remove(std::string name);
 		GameObject* GetObject(std::string name) const;
 		void RemoveAll();
 
 		void Update();
+		void EnableUpdates(bool value) { m_EnableUpdates = value; };
 		void Render() const;
 		void HandleDeletion();
 
@@ -31,5 +32,7 @@ namespace engine
 		std::vector< std::pair<std::string, std::unique_ptr<GameObject>> > m_Objects{};
 
 		static unsigned int m_IdCounter; 
+
+		bool m_EnableUpdates{ true };
 	};
 }

@@ -10,7 +10,6 @@ namespace engine
 	class GameObject final
 	{
 	public:
-		void DoesUpdate(bool value) { m_UpdateFlag = value; };
 		virtual void Update();
 		virtual void Render() const;
 
@@ -101,6 +100,5 @@ namespace engine
 
 		bool m_DeleteFlag{ false };
 		bool m_PositionFlag{ false };
-		bool m_UpdateFlag{ true };
 	};
 }
