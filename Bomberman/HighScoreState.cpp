@@ -84,7 +84,7 @@ void HighScoreState::OnEnter()
 			return a.first > b.first;
 		});
 
-	for (int rank{ 1 }; rank < std::min(6, std::ssize(m_ScoreData) + 1); ++rank)
+	for (int rank{ 1 }; rank < std::min(6, static_cast<int>(std::ssize(m_ScoreData)) + 1); ++rank)
 	{
 		float yPos = 138.f + rank * 56.f;
 
@@ -146,7 +146,7 @@ void HighScoreState::OnExit()
 	engine::sceneManager::currentScene->Remove("leftcursor");
 	engine::sceneManager::currentScene->Remove("rightcursor");
 
-	for (int rank{ 1 }; rank < std::min(6, std::ssize(m_ScoreData) + 1); ++rank)
+	for (int rank{ 1 }; rank < std::min(6, static_cast<int>(std::ssize(m_ScoreData)) + 1); ++rank)
 	{
 		engine::sceneManager::currentScene->Remove("rank " + std::to_string(rank));
 		engine::sceneManager::currentScene->Remove("score " + std::to_string(rank));
