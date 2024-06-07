@@ -221,6 +221,7 @@ void load()
 	}
 #pragma endregion Level
 
+	std::vector<engine::GameObject*> players;
 #pragma region playerBomberman
 	go = std::make_unique<engine::GameObject>(glm::vec3{ 16, 16, 0.f });
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png"));
@@ -247,12 +248,16 @@ void load()
 
 	go->AddComponent<DataComponent>(std::move(sc));
 	go->SetParent(bgptr, false);
+	players.push_back(go.get());
 	LevelScene.Add("player1", std::move(go));
 #pragma endregion playerBomberman
 
+	enemyController::EnemyController::GetInstance().SetPlayers(players);
 	enemyController::EnemyController::GetInstance().AddBalloomEnemy(13, 7);
 	enemyController::EnemyController::GetInstance().AddBalloomEnemy(5, 11);
 	enemyController::EnemyController::GetInstance().AddDollEnemy(3, 9);
+	enemyController::EnemyController::GetInstance().AddOnealEnemy(9, 3);
+	enemyController::EnemyController::GetInstance().AddMinvoEnemy(9, 3);
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/flames up.png"));

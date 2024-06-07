@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_mixer;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\json;$(SolutionDir)3rdParty\SDL2_mixer;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -138,7 +138,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minigin.lib;json.hpp;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,7 +149,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_mixer;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\json;$(SolutionDir)3rdParty\SDL2_mixer;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -159,7 +159,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minigin.lib;json.hpp;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -175,26 +175,29 @@
     <ClCompile Include="GameWonState.cpp" />
     <ClCompile Include="HighscoreData.cpp" />
     <ClCompile Include="HighScoreState.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LevelLoadingState.cpp" />
     <ClCompile Include="LevelLostState.cpp" />
     <ClCompile Include="LevelState.cpp" />
     <ClCompile Include="LevelWonState.cpp" />
+    <ClCompile Include="ChasingBehaviour.cpp" />
     <ClCompile Include="StartMenuState.cpp" />
     <ClCompile Include="StateComponent.h" />
     <ClCompile Include="DataComponent.cpp" />
     <ClCompile Include="UILinkingComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BalloomBehaviour.h" />
+    <ClInclude Include="ConstantWalkingBehaviour.h" />
     <ClInclude Include="BombCommands.h" />
     <ClInclude Include="BombController.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
-    <ClInclude Include="DollBehaviour.h" />
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="EnemyStateInterface.h" />
     <ClInclude Include="GameStates.h" />
     <ClInclude Include="HighscoreData.h" />
+    <ClInclude Include="ChasingBehaviour.h" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="RespawnBombermanCommand.h" />
     <ClInclude Include="DataComponent.h" />
     <ClInclude Include="UILinkingComponent.h" />

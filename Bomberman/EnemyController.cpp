@@ -11,13 +11,14 @@
 #include "ColliderComponent.h"
 
 #include "StateComponent.h"
-#include "BalloomBehaviour.h"
-#include "DollBehaviour.h"
+#include "ConstantWalkingBehaviour.h"
+#include "ChasingBehaviour.h"
 
 namespace enemyController
 {
 	template <typename StartState>
-	void EnemyController::AddEnemy(int column, int row, const std::string& name, int points)
+	void EnemyController::AddEnemy(int column, int row, const std::string& name, 
+		int points, float speed, float chasingDistance)
 	{
 		auto levelScene = engine::sceneManager::sceneMap["Demo level"].get();
 		auto levelBg = levelScene->GetObject("bg");
@@ -26,7 +27,8 @@ namespace enemyController
 		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + name + ".png"));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
-		go->AddComponent<StateComponent<EnemyStateInterface>>(std::make_unique<StateComponent<EnemyStateInterface>>(go.get(), new StartState(go.get()) ));
+		go->AddComponent<StateComponent<EnemyStateInterface>>(std::make_unique<StateComponent<EnemyStateInterface>>(go.get(),
+			new StartState(speed, go.get(), m_Players, chasingDistance) ));
 
 		auto sc = std::make_unique<DataComponent>(go.get());
 		sc->AddDataMapping("POINTS", points);
@@ -40,12 +42,22 @@ namespace enemyController
 
 	void EnemyController::AddBalloomEnemy(int column, int row)
 	{
-		AddEnemy<BalloomWalking>(column, row, "balloom", 100);
+		AddEnemy<ConstantWalking>(column, row, "balloom", 100, 25.f);
+	}
+
+	void EnemyController::AddOnealEnemy(int column, int row)
+	{
+		AddEnemy<WalkTillChasing>(column, row, "oneal", 200, 50.f, 5*16.f);
 	}
 
 	void EnemyController::AddDollEnemy(int column, int row)
 	{
-		AddEnemy<DollWalking>(column, row, "doll", 400);
+		AddEnemy<ConstantWalking>(column, row, "doll", 400, 50.f);
+	}
+
+	void EnemyController::AddMinvoEnemy(int column, int row)
+	{
+		AddEnemy<WalkTillChasing>(column, row, "minvo", 800, 75.f);
 	}
 
 	void EnemyController::KillEnemy(engine::GameObject* enemy)

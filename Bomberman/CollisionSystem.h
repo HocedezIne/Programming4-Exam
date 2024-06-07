@@ -18,7 +18,7 @@ namespace collisionSystem
 		void ResolveCollision(ColliderComponent* currCollider, ColliderComponent* otherCollider);
 	
 	private:
-		void PlayerBlockResolve(ColliderComponent* currCollider, ColliderComponent* otherCollider);
-		void PlayerWallResolve(ColliderComponent* currCollider);
+		void BlockResolve(ColliderComponent* currCollider, ColliderComponent* otherCollider);
+		void WallResolve(ColliderComponent* currCollider);
 	};
 }

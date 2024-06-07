@@ -29,12 +29,12 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Wall:
-				PlayerWallResolve(currCollider);
+				WallResolve(currCollider);
 				break;
 
 			case CollisionType::Block:
 			case CollisionType::Destructable:
-				PlayerBlockResolve(currCollider, otherCollider);
+				BlockResolve(currCollider, otherCollider);
 				break;
 
 			case CollisionType::Door:
@@ -69,6 +69,7 @@ namespace collisionSystem
 
 			case CollisionType::Wall:
 			case CollisionType::Block:
+			case CollisionType::Destructable:
 				NotifyObservers(engine::Event::EnemyWalkedIntoWall, currCollider->GetOwner(), std::any{});
 				break;
 			}
@@ -111,7 +112,7 @@ namespace collisionSystem
 		}
 	}
 
-	void CollisionHandler::PlayerBlockResolve(ColliderComponent* currCollider, ColliderComponent* otherCollider)
+	void CollisionHandler::BlockResolve(ColliderComponent* currCollider, ColliderComponent* otherCollider)
 	{
 		auto currPos = currCollider->GetOwner()->GetWorldPosition();
 		auto otherPos = otherCollider->GetOwner()->GetWorldPosition();
@@ -135,7 +136,7 @@ namespace collisionSystem
 		currCollider->GetOwner()->SetLocalPosition(localPos + movement);
 	}
 
-	void CollisionHandler::PlayerWallResolve(ColliderComponent* currCollider)
+	void CollisionHandler::WallResolve(ColliderComponent* currCollider)
 	{
 		auto currPos = currCollider->GetOwner()->GetLocalPosition();
 		auto currDeltaPos = currPos - currCollider->GetOwner()->GetPreviousLocalPosition();

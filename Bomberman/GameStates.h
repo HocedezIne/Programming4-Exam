@@ -5,6 +5,13 @@
 #include "GameObject.h"
 #include "Observer.h"
 
+enum class GameMode
+{
+	Single,
+	Coop,
+	Vs
+};
+
 class GameStateInterface {
 public:
 	GameStateInterface() = default;
@@ -18,6 +25,7 @@ public:
 protected:
 	static int m_CurrentLevel;
 	static const int m_TotalLevels;
+	static GameMode m_GameMode;
 };
 
 class StartMenuState final : public GameStateInterface

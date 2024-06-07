@@ -29,6 +29,12 @@
     <Filter Include="HighscoreSaving">
       <UniqueIdentifier>{6bd02d88-69ee-4711-9c9e-85168321a2b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Controllers">
+      <UniqueIdentifier>{48befc51-8e3c-4186-b880-d02fafcb29fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Loader">
+      <UniqueIdentifier>{992b4541-2d0d-4df9-9b65-43f74543d52a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bomberman.cpp">
@@ -40,17 +46,11 @@
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>CollisionSystem</Filter>
     </ClCompile>
-    <ClCompile Include="BombController.cpp">
-      <Filter>Game Files</Filter>
-    </ClCompile>
     <ClCompile Include="DataComponent.cpp">
       <Filter>Engine Extensions\Components</Filter>
     </ClCompile>
     <ClCompile Include="UILinkingComponent.cpp">
       <Filter>Engine Extensions\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyController.cpp">
-      <Filter>Game Files</Filter>
     </ClCompile>
     <ClCompile Include="GameStates.cpp">
       <Filter>States\Game</Filter>
@@ -91,6 +91,18 @@
     <ClCompile Include="HighScoreState.cpp">
       <Filter>States\Game</Filter>
     </ClCompile>
+    <ClCompile Include="BombController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyController.cpp">
+      <Filter>Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="ChasingBehaviour.cpp">
+      <Filter>States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Loader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionSystem.h">
@@ -98,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="ColliderComponent.h">
       <Filter>CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="BombController.h">
-      <Filter>Game Files</Filter>
     </ClInclude>
     <ClInclude Include="RespawnBombermanCommand.h">
       <Filter>Engine Extensions\Commands</Filter>
@@ -114,23 +123,29 @@
     <ClInclude Include="UILinkingComponent.h">
       <Filter>Engine Extensions\Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyController.h">
-      <Filter>Game Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameStates.h">
       <Filter>States\Game</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStateInterface.h">
       <Filter>States\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="BalloomBehaviour.h">
+    <ClInclude Include="ConstantWalkingBehaviour.h">
       <Filter>States\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="HighscoreData.h">
       <Filter>HighscoreSaving</Filter>
     </ClInclude>
-    <ClInclude Include="DollBehaviour.h">
+    <ClInclude Include="BombController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyController.h">
+      <Filter>Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ChasingBehaviour.h">
       <Filter>States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Loader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
