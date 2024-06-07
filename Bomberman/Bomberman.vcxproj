@@ -186,7 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BalloomBehaviour.h" />
-    <ClInclude Include="BombCommand.h" />
+    <ClInclude Include="BombCommands.h" />
     <ClInclude Include="BombController.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />

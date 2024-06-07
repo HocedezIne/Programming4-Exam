@@ -6,9 +6,10 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include "ColliderComponent.h"
+#include "DataComponent.h"
 #include "TimerComponent.h"
 #include "TextureComponent.h"
-#include "ColliderComponent.h"
 
 void BombController::OnNotify(engine::Event event, void* caller, const std::any& /*args*/)
 {
@@ -19,49 +20,41 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 		
 		if (obj->GetChildren().empty())
 		{
-			engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanExplosion.wav", false);
-
-			obj->GetComponent<engine::TextureComponent>()->SetTexture("Images/explosion center.png");
-			obj->GetComponent<engine::TimerComponent>()->Reset();
-
-			// create explosion
-			for (int idx{ 1 }; idx < m_ExplosionSize + 1; ++idx)
-			{
-				for (int direction{}; direction < 4; ++direction) 
-				{
-					glm::vec3 pos;
-					switch (direction)
-					{
-					case 0: pos = glm::vec3{ m_GridSize * idx, 0, 0 }; break;
-					case 1: pos = glm::vec3{ 0, m_GridSize * idx, 0 }; break;
-					case 2: pos = glm::vec3{ -m_GridSize * idx, 0, 0 }; break;
-					case 3: pos = glm::vec3{ 0, -m_GridSize * idx, 0 }; break;
-					}
-
-					std::string textureDirection = (direction % 2 == 0) ? "horizontal" : "vertical";
-					auto go = std::make_unique<engine::GameObject>(pos);
-					go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/explosion " + textureDirection + ".png"));
-					go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-						go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Explosion));
-					go->SetParent(obj, false);
-					engine::sceneManager::currentScene->Add("explosion " + std::to_string(idx) + "." + std::to_string(direction), std::move(go));
-				}
-			}
+			ExplodeBomb(obj);
 		}
 		else
 		{
 			obj->MarkDeletion();
+			m_Bombs.erase(std::remove(m_Bombs.begin(), m_Bombs.end(), obj), m_Bombs.end());
 			--m_LiveBombs;
 		}
 		break;
 	}
 
 	case engine::Event::PowerUpCollected:
+	{
+		auto obj = static_cast<engine::GameObject*>(caller);
+		auto type = std::any_cast<std::string>(obj->GetComponent<DataComponent>()->GetData("TYPE"));
+
+		if (type == "FLAMES UP")
+			++m_ExplosionSize;
+		else if (type == "BOMB UP")
+			++m_MaxBombCount;
+		else if (type == "REMOTE CONTROL")
+			m_RemoteEnabled = true;
+
 		break;
+	}
 
 	default:
 		break;
 	}
+}
+
+void BombController::ResetAllPowerups()
+{
+	m_ExplosionSize = m_DefaultExplosionSize;
+	m_MaxBombCount = m_DefaultMaxBombCount;
 }
 
 void BombController::AddBomb(const glm::vec3 pos)
@@ -80,9 +73,55 @@ void BombController::AddBomb(const glm::vec3 pos)
 		bomb->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(bomb.get(), "Images/bomb.png"));
 		bomb->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(bomb.get(),
 			bomb->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Block));
-		auto timer = std::make_unique<engine::TimerComponent>(bomb.get(), 3);
+
+		if (!m_RemoteEnabled)
+		{
+			auto timer = std::make_unique<engine::TimerComponent>(bomb.get(), 3);
+			timer->AddObserver(this);
+			bomb->AddComponent<engine::TimerComponent>(std::move(timer));
+		}
+
+		m_Bombs.push_back(bomb.get());
+
+		scene->Add("bomb " + std::to_string(m_LiveBombs), std::move(bomb));
+	}
+}
+
+void BombController::ExplodeBomb(engine::GameObject* obj)
+{
+	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanExplosion.wav", false);
+
+	if (m_RemoteEnabled)
+	{
+		auto timer = std::make_unique<engine::TimerComponent>(obj, 3);
 		timer->AddObserver(this);
-		bomb->AddComponent<engine::TimerComponent>(std::move(timer));
-		scene->Add("bomb", std::move(bomb));
+		obj->AddComponent<engine::TimerComponent>(std::move(timer));
+	}
+	else obj->GetComponent<engine::TimerComponent>()->Reset();
+	obj->GetComponent<engine::TextureComponent>()->SetTexture("Images/explosion center.png");
+
+	auto bombIdentifier = engine::sceneManager::currentScene->GetObjectIdentifier(obj);
+	// create explosion
+	for (int idx{ 1 }; idx < m_ExplosionSize + 1; ++idx)
+	{
+		for (int direction{}; direction < 4; ++direction)
+		{
+			glm::vec3 pos;
+			switch (direction)
+			{
+			case 0: pos = glm::vec3{ m_GridSize * idx, 0, 0 }; break;
+			case 1: pos = glm::vec3{ 0, m_GridSize * idx, 0 }; break;
+			case 2: pos = glm::vec3{ -m_GridSize * idx, 0, 0 }; break;
+			case 3: pos = glm::vec3{ 0, -m_GridSize * idx, 0 }; break;
+			}
+
+			std::string textureDirection = (direction % 2 == 0) ? "horizontal" : "vertical";
+			auto go = std::make_unique<engine::GameObject>(pos);
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/explosion " + textureDirection + ".png"));
+			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Explosion));
+			go->SetParent(obj, false);
+			engine::sceneManager::currentScene->Add(bombIdentifier + " explosion " + std::to_string(idx) + "." + std::to_string(direction), std::move(go));
+		}
 	}
 }

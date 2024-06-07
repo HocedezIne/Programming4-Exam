@@ -255,22 +255,22 @@ void load()
 	enemyController::EnemyController::GetInstance().AddDollEnemy(3, 9);
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
-	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
-	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
-	go->SetParent(bgptr, false);
-	LevelScene.Add("destructible1", std::move(go));
-
-	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/flames up.png"));
 	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::PowerUp));
 	sc = std::make_unique<DataComponent>(go.get());
 	sc->AddDataMapping("BLOCKED", true);
-	sc->AddDataMapping("TYPE", "FLAMES UP");
+	sc->AddDataMapping("TYPE", std::string("FLAMES UP"));
 	go->AddComponent<DataComponent>(std::move(sc));
 	go->SetParent(bgptr, false);
 	LevelScene.Add("powerup flames", std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
+	go->SetParent(bgptr, false);
+	LevelScene.Add("destructible1", std::move(go));
 
 	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 10, 16.f * 5, 0.f));
 	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/door.png"));
@@ -288,6 +288,42 @@ void load()
 		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
 	go->SetParent(bgptr, false);
 	LevelScene.Add("destructible2", std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 9, 16.f * 6, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomb up.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::PowerUp));
+	sc = std::make_unique<DataComponent>(go.get());
+	sc->AddDataMapping("BLOCKED", true);
+	sc->AddDataMapping("TYPE", std::string("BOMB UP"));
+	go->AddComponent<DataComponent>(std::move(sc));
+	go->SetParent(bgptr, false);
+	LevelScene.Add("powerup bomb", std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 9, 16.f * 6, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
+	go->SetParent(bgptr, false);
+	LevelScene.Add("destructible3", std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 15, 16.f * 8, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/remote control.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::PowerUp));
+	sc = std::make_unique<DataComponent>(go.get());
+	sc->AddDataMapping("BLOCKED", true);
+	sc->AddDataMapping("TYPE", std::string("REMOTE CONTROL"));
+	go->AddComponent<DataComponent>(std::move(sc));
+	go->SetParent(bgptr, false);
+	LevelScene.Add("remote control", std::move(go));
+
+	go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 15, 16.f * 8, 0.f));
+	go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
+	go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+		go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
+	go->SetParent(bgptr, false);
+	LevelScene.Add("destructible4", std::move(go));
 
 	auto& generalScene = engine::sceneManager::CreateScene("");
 	auto gameStateHolder = std::make_unique<engine::GameObject>();

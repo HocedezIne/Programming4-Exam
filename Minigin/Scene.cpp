@@ -28,6 +28,14 @@ GameObject* Scene::GetObject(std::string name) const
 	else return nullptr;
 }
 
+const std::string Scene::GetObjectIdentifier(GameObject* obj) const
+{
+	auto it = std::find_if(m_Objects.begin(), m_Objects.end(),
+		[obj](const auto& pair) {return pair.second.get() == obj; });
+	if (it != m_Objects.end()) return it->first;
+	else return "";
+}
+
 void Scene::Remove(std::string name)
 {
 	auto obj = std::find_if(m_Objects.begin(), m_Objects.end(),

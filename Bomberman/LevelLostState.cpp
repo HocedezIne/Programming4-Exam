@@ -5,6 +5,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include "BombController.h"
+
 #include "DataComponent.h"
 
 GameStateInterface* LevelLostState::HandleInput()
@@ -27,6 +29,7 @@ void LevelLostState::Update()
 void LevelLostState::OnEnter()
 {
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDeath.wav", false);
+	BombController::GetInstance().ResetRemote();
 }
 
 void LevelLostState::OnExit()

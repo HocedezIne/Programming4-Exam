@@ -39,6 +39,19 @@ namespace collisionSystem
 
 			case CollisionType::Door:
 				NotifyObservers(engine::Event::PlayerOnExit, otherCollider->GetOwner(), std::any{});
+				break;
+
+			case CollisionType::PowerUp:
+			{
+				bool blocked = std::any_cast<bool>(otherCollider->GetOwner()->GetComponent<DataComponent>()->GetData("BLOCKED"));
+				if (!blocked)
+				{
+					NotifyObservers(engine::Event::PowerUpCollected, otherCollider->GetOwner(), std::any{});
+					otherCollider->GetOwner()->MarkDeletion();
+				}
+				break;
+
+			}
 
 			default:
 				break;
@@ -76,6 +89,7 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Door:
+			{
 				bool blocked = std::any_cast<bool>(otherCollider->GetOwner()->GetComponent<DataComponent>()->GetData("BLOCKED"));
 				if (enemyController::EnemyController::GetInstance().GetCount() == 0 && blocked)
 				{
@@ -85,6 +99,11 @@ namespace collisionSystem
 				break;
 			}
 
+			case CollisionType::PowerUp:
+				otherCollider->GetOwner()->GetComponent<DataComponent>()->UpdateData("BLOCKED", false);
+				break;
+
+			}
 			break;
 
 		default:

@@ -7,6 +7,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include "BombController.h"
+
 #include "TextComponent.h"
 
 GameStateInterface* StartMenuState::HandleInput()
@@ -39,9 +41,13 @@ void StartMenuState::OnEnter()
 	assert(m_Cursor);
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Pressed, std::make_unique<engine::SnapToInputCommand>(m_Cursor, m_Start));
 	engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Pressed, std::make_unique<engine::SnapToInputCommand>(m_Cursor, m_Controls));
+
+
 }
 
 void StartMenuState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+
+	BombController::GetInstance().ResetAllPowerups();
 }

@@ -11,6 +11,7 @@ namespace engine
 		void Add(std::string name, std::unique_ptr<GameObject> object);
 		void Remove(std::string name);
 		GameObject* GetObject(std::string name) const;
+		const std::string GetObjectIdentifier(GameObject* obj) const;
 		void RemoveAll();
 
 		void Update();

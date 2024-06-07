@@ -8,7 +8,7 @@
 #include "CollisionSystem.h"
 #include "EnemyController.h"
 
-#include "BombCommand.h"
+#include "BombCommands.h"
 #include "RespawnBombermanCommand.h"
 
 #include "TimerComponent.h"
@@ -39,6 +39,7 @@ void LevelState::OnEnter()
 
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelBackground.mp3", true);
 	collisionSystem::collisionHandler.AddObserver(this);
+	collisionSystem::collisionHandler.AddObserver(&BombController::GetInstance());
 
 	// add player commands
 	auto obj = engine::sceneManager::currentScene->GetObject("player1");
@@ -52,6 +53,7 @@ void LevelState::OnEnter()
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,1.f,0.f }, 50.f));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 1.f,0.f,0.f }, 50.f));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj, 16));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(obj));
 	}
 }
@@ -62,6 +64,9 @@ void LevelState::OnExit()
 
 	engine::sceneManager::currentScene->EnableUpdates(false);
 
+	collisionSystem::collisionHandler.RemoveObserver(this);
+	collisionSystem::collisionHandler.RemoveObserver(&BombController::GetInstance());
+
 	// remove player commands
 	auto obj = engine::sceneManager::currentScene->GetObject("player1");
 	if (obj != nullptr)
@@ -71,6 +76,7 @@ void LevelState::OnExit()
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed);
 	}
 }

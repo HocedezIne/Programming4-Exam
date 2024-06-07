@@ -27,3 +27,20 @@ public:
 private:
 	const int m_GridSize;
 };
+
+class DetonateCommand : public engine::InputCommand
+{
+public:
+	DetonateCommand() = default;
+
+	virtual ~DetonateCommand() = default;
+
+	DetonateCommand(const DetonateCommand& other) = delete;
+	DetonateCommand& operator=(const DetonateCommand& other) = delete;
+	DetonateCommand(DetonateCommand&& other) = delete;
+	DetonateCommand& operator=(DetonateCommand&& other) = delete;
+
+	virtual void Execute() override {
+		BombController::GetInstance().ExplodeAllBombs();
+	};
+};

@@ -105,7 +105,7 @@
     <ClInclude Include="RespawnBombermanCommand.h">
       <Filter>Engine Extensions\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="BombCommand.h">
+    <ClInclude Include="BombCommands.h">
       <Filter>Engine Extensions\Commands</Filter>
     </ClInclude>
     <ClInclude Include="DataComponent.h">
