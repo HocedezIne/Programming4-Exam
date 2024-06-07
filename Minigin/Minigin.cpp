@@ -11,7 +11,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "TimeService.h"
+#include "TimeUtil.h"
 
 SDL_Window* g_window{};
 
@@ -84,12 +84,11 @@ void engine::Minigin::Run(const std::function<void()>& load)
 
 	auto& input = InputCommandLinker::GetInstance();
 	auto& renderer = Renderer::GetInstance();
-	auto& time = TimeService::GetInstance();
 
 	bool doContinue = true;
 	while (doContinue)
 	{
-		time.UpdateDeltaTime();
+		TimeUtil::UpdateDeltaTime();
 
 		doContinue = input.ProcessInput();
 
@@ -99,6 +98,6 @@ void engine::Minigin::Run(const std::function<void()>& load)
 		renderer.Render();
 
 
-		std::this_thread::sleep_for(time.GetSleepTime());
+		std::this_thread::sleep_for(TimeUtil::GetSleepTime());
 	}
 }

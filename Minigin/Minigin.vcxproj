@@ -214,7 +214,7 @@
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="ThreadSafeQueue.h" />
-    <ClInclude Include="TimeService.h" />
+    <ClInclude Include="TimeUtil.h" />
     <ClInclude Include="TimerComponent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +235,7 @@
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
-    <ClCompile Include="TimeService.cpp" />
+    <ClCompile Include="TimeUtil.cpp" />
     <ClCompile Include="TimerComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

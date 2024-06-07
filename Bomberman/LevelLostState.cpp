@@ -22,7 +22,7 @@ GameStateInterface* LevelLostState::HandleInput()
 
 void LevelLostState::Update()
 {
-	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+	m_TimeToStateSwitch -= engine::TimeUtil::GetDeltaTime();
 	if ((m_TimeToStateSwitch - 3.f) < 1e-5f) engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelLost.mp3", true);
 }
 

@@ -15,7 +15,7 @@ GameStateInterface* GameOverState::HandleInput()
 
 void GameOverState::Update()
 {
-	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+	m_TimeToStateSwitch -= engine::TimeUtil::GetDeltaTime();
 }
 
 void GameOverState::OnEnter()

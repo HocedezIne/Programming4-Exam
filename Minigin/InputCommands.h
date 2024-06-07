@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "TimeService.h"
+#include "TimeUtil.h"
 #include "ServiceLocator.h"
 
 namespace engine
@@ -55,7 +55,7 @@ namespace engine
 
 		virtual void Execute() override 
 		{ 
-			GetGameObject()->SetLocalPosition(GetGameObject()->GetLocalPosition() + (m_Direction * m_Speed * TimeService::GetInstance().GetDeltaTime())); 
+			GetGameObject()->SetLocalPosition(GetGameObject()->GetLocalPosition() + (m_Direction * m_Speed * TimeUtil::GetDeltaTime())); 
 		};
 		
 	private:

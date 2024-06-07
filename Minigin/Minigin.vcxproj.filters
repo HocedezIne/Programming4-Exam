@@ -93,9 +93,6 @@
     <ClInclude Include="TimerComponent.h">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClInclude>
-    <ClInclude Include="TimeService.h">
-      <Filter>Helpers\Services</Filter>
-    </ClInclude>
     <ClInclude Include="ServiceLocator.h">
       <Filter>Helpers\Services</Filter>
     </ClInclude>
@@ -103,6 +100,9 @@
       <Filter>Helpers\Services</Filter>
     </ClInclude>
     <ClInclude Include="ThreadSafeQueue.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeUtil.h">
       <Filter>Helpers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,14 +155,14 @@
     <ClCompile Include="TimerComponent.cpp">
       <Filter>Object Files\Components\Component Subclasses</Filter>
     </ClCompile>
-    <ClCompile Include="TimeService.cpp">
-      <Filter>Helpers\Services</Filter>
-    </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>Helpers\Services</Filter>
     </ClCompile>
     <ClCompile Include="SoundSystemService.cpp">
       <Filter>Helpers\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeUtil.cpp">
+      <Filter>Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

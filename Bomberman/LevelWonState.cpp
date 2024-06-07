@@ -21,7 +21,7 @@ GameStateInterface* LevelWonState::HandleInput()
 
 void LevelWonState::Update()
 {
-	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+	m_TimeToStateSwitch -= engine::TimeUtil::GetDeltaTime();
 }
 
 void LevelWonState::OnEnter()

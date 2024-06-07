@@ -17,7 +17,7 @@ GameStateInterface* LevelLoadingState::HandleInput()
 
 void LevelLoadingState::Update()
 {
-	m_TimeToStateSwitch -= engine::TimeService::GetInstance().GetDeltaTime();
+	m_TimeToStateSwitch -= engine::TimeUtil::GetDeltaTime();
 }
 
 void LevelLoadingState::OnEnter()
