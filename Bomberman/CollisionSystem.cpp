@@ -72,6 +72,7 @@ namespace collisionSystem
 			}
 			case CollisionType::Wall:
 			case CollisionType::Block:
+			case CollisionType::Bomb:
 			case CollisionType::Destructable:
 				NotifyObservers(engine::Event::EnemyWalkedIntoWall, currCollider->GetOwner(), std::any{});
 				break;
@@ -92,6 +93,7 @@ namespace collisionSystem
 				break;
 
 			case CollisionType::Block:
+			case CollisionType::Bomb:
 			case CollisionType::Destructable:
 				BlockResolve(currCollider, otherCollider);
 				break;

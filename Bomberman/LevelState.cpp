@@ -159,6 +159,7 @@ void LevelState::OnExit()
 	engine::sceneManager::currentScenes[1]->EnableUpdates(false);
 
 	collisionSystem::collisionHandler.RemoveObserver(this);
+	enemyController::EnemyController::GetInstance().ClearEnemies();
 
 	switch (m_GameMode)
 	{

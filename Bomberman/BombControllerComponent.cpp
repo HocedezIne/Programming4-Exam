@@ -72,7 +72,7 @@ void BombControllerComponent::AddBomb(const glm::vec3 pos)
 		auto bomb = std::make_unique<engine::GameObject>(pos);
 		bomb->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(bomb.get(), "Images/bomb.png"));
 		bomb->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(bomb.get(),
-			bomb->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Block));
+			bomb->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Bomb));
 
 		if (!m_RemoteEnabled)
 		{

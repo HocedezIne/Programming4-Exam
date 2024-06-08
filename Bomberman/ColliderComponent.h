@@ -10,6 +10,7 @@ enum class CollisionType
 	Enemy,
 	Wall,
 	Block,
+	Bomb,
 	Explosion,
 	Destructable,
 	Door,

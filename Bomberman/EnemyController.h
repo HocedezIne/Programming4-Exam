@@ -22,6 +22,7 @@ namespace enemyController
 		void SetPlayers(const std::vector<engine::GameObject*> players) { m_Players = players; };
 
 		int GetCount() const { return m_Count; };
+		void ClearEnemies() { m_Count = 0; };
 
 	private:
 		template <typename StartState>
