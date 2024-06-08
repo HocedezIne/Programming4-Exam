@@ -36,7 +36,7 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 		auto obj = static_cast<engine::GameObject*>(caller);
 		auto type = std::any_cast<std::string>(obj->GetComponent<DataComponent>()->GetData("TYPE"));
 
-		if (type == "FLAMES UP")
+		if (type == "FLAME UP")
 			++m_ExplosionSize;
 		else if (type == "BOMB UP")
 			++m_MaxBombCount;
