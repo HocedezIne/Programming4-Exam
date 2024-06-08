@@ -71,7 +71,7 @@ void HighScoreState::Update()
 
 void HighScoreState::OnEnter()
 {
-	engine::InputCommandLinker::GetInstance().RemoveController(1);
+	if(m_GameMode != GameMode::Single) engine::InputCommandLinker::GetInstance().RemoveController(1);
 
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
 	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Highscore menu"].get());
@@ -174,6 +174,11 @@ void HighScoreState::OnEnter()
 
 void HighScoreState::OnExit()
 {
+	if (m_GameMode == GameMode::Coop)
+	{
+		engine::sceneManager::currentScenes[0]->Remove("player2text");
+		engine::sceneManager::currentScenes[0]->Remove("player2score");
+	}
 	engine::sceneManager::currentScenes[0]->Remove("upcursor");
 	engine::sceneManager::currentScenes[0]->Remove("downcursor");
 	engine::sceneManager::currentScenes[0]->Remove("leftcursor");

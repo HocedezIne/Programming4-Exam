@@ -30,6 +30,7 @@ void DataComponent::RemoveDataMapping(const std::string& keyword)
 void DataComponent::OnNotify(engine::Event event, void* caller, const std::any& args)
 {	switch (event)
 	{
+	case engine::Event::PlayableEnemyDied:
 	case engine::Event::PlayerDied:
 	{
 		auto obj = static_cast<engine::GameObject*>(caller);

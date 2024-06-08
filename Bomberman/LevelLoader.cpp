@@ -132,7 +132,7 @@ namespace levelLoader
 			go = std::make_unique<engine::GameObject>(glm::vec3{ 32.f, 16.f, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/balloom.png"));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::PlayableEnemy));
 
 			sc = std::make_unique<DataComponent>(go.get());
 			sc->AddDataMapping("LEFT", 3);

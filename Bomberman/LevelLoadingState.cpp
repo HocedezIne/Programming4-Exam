@@ -26,7 +26,8 @@ void LevelLoadingState::OnEnter()
 
 	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Level loading"].get());
 	auto text = engine::sceneManager::sceneMap["Level loading"].get()->GetObject("level text");
-	text->GetComponent<engine::TextComponent>()->SetText("STAGE " + std::to_string(m_CurrentLevel));
+	if (m_GameMode != GameMode::Vs) text->GetComponent<engine::TextComponent>()->SetText("STAGE " + std::to_string(m_CurrentLevel));
+	else text->GetComponent<engine::TextComponent>()->SetText("GET READY");
 
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelStart.mp3", true);
 }

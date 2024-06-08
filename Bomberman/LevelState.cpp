@@ -19,9 +19,13 @@
 GameStateInterface* LevelState::HandleInput()
 {
 	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_F1) || m_Won)
+	{
 		return new LevelWonState();
+	}
 	if (m_Lost)
+	{
 		return new LevelLostState();
+	}
 
 	return nullptr;
 }
@@ -224,11 +228,15 @@ void LevelState::OnNotify(engine::Event event, void* caller, const std::any& /*a
 	{
 		m_Lost = true;
 	}
+	if (event == engine::Event::PlayableEnemyDied)
+	{
+		m_Won = true;
+	}
 	if (event == engine::Event::PlayerOnExit)
 	{
 		auto door = static_cast<engine::GameObject*>(caller);
 		auto isDoorBlocked = std::any_cast<bool>(door->GetComponent<DataComponent>()->GetData("BLOCKED"));
-		if (enemyController::EnemyController::GetInstance().GetCount() == 0 && !isDoorBlocked)
+		if (enemyController::EnemyController::GetInstance().GetCount() == 0 && !isDoorBlocked && m_GameMode != GameMode::Vs)
 			m_Won = true;
 	}
 }

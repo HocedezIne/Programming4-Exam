@@ -8,6 +8,7 @@ namespace engine
 	{
 		PlayerDied,
 		EnemyDied,
+		PlayableEnemyDied,
 		TimerFinished,
 		PlayerOnExit,
 		EnemyWalkedIntoWall,

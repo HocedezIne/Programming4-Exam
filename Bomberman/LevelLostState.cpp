@@ -11,10 +11,32 @@
 GameStateInterface* LevelLostState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		if (std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
-			return new LevelLoadingState();
-		else
-			return new GameOverState();
+		switch (m_GameMode)
+		{
+		case GameMode::Single:
+			if (std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
+				return new LevelLoadingState();
+			else
+				return new GameOverState();
+	
+		case GameMode::Coop:
+			if (std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0 &&
+				std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player2")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
+				return new LevelLoadingState();
+			else
+				return new GameOverState();
+
+		case GameMode::Vs:
+			if (std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0 &&
+				std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player2")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
+				return new LevelLoadingState();
+			else
+				return new GameOverState();
+
+
+		default:
+			break;
+		}
 
 	return nullptr;
 }

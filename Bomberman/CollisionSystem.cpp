@@ -23,6 +23,7 @@ namespace collisionSystem
 
 			switch (otherCollider->m_CollisionType)
 			{
+			case CollisionType::PlayableEnemy:
 			case CollisionType::Enemy:
 			case CollisionType::Explosion:
 				NotifyObservers(engine::Event::PlayerDied, currCollider->GetOwner(), std::any{});
@@ -76,6 +77,28 @@ namespace collisionSystem
 				break;
 			}
 
+			break;
+
+		case CollisionType::PlayableEnemy:
+
+			switch (otherCollider->m_CollisionType)
+			{
+			case CollisionType::Explosion:
+				NotifyObservers(engine::Event::PlayableEnemyDied, currCollider->GetOwner(), std::any{});
+				break;
+
+			case CollisionType::Wall:
+				WallResolve(currCollider);
+				break;
+
+			case CollisionType::Block:
+			case CollisionType::Destructable:
+				BlockResolve(currCollider, otherCollider);
+				break;
+
+			default:
+				break;
+			}
 			break;
 
 		case CollisionType::Explosion:

@@ -14,6 +14,7 @@ enum class CollisionType
 	Destructable,
 	Door,
 	PowerUp,
+	PlayableEnemy
 };
 
 namespace collisionSystem {
