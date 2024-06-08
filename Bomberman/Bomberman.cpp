@@ -127,15 +127,32 @@ void load()
 	auto controls = std::make_unique<engine::GameObject>(glm::vec3{ 200.f, 25.f, 0.f });
 	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "Controls", fontBig));
 	controlsMenu.Add("controls", std::move(controls));
+
 	controls = std::make_unique<engine::GameObject>(glm::vec3{ 15.f, 100.f, 0.f });
 	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "Keyboard:"));
 	controlsMenu.Add("keyboard", std::move(controls));
-	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 135.f, 0.f });
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 140.f, 0.f });
 	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "WASD to walk around"));
-	controlsMenu.Add("wasd", std::move(controls));
-	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 165.f, 0.f });
+	controlsMenu.Add("keyboard wasd", std::move(controls));
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 180.f, 0.f });
 	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "C to drop a bomb"));
-	controlsMenu.Add("c", std::move(controls));
+	controlsMenu.Add("keyboard c", std::move(controls));
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 220.f, 0.f });
+	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "X to detonate all bombs"));
+	controlsMenu.Add("keyboard x", std::move(controls));
+
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 15.f, 280.f, 0.f });
+	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "Controller:"));
+	controlsMenu.Add("controller", std::move(controls));
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 320.f, 0.f });
+	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "Dpad to walk around"));
+	controlsMenu.Add("controller wasd", std::move(controls));
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 360.f, 0.f });
+	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "A to drop a bomb"));
+	controlsMenu.Add("controller c", std::move(controls));
+	controls = std::make_unique<engine::GameObject>(glm::vec3{ 25.f, 400.f, 0.f });
+	controls->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(controls.get(), "B to detonate all bombs"));
+	controlsMenu.Add("controller x", std::move(controls));
 #pragma endregion Controls
 
 #pragma region HighScoreMenu
