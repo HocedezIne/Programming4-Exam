@@ -79,6 +79,7 @@ public:
 
 private:
 	float m_TimeToStateSwitch{ 4.f };
+	bool m_PlayMusic{ true };
 };
 
 class LevelWonState final : public GameStateInterface
