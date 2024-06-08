@@ -17,11 +17,11 @@ GameStateInterface* HighScoreState::HandleInput()
 {
 	auto& input = engine::InputCommandLinker::GetInstance();
 
-	if (input.IsKeyDown(SDL_SCANCODE_RETURN))
+	if (input.IsKeyDown(SDL_SCANCODE_RETURN) || input.IsButtonDown(engine::Controller::Button::A))
 	{
 		return new StartMenuState();
 	}
-	if (input.IsKeyDown(SDL_SCANCODE_D) && m_Cursors != nullptr)
+	if ((input.IsKeyDown(SDL_SCANCODE_D) || input.IsButtonDown(engine::Controller::Button::DPadRight)) && m_Cursors != nullptr)
 	{
 		auto pos = m_Cursors->GetLocalPosition();
 		pos.x -= 516.f;
@@ -29,7 +29,7 @@ GameStateInterface* HighScoreState::HandleInput()
 		pos.x = float(int(pos.x) % 51) + 516.f;
 		m_Cursors->SetLocalPosition(pos);
 	}
-	if (input.IsKeyDown(SDL_SCANCODE_A) && m_Cursors != nullptr)
+	if ((input.IsKeyDown(SDL_SCANCODE_A) || input.IsButtonDown(engine::Controller::Button::DPadLeft)) && m_Cursors != nullptr)
 	{
 		auto pos = m_Cursors->GetLocalPosition();
 		pos.x -= 516.f;
@@ -38,7 +38,7 @@ GameStateInterface* HighScoreState::HandleInput()
 		pos.x += 516.f;
 		m_Cursors->SetLocalPosition(pos);
 	}
-	if (input.IsKeyDown(SDL_SCANCODE_W) && m_Cursors != nullptr)
+	if ((input.IsKeyDown(SDL_SCANCODE_W) || input.IsButtonDown(engine::Controller::Button::DPadUp)) && m_Cursors != nullptr)
 	{
 		int Xpos = int(m_Cursors->GetLocalPosition().x - 516.f);
 
@@ -48,7 +48,7 @@ GameStateInterface* HighScoreState::HandleInput()
 		datacomp->UpdateData("currName", nameString);
 		m_Name->GetComponent<engine::TextComponent>()->SetText(nameString);
 	}
-	if (input.IsKeyDown(SDL_SCANCODE_S) && m_Cursors != nullptr)
+	if ((input.IsKeyDown(SDL_SCANCODE_S) || input.IsButtonDown(engine::Controller::Button::DPadDown)) && m_Cursors != nullptr)
 	{
 		int Xpos = int(m_Cursors->GetLocalPosition().x - 516.f);
 

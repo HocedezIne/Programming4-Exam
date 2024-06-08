@@ -22,7 +22,7 @@ namespace engine
 			ZeroMemory(&m_State, sizeof(XINPUT_STATE));
 			XInputGetState(m_Index, &m_State);
 
-			uint8_t buttonChanges = static_cast<uint8_t>(m_State.Gamepad.wButtons ^ m_PrevState.Gamepad.wButtons);
+			uint16_t buttonChanges = static_cast<uint16_t>(m_State.Gamepad.wButtons ^ m_PrevState.Gamepad.wButtons);
 			m_ButtonsPressedThisFrame = buttonChanges & m_State.Gamepad.wButtons;
 			m_ButtonsReleasedThisFrame = buttonChanges & (~m_State.Gamepad.wButtons);
 		};
@@ -37,8 +37,8 @@ namespace engine
 		XINPUT_STATE m_State{};
 		XINPUT_STATE m_PrevState{};
 
-		uint8_t m_ButtonsPressedThisFrame{};
-		uint8_t m_ButtonsReleasedThisFrame{};
+		uint16_t m_ButtonsPressedThisFrame{};
+		uint16_t m_ButtonsReleasedThisFrame{};
 	};
 
 	Controller::Controller(const unsigned int index)

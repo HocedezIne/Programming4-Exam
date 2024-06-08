@@ -60,6 +60,13 @@ void LevelState::OnEnter()
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj, 16));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(obj));
+
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ -1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj, 16));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
 	}
 }
 
@@ -86,6 +93,13 @@ void LevelState::OnExit()
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed);
+
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed);
 	}
 }
 

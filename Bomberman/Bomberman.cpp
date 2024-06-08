@@ -150,6 +150,7 @@ void load()
 #pragma region Level
 	auto& LevelStaticScene = engine::sceneManager::CreateScene("Level Statics");
 	engine::InputCommandLinker::GetInstance().AddKeyboard();
+	engine::InputCommandLinker::GetInstance().AddController();
 
 	auto font = engine::ResourceManager::GetInstance().LoadFont("Fonts/nes-arcade-font-monospace.otf", 16);
 

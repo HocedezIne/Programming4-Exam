@@ -8,12 +8,14 @@
 
 #include "Scene.h"
 #include "GameObject.h"
+#include "GameStates.h"
 
 using json = nlohmann::json;
 
 namespace levelLoader
 {
 	void LoadLevel(const std::string filePath);
+	//void LoadLevelStatics(GameMode gameMode);
 
 	static void CreateSoftBlocks(engine::GameObject* parent, engine::Scene& scene, int count);
 	static void CreateDoor(engine::GameObject* parent, engine::Scene& scene);

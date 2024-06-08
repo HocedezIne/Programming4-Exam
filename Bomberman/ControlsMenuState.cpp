@@ -7,7 +7,8 @@
 
 GameStateInterface* ControlsMenuState::HandleInput()
 {
-	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_RETURN))
+	if (engine::InputCommandLinker::GetInstance().IsKeyDown(SDL_SCANCODE_RETURN) ||
+		engine::InputCommandLinker::GetInstance().IsButtonDown(engine::Controller::Button::B))
 	{
 		return new StartMenuState();
 	}
