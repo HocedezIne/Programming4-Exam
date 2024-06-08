@@ -17,6 +17,8 @@ namespace levelLoader
 
 	void LoadLevel(const std::string filePath)
 	{
+		m_UsedPositions.clear();
+
 		m_UsedPositions.push_back(glm::vec2{ 16.f, 16.f }); // bombermans position
 		// indestructible blocks
 		for (int r{}; r < 5; ++r)
