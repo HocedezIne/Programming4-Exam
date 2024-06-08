@@ -11,7 +11,7 @@ namespace engine
 	class Scene;
 	namespace sceneManager
 	{
-		extern Scene* currentScene;
+		extern std::vector<Scene*> currentScenes;
 		extern std::map<std::string, std::unique_ptr<Scene>> sceneMap;
 
 		Scene& CreateScene(const std::string& name);

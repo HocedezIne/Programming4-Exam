@@ -66,7 +66,7 @@ void BombController::AddBomb(const glm::vec3 pos)
 		engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDropsBomb.wav", false);
 
 		// create bomb
-		auto scene = engine::sceneManager::currentScene;
+		auto scene = engine::sceneManager::currentScenes[1];
 		auto bombwrapper = std::make_unique<engine::GameObject>();
 
 		auto bomb = std::make_unique<engine::GameObject>(pos);
@@ -102,7 +102,7 @@ void BombController::ExplodeBomb(engine::GameObject* obj)
 		else obj->GetComponent<engine::TimerComponent>()->Reset();
 		obj->GetComponent<engine::TextureComponent>()->SetTexture("Images/explosion center.png");
 
-		auto bombIdentifier = engine::sceneManager::currentScene->GetObjectIdentifier(obj);
+		auto bombIdentifier = engine::sceneManager::currentScenes[1]->GetObjectIdentifier(obj);
 		// create explosion
 		for (int idx{ 1 }; idx < m_ExplosionSize + 1; ++idx)
 		{
@@ -123,7 +123,7 @@ void BombController::ExplodeBomb(engine::GameObject* obj)
 				go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 					go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Explosion));
 				go->SetParent(obj, false);
-				engine::sceneManager::currentScene->Add(bombIdentifier + " explosion " + std::to_string(idx) + "." + std::to_string(direction), std::move(go));
+				engine::sceneManager::currentScenes[1]->Add(bombIdentifier + " explosion " + std::to_string(idx) + "." + std::to_string(direction), std::move(go));
 			}
 		}
 	}

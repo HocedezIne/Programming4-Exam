@@ -22,10 +22,10 @@ void ControlsMenuState::Update()
 
 void ControlsMenuState::OnEnter()
 {
-	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Controls menu"].get();
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Controls menu"].get());
 }
 
 void ControlsMenuState::OnExit()
 {
-
+	engine::sceneManager::currentScenes.clear();
 }

@@ -1,5 +1,7 @@
 #include "GameStates.h"
 
+#include "LevelLoader.h"
+
 #include "InputCommandLinker.h"
 #include "Renderer.h"
 #include "SceneManager.h"
@@ -33,16 +35,19 @@ void LevelState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(173, 173, 173));
 
-	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Demo level"].get();
-	engine::sceneManager::currentScene->EnableUpdates(true);
-	engine::sceneManager::currentScene->GetObject("timer")->GetComponent<engine::TimerComponent>()->Reset();
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Level Statics"].get());
+	engine::sceneManager::currentScenes[0]->EnableUpdates(true);
+	engine::sceneManager::currentScenes[0]->GetObject("timer")->GetComponent<engine::TimerComponent>()->Reset();
+
+	levelLoader::LoadLevel("../Data/STAGE " + std::to_string(m_CurrentLevel) + ".json");
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Level Dynamics"].get());
 
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelBackground.mp3", true);
 	collisionSystem::collisionHandler.AddObserver(this);
 	collisionSystem::collisionHandler.AddObserver(&BombController::GetInstance());
 
 	// add player commands
-	auto obj = engine::sceneManager::currentScene->GetObject("player1");
+	auto obj = engine::sceneManager::currentScenes[0]->GetObject("player1");
 	if (obj != nullptr)
 	{
 		// reset player
@@ -62,13 +67,16 @@ void LevelState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
 
-	engine::sceneManager::currentScene->EnableUpdates(false);
+	engine::sceneManager::currentScenes[0]->EnableUpdates(false);
+	engine::sceneManager::currentScenes[1]->EnableUpdates(false);
 
 	collisionSystem::collisionHandler.RemoveObserver(this);
 	collisionSystem::collisionHandler.RemoveObserver(&BombController::GetInstance());
 
+	BombController::GetInstance().ClearBombCount();
+
 	// remove player commands
-	auto obj = engine::sceneManager::currentScene->GetObject("player1");
+	auto obj = engine::sceneManager::currentScenes[0]->GetObject("player1");
 	if (obj != nullptr)
 	{
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held);

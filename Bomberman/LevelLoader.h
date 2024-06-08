@@ -3,11 +3,24 @@
 #include <string>
 #include <vector>
 
+#include <json.hpp>
 #include <glm/glm.hpp>
+
+#include "Scene.h"
+#include "GameObject.h"
+
+using json = nlohmann::json;
 
 namespace levelLoader
 {
-	static void LoadLevel(std::string& filePath);
+	void LoadLevel(const std::string filePath);
 
-	static std::vector<glm::vec2> m_UsedPositions;
+	static void CreateSoftBlocks(engine::GameObject* parent, engine::Scene& scene, int count);
+	static glm::vec2 CreateDoor(engine::GameObject* parent, engine::Scene& scene);
+	static void CreatePowerUp(engine::GameObject* parent, engine::Scene& scene, std::string type, glm::vec2 doorPos);
+	static void CreateEnemies(engine::GameObject* parent, engine::Scene& scene, const json& enemiesCollection);
+
+	static glm::vec2 GetFreePosition();
+
+	extern std::vector<glm::vec2> m_UsedPositions;
 }

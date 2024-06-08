@@ -24,7 +24,7 @@ void LevelLoadingState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
 
-	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Level loading"].get();
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Level loading"].get());
 	auto text = engine::sceneManager::sceneMap["Level loading"].get()->GetObject("level text");
 	text->GetComponent<engine::TextComponent>()->SetText("STAGE " + std::to_string(m_CurrentLevel));
 
@@ -34,4 +34,5 @@ void LevelLoadingState::OnEnter()
 void LevelLoadingState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+	engine::sceneManager::currentScenes.clear();
 }

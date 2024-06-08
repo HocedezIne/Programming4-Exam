@@ -5,16 +5,17 @@
 #include "Singleton.h"
 #include "GameObject.h"
 #include "Observer.h"
+#include "Scene.h"
 
 namespace enemyController
 {
 	class EnemyController : public engine::Singleton<EnemyController>, public engine::Subject
 	{
 	public:
-		void AddBalloomEnemy(int column, int row);
-		void AddOnealEnemy(int column, int row);
-		void AddDollEnemy(int column, int row);
-		void AddMinvoEnemy(int column, int row);
+		void AddBalloomEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene);
+		void AddOnealEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene);
+		void AddDollEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene);
+		void AddMinvoEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene);
 
 		void KillEnemy(engine::GameObject* enemy);
 
@@ -24,8 +25,8 @@ namespace enemyController
 
 	private:
 		template <typename StartState>
-		void AddEnemy(int column, int row, const std::string& name, int points,
-			float speed, float chasingDistance = 0.f);
+		void AddEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene, 
+			const std::string& name, int points, float speed, float chasingDistance = 0.f);
 
 		int m_Count{};
 		std::vector<engine::GameObject*> m_Players;

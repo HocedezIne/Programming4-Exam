@@ -33,4 +33,5 @@ void LevelWonState::OnEnter()
 void LevelWonState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+	engine::sceneManager::currentScenes.clear();
 }

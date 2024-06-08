@@ -1,0 +1,22 @@
+{
+   "soft blocks count":55,
+   "power up":"BOMB UP",
+   "enemies":[
+      {
+         "type":"balloom",
+         "count":1
+      },
+      {
+         "type":"oneal",
+         "count":1
+      },
+      {
+         "type":"doll",
+         "count":2
+      },
+      {
+         "type":"minvo",
+         "count":2
+      }
+   ]
+}

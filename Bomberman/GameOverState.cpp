@@ -21,11 +21,13 @@ void GameOverState::Update()
 void GameOverState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
-	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Game over"].get();
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Game over"].get());
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/GameOver.mp3", true);
 }
 
 void GameOverState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+
+	engine::sceneManager::currentScenes.clear();
 }

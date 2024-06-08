@@ -12,7 +12,7 @@
 GameStateInterface* LevelLostState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
-		if (std::any_cast<int>(engine::sceneManager::currentScene->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
+		if (std::any_cast<int>(engine::sceneManager::currentScenes[0]->GetObject("player1")->GetComponent<DataComponent>()->GetData("LEFT")) > 0)
 			return new LevelLoadingState();
 		else
 			return new GameOverState();
@@ -35,4 +35,5 @@ void LevelLostState::OnEnter()
 void LevelLostState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+	engine::sceneManager::currentScenes.clear();
 }

@@ -4,7 +4,7 @@
 namespace engine {
 	namespace sceneManager
 	{
-		Scene* currentScene{ nullptr };
+		std::vector<Scene*> currentScenes{};
 		std::map<std::string, std::unique_ptr<Scene>> sceneMap;
 
 		Scene& CreateScene(const std::string& name)
@@ -19,19 +19,19 @@ namespace engine {
 		void UpdateScenes()
 		{
 			if (sceneMap.find("") != sceneMap.end()) sceneMap[""]->Update();
-			currentScene->Update();
+			for(auto scene : currentScenes) scene->Update();
 		}
 
 		void RenderScenes()
 		{
 			if (sceneMap.find("") != sceneMap.end()) sceneMap[""]->Render();
-			currentScene->Render();
+			for (auto scene : currentScenes) scene->Render();
 		}
 
 		void HandleDeletion()
 		{
 			if (sceneMap.find("") != sceneMap.end()) sceneMap[""]->HandleDeletion();
-			currentScene->HandleDeletion();
+			for (auto scene : currentScenes) scene->HandleDeletion();
 		}
 	}
 }

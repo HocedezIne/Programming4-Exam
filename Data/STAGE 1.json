@@ -1,0 +1,10 @@
+{
+   "soft blocks count":50,
+   "power up":"FLAME UP",
+   "enemies":[
+      {
+         "type":"balloom",
+         "count":6
+      }
+   ]
+}

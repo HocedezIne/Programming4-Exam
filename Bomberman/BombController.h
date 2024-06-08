@@ -14,6 +14,7 @@ public:
 	
 	void ResetAllPowerups();
 	void ResetRemote() { m_RemoteEnabled = false; };
+	void ClearBombCount() { m_LiveBombs = 0; };
 
 private:
 	void ExplodeBomb(engine::GameObject* obj);

@@ -72,9 +72,9 @@ void HighScoreState::Update()
 void HighScoreState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
-	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Highscore menu"].get();
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Highscore menu"].get());
 
-	auto currentScore = std::any_cast<int>(engine::sceneManager::sceneMap["Demo level"].get()->GetObject("player1")->GetComponent<DataComponent>()->GetData("SCORE"));
+	auto currentScore = std::any_cast<int>(engine::sceneManager::sceneMap["Level Statics"].get()->GetObject("player1")->GetComponent<DataComponent>()->GetData("SCORE"));
 	engine::sceneManager::sceneMap["Highscore menu"].get()->GetObject("player1score")->GetComponent<engine::TextComponent>()->SetText(std::to_string(currentScore));
 
 	m_ScoreData = highscoreData::GetLeaderboardData();
@@ -91,12 +91,12 @@ void HighScoreState::OnEnter()
 		// create rank number
 		auto ranknumber = std::make_unique<engine::GameObject>(glm::vec3{ 148.f, yPos,0.f });
 		ranknumber->AddComponent(std::make_unique<engine::TextComponent>(ranknumber.get(), std::to_string(rank)));
-		engine::sceneManager::currentScene->Add("rank " + std::to_string(rank), std::move(ranknumber));
+		engine::sceneManager::currentScenes[0]->Add("rank " + std::to_string(rank), std::move(ranknumber));
 
 		// create score
 		auto score = std::make_unique<engine::GameObject>(glm::vec3{ 300.f, yPos,0.f });
 		score->AddComponent(std::make_unique<engine::TextComponent>(score.get(), std::to_string(m_ScoreData[rank - 1].first) + "00"));
-		engine::sceneManager::currentScene->Add("score " + std::to_string(rank), std::move(score));
+		engine::sceneManager::currentScenes[0]->Add("score " + std::to_string(rank), std::move(score));
 
 		// if name empty -> add controls and visulizers to change letters
 		if (m_ScoreData[rank - 1].second == "???")
@@ -107,17 +107,17 @@ void HighScoreState::OnEnter()
 			auto downcursor = std::make_unique<engine::GameObject>(glm::vec3{ 0.f, 48.f, 0.f });
 			downcursor->AddComponent(std::make_unique<engine::TextureComponent>(downcursor.get(), "Images/arrow down.png"));
 			downcursor->SetParent(upcursor.get(), false);
-			engine::sceneManager::currentScene->Add("downcursor", std::move(downcursor));
+			engine::sceneManager::currentScenes[0]->Add("downcursor", std::move(downcursor));
 
 			m_Cursors = upcursor.get();
-			engine::sceneManager::currentScene->Add("upcursor", std::move(upcursor));
+			engine::sceneManager::currentScenes[0]->Add("upcursor", std::move(upcursor));
 
 			auto leftcursor = std::make_unique<engine::GameObject>(glm::vec3{ 492.f, yPos, 0.f });
 			leftcursor->AddComponent(std::make_unique<engine::TextureComponent>(leftcursor.get(), "Images/arrow left.png"));
-			engine::sceneManager::currentScene->Add("leftcursor", std::move(leftcursor));
+			engine::sceneManager::currentScenes[0]->Add("leftcursor", std::move(leftcursor));
 			auto rightcursor = std::make_unique<engine::GameObject>(glm::vec3{ 572.f, yPos, 0.f });
 			rightcursor->AddComponent(std::make_unique<engine::TextureComponent>(rightcursor.get(), "Images/arrow right.png"));
-			engine::sceneManager::currentScene->Add("rightcursor", std::move(rightcursor));
+			engine::sceneManager::currentScenes[0]->Add("rightcursor", std::move(rightcursor));
 
 			auto name = std::make_unique<engine::GameObject>(glm::vec3{ 516.f, yPos,0.f });
 			auto sc = std::make_unique<DataComponent>(name.get());
@@ -126,7 +126,7 @@ void HighScoreState::OnEnter()
 			name->AddComponent(std::move(sc));
 
 			m_Name = name.get();
-			engine::sceneManager::currentScene->Add("currName", std::move(name));
+			engine::sceneManager::currentScenes[0]->Add("currName", std::move(name));
 
 			m_CurrScoreIdx = static_cast<uint8_t>(rank - 1);
 		}
@@ -134,33 +134,33 @@ void HighScoreState::OnEnter()
 		{
 			auto name = std::make_unique<engine::GameObject>(glm::vec3{ 516.f, yPos,0.f });
 			name->AddComponent(std::make_unique<engine::TextComponent>(name.get(), m_ScoreData[rank - 1].second));
-			engine::sceneManager::currentScene->Add("name " + std::to_string(rank), std::move(name));
+			engine::sceneManager::currentScenes[0]->Add("name " + std::to_string(rank), std::move(name));
 		}
 	}
 }
 
 void HighScoreState::OnExit()
 {
-	engine::sceneManager::currentScene->Remove("upcursor");
-	engine::sceneManager::currentScene->Remove("downcursor");
-	engine::sceneManager::currentScene->Remove("leftcursor");
-	engine::sceneManager::currentScene->Remove("rightcursor");
+	engine::sceneManager::currentScenes[0]->Remove("upcursor");
+	engine::sceneManager::currentScenes[0]->Remove("downcursor");
+	engine::sceneManager::currentScenes[0]->Remove("leftcursor");
+	engine::sceneManager::currentScenes[0]->Remove("rightcursor");
 
 	for (int rank{ 1 }; rank < std::min(6, static_cast<int>(std::ssize(m_ScoreData)) + 1); ++rank)
 	{
-		engine::sceneManager::currentScene->Remove("rank " + std::to_string(rank));
-		engine::sceneManager::currentScene->Remove("score " + std::to_string(rank));
+		engine::sceneManager::currentScenes[0]->Remove("rank " + std::to_string(rank));
+		engine::sceneManager::currentScenes[0]->Remove("score " + std::to_string(rank));
 
 		if (m_ScoreData[rank - 1].second == "???")
 		{
-			m_ScoreData[rank - 1].second = std::any_cast<std::string>(engine::sceneManager::currentScene->GetObject("currName")->GetComponent< DataComponent>()->GetData("currName"));
+			m_ScoreData[rank - 1].second = std::any_cast<std::string>(engine::sceneManager::currentScenes[0]->GetObject("currName")->GetComponent< DataComponent>()->GetData("currName"));
 			if (m_ScoreData[rank - 1].second == "???") m_ScoreData[rank + 1].second = "UNK";
-			engine::sceneManager::currentScene->Remove("currName");
+			engine::sceneManager::currentScenes[0]->Remove("currName");
 		}
-		else engine::sceneManager::currentScene->Remove("name " + std::to_string(rank));
+		else engine::sceneManager::currentScenes[0]->Remove("name " + std::to_string(rank));
 	}
 
-	engine::sceneManager::currentScene->HandleDeletion();
+	engine::sceneManager::currentScenes[0]->HandleDeletion();
 
 	if (m_ScoreData.size() > 5)
 		m_ScoreData.erase(m_ScoreData.begin() + 5, m_ScoreData.end());
@@ -168,4 +168,5 @@ void HighScoreState::OnExit()
 	highscoreData::SaveLeaderboardData(m_ScoreData);
 
 	m_CurrentLevel = 1;
+	engine::sceneManager::currentScenes.clear();
 }

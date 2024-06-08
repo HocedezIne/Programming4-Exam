@@ -1,0 +1,18 @@
+{
+   "soft blocks count":50,
+   "power up":"REMOTE CONTROL",
+   "enemies":[
+      {
+         "type":"balloom",
+         "count":2
+      },
+      {
+         "type":"oneal",
+         "count":2
+      },
+      {
+         "type":"doll",
+         "count":2
+      }
+   ]
+}

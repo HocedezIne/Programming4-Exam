@@ -21,11 +21,13 @@ void GameWonState::Update()
 void GameWonState::OnEnter()
 {
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
-	engine::sceneManager::currentScene = engine::sceneManager::sceneMap["Game won"].get();
+	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Game won"].get());
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/GameWon.mp3", true);
 }
 
 void GameWonState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
+
+	engine::sceneManager::currentScenes.clear();
 }
