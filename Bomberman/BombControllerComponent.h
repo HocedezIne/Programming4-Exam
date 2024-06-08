@@ -1,12 +1,16 @@
 #pragma once
 
-#include "Singleton.h"
+#include "Component.h"
 #include "GameObject.h"
 #include "Observer.h"
 
-class BombController : public engine::Singleton<BombController>, public engine::Observer
+class BombControllerComponent : public engine::Component, public engine::Observer
 {
 public:
+	BombControllerComponent(engine::GameObject* owner) : engine::Component(owner)
+	{};
+	virtual ~BombControllerComponent() = default;
+
 	virtual void OnNotify(engine::Event event, void* caller, const std::any& args) override;
 
 	void AddBomb(const glm::vec3 pos);

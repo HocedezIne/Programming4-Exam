@@ -91,9 +91,6 @@
     <ClCompile Include="HighScoreState.cpp">
       <Filter>States\Game</Filter>
     </ClCompile>
-    <ClCompile Include="BombController.cpp">
-      <Filter>Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyController.cpp">
       <Filter>Controllers</Filter>
     </ClCompile>
@@ -105,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="GameModeSelectState.cpp">
       <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="BombControllerComponent.cpp">
+      <Filter>Engine Extensions\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +138,6 @@
     <ClInclude Include="HighscoreData.h">
       <Filter>HighscoreSaving</Filter>
     </ClInclude>
-    <ClInclude Include="BombController.h">
-      <Filter>Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyController.h">
       <Filter>Controllers</Filter>
     </ClInclude>
@@ -149,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="BombControllerComponent.h">
+      <Filter>Engine Extensions\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

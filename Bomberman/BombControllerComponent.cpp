@@ -1,4 +1,4 @@
-#include "BombController.h"
+#include "BombControllerComponent.h"
 
 #include <memory>
 
@@ -11,7 +11,7 @@
 #include "TimerComponent.h"
 #include "TextureComponent.h"
 
-void BombController::OnNotify(engine::Event event, void* caller, const std::any& /*args*/)
+void BombControllerComponent::OnNotify(engine::Event event, void* caller, const std::any& /*args*/)
 {
 	switch (event)
 	{
@@ -51,13 +51,13 @@ void BombController::OnNotify(engine::Event event, void* caller, const std::any&
 	}
 }
 
-void BombController::ResetAllPowerups()
+void BombControllerComponent::ResetAllPowerups()
 {
 	m_ExplosionSize = m_DefaultExplosionSize;
 	m_MaxBombCount = m_DefaultMaxBombCount;
 }
 
-void BombController::AddBomb(const glm::vec3 pos)
+void BombControllerComponent::AddBomb(const glm::vec3 pos)
 {
 	if (m_LiveBombs < m_MaxBombCount)
 	{
@@ -83,11 +83,11 @@ void BombController::AddBomb(const glm::vec3 pos)
 
 		m_Bombs.push_back(bomb.get());
 
-		scene->Add("bomb " + std::to_string(m_LiveBombs), std::move(bomb));
+		scene->Add("bomb " + std::to_string(rand()%256), std::move(bomb));
 	}
 }
 
-void BombController::ExplodeBomb(engine::GameObject* obj)
+void BombControllerComponent::ExplodeBomb(engine::GameObject* obj)
 {
 	if (obj->GetChildren().empty())
 	{

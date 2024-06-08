@@ -9,6 +9,7 @@
 #include "CollisionSystem.h"
 #include "EnemyController.h"
 
+#include "BombControllerComponent.h"
 #include "ColliderComponent.h"
 #include "DataComponent.h"
 #include "FPSComponent.h"
@@ -36,6 +37,10 @@ namespace levelLoader
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman 2.png"));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
+
+			auto bc = std::make_unique<BombControllerComponent>(go.get());
+			collisionSystem::collisionHandler.AddObserver(bc.get());
+			go->AddComponent(std::move(bc));
 
 			auto sc = std::make_unique<DataComponent>(go.get());
 			sc->AddDataMapping("LEFT", 3);
@@ -67,6 +72,10 @@ namespace levelLoader
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png"));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
+
+			auto bc = std::make_unique<BombControllerComponent>(go.get());
+			collisionSystem::collisionHandler.AddObserver(bc.get());
+			go->AddComponent(std::move(bc));
 
 			auto sc = std::make_unique<DataComponent>(go.get());
 			sc->AddDataMapping("LEFT", 3);
@@ -100,6 +109,10 @@ namespace levelLoader
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 
+			auto bc = std::make_unique<BombControllerComponent>(go.get());
+			collisionSystem::collisionHandler.AddObserver(bc.get());
+			go->AddComponent(std::move(bc));
+
 			auto sc = std::make_unique<DataComponent>(go.get());
 			sc->AddDataMapping("LEFT", 3);
 			collisionSystem::collisionHandler.AddObserver(sc.get());
@@ -119,7 +132,7 @@ namespace levelLoader
 			go = std::make_unique<engine::GameObject>(glm::vec3{ 32.f, 16.f, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/balloom.png"));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 
 			sc = std::make_unique<DataComponent>(go.get());
 			sc->AddDataMapping("LEFT", 3);
@@ -283,7 +296,7 @@ namespace levelLoader
 
 	static void CreateSoftBlocks(engine::GameObject* parent, engine::Scene& scene, int count)
 	{
-		for (int posIdx{static_cast<int>(m_UsedPositions.size()-3)}; posIdx < static_cast<int>(m_UsedPositions.size()); ++posIdx)
+		for (int posIdx{static_cast<int>(m_UsedPositions.size()-2)}; posIdx < static_cast<int>(m_UsedPositions.size()); ++posIdx)
 		{
 			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_UsedPositions[posIdx], 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));

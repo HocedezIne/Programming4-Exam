@@ -5,8 +5,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-#include "BombController.h"
-
+#include "BombControllerComponent.h"
 #include "DataComponent.h"
 
 GameStateInterface* LevelLostState::HandleInput()
@@ -34,7 +33,20 @@ void LevelLostState::OnEnter()
 {
 	m_PlayMusic = true;
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDeath.wav", false);
-	BombController::GetInstance().ResetRemote();
+
+	auto scene = engine::sceneManager::currentScenes[0];
+	switch (m_GameMode)
+	{
+	case GameMode::Coop:
+		scene->GetObject("player2")->GetComponent<BombControllerComponent>()->ResetRemote();
+
+	case GameMode::Vs:
+	case GameMode::Single:
+		scene->GetObject("player1")->GetComponent<BombControllerComponent>()->ResetRemote();
+		break;
+	default:
+		break;
+	}
 }
 
 void LevelLostState::OnExit()

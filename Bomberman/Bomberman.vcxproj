@@ -187,7 +187,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BombController.cpp" />
+    <ClCompile Include="BombControllerComponent.cpp" />
     <ClCompile Include="Bomberman.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
@@ -214,7 +214,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
   <ItemGroup>
     <ClInclude Include="ConstantWalkingBehaviour.h" />
     <ClInclude Include="BombCommands.h" />
-    <ClInclude Include="BombController.h" />
+    <ClInclude Include="BombControllerComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="EnemyController.h" />

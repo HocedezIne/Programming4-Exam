@@ -2,7 +2,7 @@
 
 #include "InputCommands.h"
 
-#include "BombController.h"
+#include "BombControllerComponent.h"
 
 class PlaceBombCommand : public engine::GameObjectInputCommand
 {
@@ -21,17 +21,17 @@ public:
 		bombPos.x = std::roundf(bombPos.x / m_GridSize) * m_GridSize;
 		bombPos.y = std::roundf(bombPos.y / m_GridSize) * m_GridSize;
 
-		BombController::GetInstance().AddBomb(bombPos);
+		GetGameObject()->GetComponent<BombControllerComponent>()->AddBomb(bombPos);
 	};
 
 private:
 	const int m_GridSize;
 };
 
-class DetonateCommand : public engine::InputCommand
+class DetonateCommand : public engine::GameObjectInputCommand
 {
 public:
-	DetonateCommand() = default;
+	DetonateCommand(engine::GameObject* go) : engine::GameObjectInputCommand(go) {};
 
 	virtual ~DetonateCommand() = default;
 
@@ -41,6 +41,6 @@ public:
 	DetonateCommand& operator=(DetonateCommand&& other) = delete;
 
 	virtual void Execute() override {
-		BombController::GetInstance().ExplodeAllBombs();
+		GetGameObject()->GetComponent<BombControllerComponent>()->ExplodeAllBombs();
 	};
 };

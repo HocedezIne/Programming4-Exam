@@ -7,8 +7,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-#include "BombController.h"
-
 #include "TextComponent.h"
 
 GameStateInterface* StartMenuState::HandleInput()
@@ -49,8 +47,6 @@ void StartMenuState::OnEnter()
 void StartMenuState::OnExit()
 {
 	engine::ServiceLocator::GetSoundSystem().StopAllSound();
-
-	BombController::GetInstance().ResetAllPowerups();
 
 	engine::sceneManager::currentScenes.clear();
 

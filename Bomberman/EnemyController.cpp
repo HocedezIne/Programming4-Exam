@@ -67,7 +67,7 @@ namespace enemyController
 
 		if (m_Count == 0)
 		{
-			auto data = engine::sceneManager::sceneMap["Demo level"].get()->GetObject("door")->GetComponent<DataComponent>()->GetData("BLOCKED");
+			auto data = engine::sceneManager::sceneMap["Level Dynamic"].get()->GetObject("door")->GetComponent<DataComponent>()->GetData("BLOCKED");
 			auto result = std::any_cast<bool>(data);
 			if(result == false)
 				engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/BombermanDoorUnlock.wav", false);
