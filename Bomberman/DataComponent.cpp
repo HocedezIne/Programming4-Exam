@@ -37,8 +37,11 @@ void DataComponent::OnNotify(engine::Event event, void* caller, const std::any& 
 		break;
 	}
 	case engine::Event::EnemyDied:
-		UpdateData("SCORE", std::any_cast<int>(GetData("SCORE")) + std::any_cast<int>(args));
+	{
+		auto obj = static_cast<engine::GameObject*>(caller);
+		if (obj == GetOwner()) UpdateData("SCORE", std::any_cast<int>(GetData("SCORE")) + std::any_cast<int>(args));
 		break;
+	}
 	default:
 		break;
 	}

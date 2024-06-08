@@ -5,6 +5,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+#include "TextComponent.h"
+
 GameStateInterface* GameOverState::HandleInput()
 {
 	if (m_TimeToStateSwitch <= 0.f)
@@ -23,6 +25,8 @@ void GameOverState::OnEnter()
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
 	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Game over"].get());
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/GameOver.mp3", true);
+
+	if (m_GameMode == GameMode::Vs) engine::sceneManager::currentScenes[0]->GetObject("game over text")->GetComponent<engine::TextComponent>()->SetText("PLAYER 2 WON");
 }
 
 void GameOverState::OnExit()

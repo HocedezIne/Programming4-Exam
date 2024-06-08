@@ -17,7 +17,7 @@ namespace enemyController
 		void AddDollEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene);
 		void AddMinvoEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene);
 
-		void KillEnemy(engine::GameObject* enemy);
+		void KillEnemy(engine::GameObject* enemy, engine::GameObject* player);
 
 		void SetPlayers(const std::vector<engine::GameObject*> players) { m_Players = players; };
 

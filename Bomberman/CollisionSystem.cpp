@@ -64,9 +64,11 @@ namespace collisionSystem
 			switch (otherCollider->m_CollisionType)
 			{
 			case CollisionType::Explosion:
-				enemyController::EnemyController::GetInstance().KillEnemy(currCollider->GetOwner());
+			{
+				auto player = std::any_cast<engine::GameObject*>(otherCollider->GetOwner()->GetComponent<DataComponent>()->GetData("PLAYER"));
+				enemyController::EnemyController::GetInstance().KillEnemy(currCollider->GetOwner(), player);
 				break;
-
+			}
 			case CollisionType::Wall:
 			case CollisionType::Block:
 			case CollisionType::Destructable:

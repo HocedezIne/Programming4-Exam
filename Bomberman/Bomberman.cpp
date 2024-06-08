@@ -8,27 +8,21 @@
 #endif
 
 #include "Minigin.h"
-#include "SceneManager.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
+
 #include "InputCommandLinker.h"
-#include "GameObject.h"
+#include "Renderer.h"
+#include "SceneManager.h"
 #include "Scene.h"
+
+#include "ResourceManager.h"
 #include "ServiceLocator.h"
 #include "SoundSystemService.h"
+
+#include "GameObject.h"
 #include "StateComponent.h"
-#include "CollisionSystem.h"
-#include "EnemyController.h"
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
-#include "FPSComponent.h"
-#include "TimerComponent.h"
-#include "DataComponent.h"
-#include "UILinkingComponent.h"
-#include "ColliderComponent.h"
-
-#include "HighscoreData.h"
 
 void load()
 {

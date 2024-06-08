@@ -56,11 +56,11 @@ namespace enemyController
 		AddEnemy<WalkTillChasing>(pos, parent, scene, "minvo", 800, 75.f);
 	}
 
-	void EnemyController::KillEnemy(engine::GameObject* enemy)
+	void EnemyController::KillEnemy(engine::GameObject* enemy, engine::GameObject* player)
 	{
 		--m_Count;
 
-		NotifyObservers(engine::Event::EnemyDied, nullptr,
+		NotifyObservers(engine::Event::EnemyDied, player,
 			enemy->GetComponent<DataComponent>()->GetData("POINTS"));
 
 		enemy->MarkDeletion();
