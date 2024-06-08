@@ -44,9 +44,9 @@ namespace levelLoader
 			json j;
 			f >> j;
 
+			CreateDoor(parent, levelDynamicScene);
+			CreatePowerUp(parent, levelDynamicScene, j["power up"]);
 			CreateSoftBlocks(parent, levelDynamicScene, j["soft blocks count"]);
-			auto doorPos = CreateDoor(parent, levelDynamicScene);
-			CreatePowerUp(parent, levelDynamicScene, j["power up"], doorPos);
 			CreateEnemies(parent, levelDynamicScene, j["enemies"]);
 
 			f.close();
@@ -68,6 +68,7 @@ namespace levelLoader
 			pos = { randX * 16.f, randY * 16.f };
 
 			foundFree = std::find(m_UsedPositions.begin(), m_UsedPositions.end(), pos) == m_UsedPositions.end();
+			if(pos == glm::vec2{ 32.f,16.f } || pos == glm::vec2{ 16.f, 32.f }) foundFree = false;
 		} while (!foundFree);
 
 		m_UsedPositions.push_back(pos);
@@ -76,7 +77,17 @@ namespace levelLoader
 
 	static void CreateSoftBlocks(engine::GameObject* parent, engine::Scene& scene, int count)
 	{
-		for (int idx = 0; idx < count; idx++)
+		for (int posIdx{static_cast<int>(m_UsedPositions.size()-3)}; posIdx < static_cast<int>(m_UsedPositions.size()); ++posIdx)
+		{
+			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_UsedPositions[posIdx], 0.f });
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
+			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
+			go->SetParent(parent, false);
+			scene.Add("destructible covering" + std::to_string(posIdx), std::move(go));
+		}
+
+		for (int idx = 0; idx < count-2; idx++)
 		{
 			glm::vec3 pos{ GetFreePosition(), 0 };
 
@@ -89,11 +100,11 @@ namespace levelLoader
 		}
 	}
 
-	static glm::vec2 CreateDoor(engine::GameObject* parent, engine::Scene& scene)
+	static void CreateDoor(engine::GameObject* parent, engine::Scene& scene)
 	{
-		auto& pos = m_UsedPositions[rand() % m_UsedPositions.size()];
+		glm::vec3 pos{ GetFreePosition(), 0 };
 
-		auto go = std::make_unique<engine::GameObject>(glm::vec3(pos, 0.f));
+		auto go = std::make_unique<engine::GameObject>(pos);
 		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/door.png"));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Door));
@@ -102,24 +113,18 @@ namespace levelLoader
 		go->AddComponent<DataComponent>(std::move(sc));
 		go->SetParent(parent, false);
 		scene.Add("door", std::move(go));
-
-		return pos;
 	}
 
-	static void CreatePowerUp(engine::GameObject* parent, engine::Scene& scene, std::string type, glm::vec2 doorPos)
+	static void CreatePowerUp(engine::GameObject* parent, engine::Scene& scene, std::string type)
 	{
-		glm::vec2 pos{};
-		do
-		{
-			pos = m_UsedPositions[rand() % m_UsedPositions.size()];
-		} while (pos == doorPos);
+		glm::vec3 pos{ GetFreePosition(), 0 };
 
 		std::string lowercaseType{};
 		lowercaseType.resize(type.size());
 		std::transform(type.begin(), type.end(), lowercaseType.begin(),
 			[](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 
-		auto go = std::make_unique<engine::GameObject>(glm::vec3(16.f * 6, 16.f * 3, 0.f));
+		auto go = std::make_unique<engine::GameObject>(pos);
 		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + lowercaseType + ".png"));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::PowerUp));

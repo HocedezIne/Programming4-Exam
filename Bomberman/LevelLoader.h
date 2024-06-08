@@ -16,8 +16,8 @@ namespace levelLoader
 	void LoadLevel(const std::string filePath);
 
 	static void CreateSoftBlocks(engine::GameObject* parent, engine::Scene& scene, int count);
-	static glm::vec2 CreateDoor(engine::GameObject* parent, engine::Scene& scene);
-	static void CreatePowerUp(engine::GameObject* parent, engine::Scene& scene, std::string type, glm::vec2 doorPos);
+	static void CreateDoor(engine::GameObject* parent, engine::Scene& scene);
+	static void CreatePowerUp(engine::GameObject* parent, engine::Scene& scene, std::string type);
 	static void CreateEnemies(engine::GameObject* parent, engine::Scene& scene, const json& enemiesCollection);
 
 	static glm::vec2 GetFreePosition();
