@@ -194,6 +194,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="ControlsMenuState.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="EnemyStateInterface.cpp" />
+    <ClCompile Include="GameModeSelectState.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="GameWonState.cpp" />

@@ -98,6 +98,35 @@ void load()
 	startScene.Add("nintendo", std::move(textLine));
 #pragma endregion StartMenu
 
+#pragma region GameModeSelect
+	auto& gmScene = engine::sceneManager::CreateScene("Game mode selection");
+
+	text = std::make_unique<engine::GameObject>(glm::vec3{ 175.f,50.f,0.f });
+	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "PICK A GAME MODE"));
+	gmScene.Add("text", std::move(text));
+
+	auto cursorRight = std::make_unique<engine::GameObject>(glm::vec3{ 176.f, 175.f, 0.f });
+	cursorRight->AddComponent(std::make_unique<engine::TextureComponent>(cursorRight.get(), "Images/arrow right.png"));
+	auto cursorLeft = std::make_unique<engine::GameObject>(glm::vec3{ 269.f, 0.f, 0.f });
+	cursorLeft->AddComponent(std::make_unique<engine::TextureComponent>(cursorLeft.get(), "Images/arrow left.png"));
+	cursorLeft->SetParent(cursorRight.get(), false);
+	gmScene.Add("cursorLeft", std::move(cursorLeft));
+	gmScene.Add("cursors", std::move(cursorRight));
+
+	text = std::make_unique<engine::GameObject>(glm::vec3{ 200.f, 175.f, 0.f });
+	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "SINGLE PLAYER"));
+	gmScene.Add("single", std::move(text));
+
+	text = std::make_unique<engine::GameObject>(glm::vec3{ 275.f,239.f,0.f });
+	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "CO-OP"));
+	gmScene.Add("coop", std::move(text));
+
+	text = std::make_unique<engine::GameObject>(glm::vec3{ 267.f,303.f,0.f });
+	text->AddComponent(std::make_unique<engine::TextComponent>(text.get(), "VERSUS"));
+	gmScene.Add("versus", std::move(text));
+
+#pragma endregion GameModeSelect
+
 #pragma region Controls
 	auto& controlsMenu = engine::sceneManager::CreateScene("Controls menu");
 	auto fontBig = engine::ResourceManager::GetInstance().LoadFont("Fonts/nes-arcade-font-monospace.otf", 24);

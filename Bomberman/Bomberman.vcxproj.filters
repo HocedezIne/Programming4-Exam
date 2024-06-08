@@ -103,6 +103,9 @@
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Loader</Filter>
     </ClCompile>
+    <ClCompile Include="GameModeSelectState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionSystem.h">

@@ -17,7 +17,7 @@ GameStateInterface* StartMenuState::HandleInput()
 
 	if (input.IsKeyDown(SDL_SCANCODE_RETURN) || input.IsButtonDown(engine::Controller::Button::A))
 	{
-		if (m_Cursor->GetLocalPosition() == m_Start) return new LevelLoadingState();
+		if (m_Cursor->GetLocalPosition() == m_Start) return new GameModeSelectState();
 		else if (m_Cursor->GetLocalPosition() == m_Controls) return new ControlsMenuState();
 	}
 

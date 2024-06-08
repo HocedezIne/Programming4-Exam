@@ -42,6 +42,18 @@ private:
 	const glm::vec3 m_Controls{ 320, 304, 0 };
 };
 
+class GameModeSelectState final : public GameStateInterface
+{
+public:
+	virtual GameStateInterface* HandleInput() override;
+	virtual void Update() override;
+	virtual void OnEnter() override;
+	virtual void OnExit() override;
+
+private:
+	engine::GameObject* m_Cursors{};
+};
+
 class LevelLoadingState final : public GameStateInterface
 {
 public:
