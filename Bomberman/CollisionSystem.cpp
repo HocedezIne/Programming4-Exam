@@ -25,7 +25,7 @@ namespace collisionSystem
 			{
 			case CollisionType::Enemy:
 			case CollisionType::Explosion:
-				NotifyObservers(engine::Event::PlayerDied, nullptr, std::any{});
+				NotifyObservers(engine::Event::PlayerDied, currCollider->GetOwner(), std::any{});
 				break;
 
 			case CollisionType::Wall:

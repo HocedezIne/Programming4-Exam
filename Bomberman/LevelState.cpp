@@ -39,7 +39,8 @@ void LevelState::OnEnter()
 	engine::sceneManager::currentScenes[0]->EnableUpdates(true);
 	engine::sceneManager::currentScenes[0]->GetObject("timer")->GetComponent<engine::TimerComponent>()->Reset();
 
-	levelLoader::LoadLevel("../Data/STAGE " + std::to_string(m_CurrentLevel) + ".json");
+	if (m_GameMode != GameMode::Vs)levelLoader::LoadLevel("../Data/STAGE " + std::to_string(m_CurrentLevel) + ".json");
+	else levelLoader::LoadLevel("../Data/Versus.json");
 	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Level Dynamics"].get());
 
 	engine::ServiceLocator::GetSoundSystem().PlaySound("../Data/Sounds/LevelBackground.mp3", true);
@@ -47,26 +48,70 @@ void LevelState::OnEnter()
 	collisionSystem::collisionHandler.AddObserver(&BombController::GetInstance());
 
 	// add player commands
-	auto obj = engine::sceneManager::currentScenes[0]->GetObject("player1");
-	if (obj != nullptr)
+	switch (m_GameMode)
 	{
+	case GameMode::Vs:
+	case GameMode::Coop:
+	{
+		auto p1 = engine::sceneManager::currentScenes[0]->GetObject("player1");
+
 		// reset player
-		obj->SetLocalPosition(glm::vec3{ 16, 16, 0.f });
+		p1->SetLocalPosition(glm::vec3{ 16, 16, 0.f });
 
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ -1.f,0.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,1.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 1.f,0.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj, 16));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ -1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(p1, 16));
 		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
-		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(obj));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(p1));
 
-		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ -1.f,0.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 0.f,1.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(obj, glm::vec3{ 1.f,0.f,0.f }, 50.f));
-		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(obj, 16));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,-1.f,0.f }, 50.f), 1);
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ -1.f,0.f,0.f }, 50.f), 1);
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,1.f,0.f }, 50.f), 1);
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 1.f,0.f,0.f }, 50.f), 1);
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(p1, 16), 1);
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed, std::make_unique<DetonateCommand>(), 1);
+
+		auto p2 = engine::sceneManager::currentScenes[0]->GetObject("player2");
+
+		// reset player
+		p2->SetLocalPosition(glm::vec3{ 32.f, 16, 0.f });
+
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p2, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p2, glm::vec3{ -1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p2, glm::vec3{ 0.f,1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p2, glm::vec3{ 1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(p2, 16));
 		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
+		break;
+	}
+
+	case GameMode::Single:
+	{
+		auto p1 = engine::sceneManager::currentScenes[0]->GetObject("player1");
+
+		// reset player
+		p1->SetLocalPosition(glm::vec3{ 16, 16, 0.f });
+
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ -1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(p1, 16));
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
+		engine::InputCommandLinker::GetInstance().AddKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed, std::make_unique<RespawnBombermanCommand>(p1));
+
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,-1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ -1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 0.f,1.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p1, glm::vec3{ 1.f,0.f,0.f }, 50.f));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed, std::make_unique<PlaceBombCommand>(p1, 16));
+		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed, std::make_unique<DetonateCommand>());
+		break;
+	}
+	default:
+		break;
 	}
 }
 
@@ -83,9 +128,10 @@ void LevelState::OnExit()
 	BombController::GetInstance().ClearBombCount();
 
 	// remove player commands
-	auto obj = engine::sceneManager::currentScenes[0]->GetObject("player1");
-	if (obj != nullptr)
+	switch (m_GameMode)
 	{
+	case GameMode::Coop:
+	case GameMode::Vs:
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held);
 		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held);
@@ -100,6 +146,32 @@ void LevelState::OnExit()
 		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held);
 		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed);
 		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed);
+
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, 1);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held, 1);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, 1);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held, 1);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed, 1);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed, 1);
+
+		break;
+	case GameMode::Single:
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_W, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_A, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_S, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_D, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_C, engine::KeyState::Pressed);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_X, engine::KeyState::Pressed);
+		engine::InputCommandLinker::GetInstance().RemoveKeyboardCommand(SDL_SCANCODE_R, engine::KeyState::Pressed);
+
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadRight, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::DPadDown, engine::KeyState::Held);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::A, engine::KeyState::Pressed);
+		engine::InputCommandLinker::GetInstance().RemoveControllerCommand(engine::Controller::Button::B, engine::KeyState::Pressed);
+	default:
+		break;
 	}
 }
 

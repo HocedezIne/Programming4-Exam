@@ -30,6 +30,8 @@ namespace engine
 
 		void AddKeyboard();
 		void AddController();
+		void RemoveKeyboard(unsigned int idx);
+		void RemoveController(unsigned int idx);
 
 		bool IsKeyDown(SDL_Scancode key);
 		bool IsButtonDown(Controller::Button button);

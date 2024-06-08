@@ -71,14 +71,47 @@ void HighScoreState::Update()
 
 void HighScoreState::OnEnter()
 {
+	engine::InputCommandLinker::GetInstance().RemoveController(1);
+
 	engine::Renderer::GetInstance().SetBackgroundColor(SDL_Color(0, 0, 0));
 	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Highscore menu"].get());
 
-	auto currentScore = std::any_cast<int>(engine::sceneManager::sceneMap["Level Statics"].get()->GetObject("player1")->GetComponent<DataComponent>()->GetData("SCORE"));
-	engine::sceneManager::sceneMap["Highscore menu"].get()->GetObject("player1score")->GetComponent<engine::TextComponent>()->SetText(std::to_string(currentScore));
+	int currentHighestPlayerScore{};
+	switch (m_GameMode)
+	{
+	case GameMode::Single:
+	{
+		currentHighestPlayerScore = std::any_cast<int>(engine::sceneManager::sceneMap["Level Statics"].get()->GetObject("player1")->GetComponent<DataComponent>()->GetData("SCORE"));
+		engine::sceneManager::sceneMap["Highscore menu"].get()->GetObject("player1score")->GetComponent<engine::TextComponent>()->SetText(std::to_string(currentHighestPlayerScore));
+
+		break;
+	}
+	case GameMode::Coop:
+	{
+		auto p1score = std::any_cast<int>(engine::sceneManager::sceneMap["Level Statics"].get()->GetObject("player1")->GetComponent<DataComponent>()->GetData("SCORE"));
+		engine::sceneManager::sceneMap["Highscore menu"].get()->GetObject("player1score")->GetComponent<engine::TextComponent>()->SetText(std::to_string(p1score));
+
+		auto p2score = std::any_cast<int>(engine::sceneManager::sceneMap["Level Statics"].get()->GetObject("player2")->GetComponent<DataComponent>()->GetData("SCORE"));
+		auto player2text = std::make_unique<engine::GameObject>(glm::vec3{ 150.f, 106.f,0.f });
+		player2text->AddComponent(std::make_unique<engine::TextComponent>(player2text.get(), "PLAYER 2 SCORE"));
+		engine::sceneManager::currentScenes[0]->Add("player2text", std::move(player2text));
+		auto player2score = std::make_unique<engine::GameObject>(glm::vec3{ 450.f, 106.f,0.f });
+		player2score->AddComponent(std::make_unique<engine::TextComponent>(player2score.get(), std::to_string(p2score)));
+		engine::sceneManager::currentScenes[0]->Add("player2score", std::move(player2score));
+
+		currentHighestPlayerScore = std::max(p1score, p2score);
+
+		break;
+	}
+	case GameMode::Vs:
+	default:
+		engine::sceneManager::sceneMap["Highscore menu"].get()->GetObject("player1text")->GetComponent<engine::TextComponent>()->SetText(" ");
+		engine::sceneManager::sceneMap["Highscore menu"].get()->GetObject("player1score")->GetComponent<engine::TextComponent>()->SetText(" ");
+		break;
+	}
 
 	m_ScoreData = highscoreData::GetLeaderboardData();
-	m_ScoreData.emplace_back(std::make_pair(static_cast<uint16_t>(currentScore / 100), "???"));
+	m_ScoreData.emplace_back(std::make_pair(static_cast<uint16_t>(currentHighestPlayerScore / 100), "???"));
 	std::sort(m_ScoreData.begin(), m_ScoreData.end(), [](const std::pair<uint16_t, std::string>& a, const std::pair<uint16_t, std::string>& b)
 		{
 			return a.first > b.first;

@@ -27,13 +27,15 @@ void DataComponent::RemoveDataMapping(const std::string& keyword)
 	m_DataMap.erase(keyword);
 }
 
-void DataComponent::OnNotify(engine::Event event, void* /*caller*/, const std::any& args)
-{
-	switch (event)
+void DataComponent::OnNotify(engine::Event event, void* caller, const std::any& args)
+{	switch (event)
 	{
 	case engine::Event::PlayerDied:
-		UpdateData("LEFT", std::any_cast<int>(GetData("LEFT")) - 1);
+	{
+		auto obj = static_cast<engine::GameObject*>(caller);
+		if (obj == GetOwner()) UpdateData("LEFT", std::any_cast<int>(GetData("LEFT")) - 1);
 		break;
+	}
 	case engine::Event::EnemyDied:
 		UpdateData("SCORE", std::any_cast<int>(GetData("SCORE")) + std::any_cast<int>(args));
 		break;

@@ -54,6 +54,36 @@ void engine::InputCommandLinker::AddController()
 	m_Controllers.push_back(std::make_unique<Controller>(int(m_Controllers.size())));
 }
 
+void engine::InputCommandLinker::RemoveKeyboard(unsigned int idx)
+{
+	for (auto it = m_KeyboardCommands.begin(); it != m_KeyboardCommands.end();)
+	{
+		// iterator.key.indexbuttonpair.index
+		if (it->first.first.first == idx)
+		{
+			it = m_KeyboardCommands.erase(it);
+		}
+		else ++it;
+	}
+
+	m_Keyboards.erase(m_Keyboards.begin() + idx);
+}
+
+void engine::InputCommandLinker::RemoveController(unsigned int idx)
+{
+	for (auto it = m_ControllerCommands.begin(); it != m_ControllerCommands.end();)
+	{
+		// iterator.key.indexbuttonpair.index
+		if (it->first.first.first == idx)
+		{
+			it = m_ControllerCommands.erase(it);
+		}
+		else ++it;
+	}
+
+	m_Controllers.erase(m_Controllers.begin() + idx);
+}
+
 bool engine::InputCommandLinker::IsKeyDown(SDL_Scancode key)
 {
 	for (int i{}; i < int(m_Keyboards.size()); ++i)

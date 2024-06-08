@@ -1,5 +1,7 @@
 #include "GameStates.h"
 
+#include "LevelLoader.h"
+
 #include "InputCommandLinker.h"
 #include "Renderer.h"
 #include "SceneManager.h"
@@ -52,21 +54,8 @@ void GameModeSelectState::OnExit()
 	pos.y -= 175.f;
 	m_GameMode = static_cast<GameMode>(static_cast<int>(pos.y / 64));
 
-	// create players per game mode
-	switch (m_GameMode)
-	{
-	case GameMode::Single:
-
-		break;
-	case GameMode::Coop:
-
-		break;
-	case GameMode::Vs:
-
-		break;
-	default:
-		break;
-	}
+	levelLoader::LoadStatics(m_GameMode);
+	if (m_GameMode != GameMode::Single) engine::InputCommandLinker::GetInstance().AddController();
 
 	engine::sceneManager::currentScenes.clear();
 }
