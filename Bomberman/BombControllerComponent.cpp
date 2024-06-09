@@ -111,10 +111,10 @@ void BombControllerComponent::ExplodeBomb(engine::GameObject* obj)
 				glm::vec3 pos;
 				switch (direction)
 				{
-				case 0: pos = glm::vec3{ levelLoader::m_GridSize * idx, 0, 0 }; break;
-				case 1: pos = glm::vec3{ 0, levelLoader::m_GridSize * idx, 0 }; break;
-				case 2: pos = glm::vec3{ -levelLoader::m_GridSize * idx, 0, 0 }; break;
-				case 3: pos = glm::vec3{ 0, -levelLoader::m_GridSize * idx, 0 }; break;
+				case 0: pos = glm::vec3{ levelLoader::m_GridSize * idx -1, 0, 0 }; break;
+				case 1: pos = glm::vec3{ 0, levelLoader::m_GridSize * idx -1, 0 }; break;
+				case 2: pos = glm::vec3{ -levelLoader::m_GridSize * idx+1, 0, 0 }; break;
+				case 3: pos = glm::vec3{ 0, -levelLoader::m_GridSize * idx+1, 0 }; break;
 				}
 
 				std::string textureDirection = (direction % 2 == 0) ? "horizontal" : "vertical";

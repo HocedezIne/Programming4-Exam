@@ -2,10 +2,13 @@
 
 #include <iostream>
 
+#include "SceneManager.h"
 #include "ServiceLocator.h"
-#include "GameObject.h"
-#include "DataComponent.h"
 #include "EnemyController.h"
+
+#include "GameObject.h"
+
+#include "DataComponent.h"
 
 namespace collisionSystem
 {
@@ -109,12 +112,38 @@ namespace collisionSystem
 			{
 			case CollisionType::Wall:
 			case CollisionType::Block:
-				currCollider->GetOwner()->MarkDeletion();
+			{
+				auto identifier = engine::sceneManager::currentScenes[1]->GetObjectIdentifier(currCollider->GetOwner());
+				auto toDelete = currCollider->GetOwner();
+				do
+				{
+					toDelete->MarkDeletion();
+					identifier = identifier.substr(0, identifier.find('.')) + "." + (++identifier.back());
+					toDelete = engine::sceneManager::currentScenes[1]->GetObject(identifier);
+				} while ( toDelete );
+
 				break;
+			}
 
 			case CollisionType::Destructable:
-				otherCollider->GetOwner()->MarkDeletion();
+			{
+				if (!otherCollider->GetOwner()->IsMarkedForDeletion())
+				{
+					otherCollider->GetOwner()->MarkDeletion();
+
+					bool firstSkip{ true };
+					auto identifier = engine::sceneManager::currentScenes[1]->GetObjectIdentifier(currCollider->GetOwner());
+					auto toDelete = currCollider->GetOwner();
+					do
+					{
+						if (!firstSkip)toDelete->MarkDeletion();
+						else firstSkip = false;
+						identifier = identifier.substr(0, identifier.find('.')) + "." + (++identifier.back());
+						toDelete = engine::sceneManager::currentScenes[1]->GetObject(identifier);
+					} while (toDelete);
+				}
 				break;
+			}
 
 			case CollisionType::Door:
 			{

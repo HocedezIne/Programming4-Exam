@@ -81,7 +81,7 @@ void LevelState::OnEnter()
 		auto p2 = engine::sceneManager::currentScenes[0]->GetObject("player2");
 
 		// reset player
-		p2->SetLocalPosition(glm::vec3{ levelLoader::m_GridSize*19, levelLoader::m_GridSize*11, 0.f });
+		p2->SetLocalPosition(glm::vec3{ levelLoader::m_GridSize*18, levelLoader::m_GridSize*10, 0.f });
 
 		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadUp, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p2, glm::vec3{ 0.f,-1.f,0.f }, 100.f));
 		engine::InputCommandLinker::GetInstance().AddControllerCommand(engine::Controller::Button::DPadLeft, engine::KeyState::Held, std::make_unique<engine::MoveInputCommand>(p2, glm::vec3{ -1.f,0.f,0.f }, 100.f));
