@@ -41,7 +41,10 @@ void LevelState::OnEnter()
 
 	engine::sceneManager::currentScenes.push_back(engine::sceneManager::sceneMap["Level Statics"].get());
 	engine::sceneManager::currentScenes[0]->EnableUpdates(true);
-	engine::sceneManager::currentScenes[0]->GetObject("timer")->GetComponent<engine::TimerComponent>()->Reset();
+	auto timer = engine::sceneManager::currentScenes[0]->GetObject("timer")->GetComponent<engine::TimerComponent>();
+	timer->Reset();
+	timer->AddObserver(this);
+
 
 	if (m_GameMode != GameMode::Vs)levelLoader::LoadLevel("../Data/STAGE " + std::to_string(m_CurrentLevel) + ".json");
 	else levelLoader::LoadLevel("../Data/Versus.json");
@@ -161,6 +164,8 @@ void LevelState::OnExit()
 	collisionSystem::collisionHandler.RemoveObserver(this);
 	enemyController::EnemyController::GetInstance().ClearEnemies();
 
+	engine::sceneManager::currentScenes[0]->GetObject("timer")->GetComponent<engine::TimerComponent>()->RemoveObserver(this);
+
 	switch (m_GameMode)
 	{
 	case GameMode::Coop:
@@ -239,5 +244,16 @@ void LevelState::OnNotify(engine::Event event, void* caller, const std::any& /*a
 		auto isDoorBlocked = std::any_cast<bool>(door->GetComponent<DataComponent>()->GetData("BLOCKED"));
 		if (enemyController::EnemyController::GetInstance().GetCount() == 0 && !isDoorBlocked && m_GameMode != GameMode::Vs)
 			m_Won = true;
+	}
+	if (event == engine::Event::TimerFinished)
+	{
+		m_Lost = true;
+		auto p1dc = engine::sceneManager::currentScenes[0]->GetObject("player1")->GetComponent<DataComponent>();
+		p1dc->UpdateData("LEFT", std::any_cast<int>(p1dc->GetData("LEFT")) - 1);
+		if (m_GameMode != GameMode::Single)
+		{
+			auto p2dc = engine::sceneManager::currentScenes[0]->GetObject("player2")->GetComponent<DataComponent>();
+			p2dc->UpdateData("LEFT", std::any_cast<int>(p2dc->GetData("LEFT")) - 1);
+		}
 	}
 }

@@ -216,7 +216,8 @@ namespace levelLoader
 #endif
 
 		auto go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 12.f, 0.f });
-		go->AddComponent<engine::TimerComponent>(std::make_unique<engine::TimerComponent>(go.get(), 200, true));
+		if(gameMode != GameMode::Vs) go->AddComponent<engine::TimerComponent>(std::make_unique<engine::TimerComponent>(go.get(), 200, true));
+		else go->AddComponent<engine::TimerComponent>(std::make_unique<engine::TimerComponent>(go.get(), 60, true));
 		LevelStaticScene.Add("timer", std::move(go));
 
 		auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{ -m_GridSize/2, 64.f,0.f });

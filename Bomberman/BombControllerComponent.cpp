@@ -127,7 +127,7 @@ void BombControllerComponent::ExplodeBomb(engine::GameObject* obj)
 				go->AddComponent(std::move(dc));
 
 				go->SetParent(obj, false);
-				engine::sceneManager::currentScenes[1]->Add(bombIdentifier + " explosion " + std::to_string(idx) + "." + std::to_string(direction), std::move(go));
+				engine::sceneManager::currentScenes[1]->Add(bombIdentifier + " explosion " + std::to_string(direction) + "." + std::to_string(idx), std::move(go));
 			}
 		}
 	}
