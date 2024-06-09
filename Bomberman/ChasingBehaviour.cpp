@@ -4,8 +4,7 @@ EnemyStateInterface* WalkTillChasing::HandleInput()
 {
 	for (int idx{}; idx < std::ssize(m_Players); ++idx)
 	{
-		auto distance = abs(m_Players[idx]->GetLocalPosition() - m_EnemyObject->GetLocalPosition());
-		if (glm::length(distance) < 5 * 16.f)
+		if (glm::distance(m_Players[idx]->GetLocalPosition(), m_EnemyObject->GetLocalPosition()) < m_ChasingDistance)
 		{
 			return new Chasing(m_Speed, m_EnemyObject, m_Players, m_ChasingDistance, idx);
 		}
@@ -18,8 +17,7 @@ EnemyStateInterface* Chasing::HandleInput()
 {
 	for (int idx{}; idx < std::ssize(m_Players); ++idx)
 	{
-		auto distance = abs(m_Players[idx]->GetLocalPosition() - m_EnemyObject->GetLocalPosition());
-		if (glm::length(distance) > 5 * 16.f)
+		if (glm::distance(m_Players[idx]->GetLocalPosition(), m_EnemyObject->GetLocalPosition()) < m_ChasingDistance)
 			return new WalkTillChasing(m_Speed, m_EnemyObject, m_Players, m_ChasingDistance);
 	}
 

@@ -38,7 +38,7 @@ namespace levelLoader
 			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize*2, m_GridSize, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman 2.png", glm::vec2{2.f,2.f}));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize() - 8.f, false, CollisionType::Player, glm::vec3{ 4.f,4.f,0.f }));
 
 			auto bc = std::make_unique<BombControllerComponent>(go.get());
 			collisionSystem::collisionHandler.AddObserver(bc.get());
@@ -73,7 +73,7 @@ namespace levelLoader
 			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, m_GridSize, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize()-8.f, false, CollisionType::Player, glm::vec3{4.f,4.f,0.f}));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize() - 8.f, false, CollisionType::Player, glm::vec3{ 4.f,4.f,0.f }));
 
 			auto bc = std::make_unique<BombControllerComponent>(go.get());
 			collisionSystem::collisionHandler.AddObserver(bc.get());
@@ -109,7 +109,7 @@ namespace levelLoader
 			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, m_GridSize, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize() - 8.f, false, CollisionType::Player, glm::vec3{ 4.f,4.f,0.f }));
 
 			auto bc = std::make_unique<BombControllerComponent>(go.get());
 			collisionSystem::collisionHandler.AddObserver(bc.get());
@@ -134,7 +134,7 @@ namespace levelLoader
 			go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, 40.f, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/balloom.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::PlayableEnemy));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize() - 8.f, false, CollisionType::PlayableEnemy, glm::vec3{ 4.f,4.f,0.f }));
 
 			sc = std::make_unique<DataComponent>(go.get());
 			sc->AddDataMapping("LEFT", 3);
@@ -278,8 +278,8 @@ namespace levelLoader
 		bool foundFree{ false };
 		do
 		{
-			int randX = rand() % 19 +1;
-			int randY = rand() % 11 +1;
+			int randX = (rand() % 19) +1;
+			int randY = (rand() % 11) +1;
 			pos = { randX * m_GridSize, randY * m_GridSize };
 
 			foundFree = std::find(m_UsedPositions.begin(), m_UsedPositions.end(), pos) == m_UsedPositions.end();

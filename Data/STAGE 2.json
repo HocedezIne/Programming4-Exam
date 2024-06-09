@@ -4,7 +4,7 @@
    "enemies":[
       {
          "type":"balloom",
-         "count":0
+         "count":3
       },
       {
          "type":"oneal",
