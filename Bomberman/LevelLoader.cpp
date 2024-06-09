@@ -20,6 +20,8 @@
 
 namespace levelLoader
 {
+	const float m_GridSize = 32.f;
+	const glm::vec2 m_Scale = { 2.f,2.f };
 	std::vector<glm::vec2> m_UsedPositions{};
 
 	static void LoadRequiredPlayers(GameMode gameMode)
@@ -33,8 +35,8 @@ namespace levelLoader
 		{
 		case GameMode::Coop:
 		{
-			auto go = std::make_unique<engine::GameObject>(glm::vec3{ 32.f, 16.f, 0.f });
-			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman 2.png"));
+			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize*2, m_GridSize, 0.f });
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman 2.png", glm::vec2{2.f,2.f}));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 
@@ -48,13 +50,13 @@ namespace levelLoader
 			collisionSystem::collisionHandler.AddObserver(sc.get());
 			enemyController::EnemyController::GetInstance().AddObserver(sc.get());
 
-			auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 52.f, 0.f));
+			auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 40.f, 0.f));
 			goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 			goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
 			collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
 			scene->Add("player2 lives", std::move(goUI));
 
-			goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 52.f, 0.f));
+			goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 40.f, 0.f));
 			goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 			goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "SCORE", sc.get(), StringFormat{ 2, '0', false }));
 			enemyController::EnemyController::GetInstance().AddObserver(goUI->GetComponent<UILinkingComponent>());
@@ -68,8 +70,8 @@ namespace levelLoader
 
 		case GameMode::Single:
 		{
-			auto go = std::make_unique<engine::GameObject>(glm::vec3{ 16.f, 16.f, 0.f });
-			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png"));
+			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, m_GridSize, 0.f });
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 
@@ -83,13 +85,13 @@ namespace levelLoader
 			collisionSystem::collisionHandler.AddObserver(sc.get());
 			enemyController::EnemyController::GetInstance().AddObserver(sc.get());
 
-			auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 20.f, 0.f));
+			auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 12.f, 0.f));
 			goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 			goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
 			collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
 			scene->Add("player1 lives", std::move(goUI));
 
-			goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 20.f, 0.f));
+			goUI = std::make_unique<engine::GameObject>(glm::vec3(350.f, 12.f, 0.f));
 			goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 			goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "SCORE", sc.get(), StringFormat{ 2, '0', false }));
 			enemyController::EnemyController::GetInstance().AddObserver(goUI->GetComponent<UILinkingComponent>());
@@ -104,8 +106,8 @@ namespace levelLoader
 		}
 		case GameMode::Vs:
 		{
-			auto go = std::make_unique<engine::GameObject>(glm::vec3{ 16.f, 16.f, 0.f });
-			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png"));
+			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, m_GridSize, 0.f });
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
 
@@ -118,7 +120,7 @@ namespace levelLoader
 			collisionSystem::collisionHandler.AddObserver(sc.get());
 			enemyController::EnemyController::GetInstance().AddObserver(sc.get());
 
-			auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 20.f, 0.f));
+			auto goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 12.f, 0.f));
 			goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 			goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
 			collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
@@ -129,8 +131,8 @@ namespace levelLoader
 			players.push_back(go.get());
 			scene->Add("player1", std::move(go));
 
-			go = std::make_unique<engine::GameObject>(glm::vec3{ 32.f, 16.f, 0.f });
-			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/balloom.png"));
+			go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, 40.f, 0.f });
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/balloom.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::PlayableEnemy));
 
@@ -139,7 +141,7 @@ namespace levelLoader
 			collisionSystem::collisionHandler.AddObserver(sc.get());
 			enemyController::EnemyController::GetInstance().AddObserver(sc.get());
 
-			goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 52.f, 0.f));
+			goUI = std::make_unique<engine::GameObject>(glm::vec3(500.f, 40.f, 0.f));
 			goUI->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(goUI.get(), "", font));
 			goUI->AddComponent<UILinkingComponent>(std::make_unique<UILinkingComponent>(goUI.get(), "LEFT", sc.get()));
 			collisionSystem::collisionHandler.AddObserver(goUI->GetComponent<UILinkingComponent>());
@@ -162,15 +164,15 @@ namespace levelLoader
 	{
 		m_UsedPositions.clear();
 
-		m_UsedPositions.push_back(glm::vec2{ 16.f, 16.f }); // bombermans position
+		m_UsedPositions.push_back(glm::vec2{ m_GridSize, m_GridSize }); // bombermans position
 		// indestructible blocks
 		for (int r{}; r < 5; ++r)
 		{
 			glm::vec2 pos{ };
-			pos.y = (r + 1) * 32.f;
+			pos.y = (r + 1) * m_GridSize*2;
 			for (int c{}; c < 14; ++c)
 			{
-				pos.x = (c + 1) * 32.f;
+				pos.x = (c + 1) * m_GridSize*2;
 				m_UsedPositions.push_back(pos);
 			}
 		}
@@ -208,48 +210,41 @@ namespace levelLoader
 
 #if NDEBUG
 #else
-		auto fps = std::make_unique<engine::GameObject>(glm::vec3{ 175.f, 20.f, 0.f });
+		auto fps = std::make_unique<engine::GameObject>(glm::vec3{ 175.f, 12.f, 0.f });
 		fps->AddComponent<engine::FPSComponent>(std::make_unique<engine::FPSComponent>(fps.get()));
 		LevelStaticScene.Add("fps", std::move(fps));
 #endif
 
-		auto go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 20.f, 0.f });
+		auto go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 12.f, 0.f });
 		go->AddComponent<engine::TimerComponent>(std::make_unique<engine::TimerComponent>(go.get(), 200, true));
 		LevelStaticScene.Add("timer", std::move(go));
 
-		go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 350.f, 0.f });
-		go->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(go.get(), "Collisions under construction."));
-		LevelStaticScene.Add("collision warning", std::move(go));
-		go = std::make_unique<engine::GameObject>(glm::vec3{ 10.f, 370.f, 0.f });
-		go->AddComponent<engine::TextComponent>(std::make_unique<engine::TextComponent>(go.get(), "Press R to respawn"));
-		LevelStaticScene.Add("respawn", std::move(go));
-
-		auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{ 0.f, 96.f,0.f });
-		lvlbg->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(lvlbg.get(), "Images/playfield.png"));
+		auto lvlbg = std::make_unique<engine::GameObject>(glm::vec3{ -m_GridSize/2, 64.f,0.f });
+		lvlbg->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(lvlbg.get(), "Images/playfield short.png", m_Scale));
 
 		// outer bounds
 		{
 			auto lvlbound = std::make_unique<engine::GameObject>();
 			lvlbound->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(lvlbound.get(),
-				glm::vec2{ lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().x, 16.f }, true, CollisionType::Wall));
+				glm::vec2{ lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().x, m_GridSize }, true, CollisionType::Wall));
 			lvlbound->SetParent(lvlbg.get(), false);
 			LevelStaticScene.Add("top bound", std::move(lvlbound));
 
 			lvlbound = std::make_unique<engine::GameObject>();
 			lvlbound->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(lvlbound.get(),
-				glm::vec2{ 16.f, lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().y }, true, CollisionType::Wall));
+				glm::vec2{ m_GridSize, lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().y }, true, CollisionType::Wall));
 			lvlbound->SetParent(lvlbg.get(), false);
 			LevelStaticScene.Add("left bound", std::move(lvlbound));
 
-			lvlbound = std::make_unique<engine::GameObject>(glm::vec3{ 0.f, lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().y - 16.f ,0.f });
+			lvlbound = std::make_unique<engine::GameObject>(glm::vec3{ 0.f, lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().y - m_GridSize ,0.f });
 			lvlbound->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(lvlbound.get(),
-				glm::vec2{ lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().x, 16.f }, true, CollisionType::Wall));
+				glm::vec2{ lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().x, m_GridSize }, true, CollisionType::Wall));
 			lvlbound->SetParent(lvlbg.get(), false);
 			LevelStaticScene.Add("bottom bound", std::move(lvlbound));
 
-			lvlbound = std::make_unique<engine::GameObject>(glm::vec3{ lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().x - 16.f,0.f,0.f });
+			lvlbound = std::make_unique<engine::GameObject>(glm::vec3{ lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().x - m_GridSize,0.f,0.f });
 			lvlbound->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(lvlbound.get(),
-				glm::vec2{ 16.f, lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().y }, true, CollisionType::Wall));
+				glm::vec2{ m_GridSize, lvlbg->GetComponent<engine::TextureComponent>()->GetTextureSize().y }, true, CollisionType::Wall));
 			lvlbound->SetParent(lvlbg.get(), false);
 			LevelStaticScene.Add("right bound", std::move(lvlbound));
 		}
@@ -261,13 +256,13 @@ namespace levelLoader
 		for (int r{}; r < 5; ++r)
 		{
 			glm::vec3 pos{ };
-			pos.y = (r + 1) * 32.f;
-			for (int c{}; c < 14; ++c)
+			pos.y = (r + 1) * m_GridSize*2;
+			for (int c{}; c < 9; ++c)
 			{
-				pos.x = (c + 1) * 32.f;
+				pos.x = (c + 1) * m_GridSize*2;
 				auto lvlbound = std::make_unique<engine::GameObject>(pos);
 				lvlbound->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(lvlbound.get(),
-					glm::vec2{ 16.f, 16.f }, true, CollisionType::Block));
+					glm::vec2{ m_GridSize, m_GridSize }, true, CollisionType::Block));
 				lvlbound->SetParent(bgptr, false);
 				LevelStaticScene.Add("r" + std::to_string(r + 1) + "c" + std::to_string(c + 1), std::move(lvlbound));
 			}
@@ -282,12 +277,12 @@ namespace levelLoader
 		bool foundFree{ false };
 		do
 		{
-			int randX = rand() % 29 +1;
+			int randX = rand() % 19 +1;
 			int randY = rand() % 11 +1;
-			pos = { randX * 16.f, randY * 16.f };
+			pos = { randX * m_GridSize, randY * m_GridSize };
 
 			foundFree = std::find(m_UsedPositions.begin(), m_UsedPositions.end(), pos) == m_UsedPositions.end();
-			if(pos == glm::vec2{ 32.f,16.f } || pos == glm::vec2{ 16.f, 32.f }) foundFree = false;
+			if(pos == glm::vec2{ m_GridSize*2,m_GridSize } || pos == glm::vec2{ m_GridSize, m_GridSize*2 }) foundFree = false;
 		} while (!foundFree);
 
 		m_UsedPositions.push_back(pos);
@@ -299,7 +294,7 @@ namespace levelLoader
 		for (int posIdx{static_cast<int>(m_UsedPositions.size()-2)}; posIdx < static_cast<int>(m_UsedPositions.size()); ++posIdx)
 		{
 			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_UsedPositions[posIdx], 0.f });
-			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
 			go->SetParent(parent, false);
@@ -311,7 +306,7 @@ namespace levelLoader
 			glm::vec3 pos{ GetFreePosition(), 0 };
 
 			auto go = std::make_unique<engine::GameObject>(pos);
-			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png"));
+			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/destructible.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Destructable));
 			go->SetParent(parent, false);
@@ -324,7 +319,7 @@ namespace levelLoader
 		glm::vec3 pos{ GetFreePosition(), 0 };
 
 		auto go = std::make_unique<engine::GameObject>(pos);
-		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/door.png"));
+		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/door.png", m_Scale));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Door));
 		auto sc = std::make_unique<DataComponent>(go.get());
@@ -344,7 +339,7 @@ namespace levelLoader
 			[](unsigned char c) { return static_cast<char>(std::tolower(c)); });
 
 		auto go = std::make_unique<engine::GameObject>(pos);
-		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + lowercaseType + ".png"));
+		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + lowercaseType + ".png", m_Scale));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::PowerUp));
 		auto sc = std::make_unique<DataComponent>(go.get());

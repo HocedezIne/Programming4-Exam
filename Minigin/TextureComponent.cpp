@@ -11,8 +11,11 @@ namespace engine
 	{
 		if (m_Texture != nullptr)
 		{
+			float width = GetTextureSize().x;
+			float height = GetTextureSize().y;
+
 			const auto& pos = GetOwner()->GetWorldPosition();
-			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, width, height);
 		}
 	}
 
@@ -28,10 +31,11 @@ namespace engine
 
 	const glm::vec2 TextureComponent::GetTextureSize() const
 	{
-		return m_Texture->GetSize();
+		return glm::vec2(m_Texture->GetSize()) * m_Size;
 	}
 
-	TextureComponent::TextureComponent(GameObject* owner, const std::string& fileName) : Component(owner)
+	TextureComponent::TextureComponent(GameObject* owner, const std::string& fileName, const glm::vec2 size) : Component(owner),
+		m_Size{size}
 	{
 		if (!fileName.empty()) m_Texture = ResourceManager::GetInstance().LoadTexture(fileName);
 	}

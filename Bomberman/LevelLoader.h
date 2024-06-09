@@ -26,4 +26,6 @@ namespace levelLoader
 	static glm::vec2 GetFreePosition();
 
 	extern std::vector<glm::vec2> m_UsedPositions;
+	extern const float m_GridSize;
+	extern const glm::vec2 m_Scale;
 }

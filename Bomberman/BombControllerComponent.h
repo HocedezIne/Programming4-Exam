@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "Observer.h"
 
+#include "LevelLoader.h"
+
 class BombControllerComponent : public engine::Component, public engine::Observer
 {
 public:
@@ -25,7 +27,6 @@ private:
 
 	bool m_RemoteEnabled{ false };
 
-	const int m_GridSize{ 16 };
 	const int m_DefaultMaxBombCount{ 1 };
 	const int m_DefaultExplosionSize{ 1 };
 	int m_MaxBombCount{ m_DefaultMaxBombCount };

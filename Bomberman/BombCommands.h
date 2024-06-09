@@ -3,11 +3,12 @@
 #include "InputCommands.h"
 
 #include "BombControllerComponent.h"
+#include "LevelLoader.h"
 
 class PlaceBombCommand : public engine::GameObjectInputCommand
 {
 public:
-	PlaceBombCommand(engine::GameObject* go, int gridSize) : engine::GameObjectInputCommand(go), m_GridSize(gridSize) {}
+	PlaceBombCommand(engine::GameObject* go) : engine::GameObjectInputCommand(go) {}
 
 	virtual ~PlaceBombCommand() = default;
 
@@ -18,14 +19,11 @@ public:
 
 	virtual void Execute() override { 
 		auto bombPos = GetGameObject()->GetWorldPosition();
-		bombPos.x = std::roundf(bombPos.x / m_GridSize) * m_GridSize;
-		bombPos.y = std::roundf(bombPos.y / m_GridSize) * m_GridSize;
+		bombPos.x = std::roundf(bombPos.x / levelLoader::m_GridSize) * levelLoader::m_GridSize - levelLoader::m_GridSize/2;
+		bombPos.y = std::roundf(bombPos.y / levelLoader::m_GridSize) * levelLoader::m_GridSize;
 
 		GetGameObject()->GetComponent<BombControllerComponent>()->AddBomb(bombPos);
 	};
-
-private:
-	const int m_GridSize;
 };
 
 class DetonateCommand : public engine::GameObjectInputCommand

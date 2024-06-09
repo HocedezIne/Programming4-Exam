@@ -20,7 +20,7 @@ namespace engine
 
 		const glm::vec2 GetTextureSize() const;
 
-		TextureComponent(GameObject* owner, const std::string& fileName = {});
+		TextureComponent(GameObject* owner, const std::string& fileName = {}, const glm::vec2 size = {1.f,1.f});
 		~TextureComponent() = default;
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent(TextureComponent&& other) = delete;
@@ -29,5 +29,6 @@ namespace engine
 
 	private:
 		std::shared_ptr<Texture2D> m_Texture {nullptr};
+		const glm::vec2 m_Size;
 	};
 }

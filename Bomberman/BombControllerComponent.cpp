@@ -70,7 +70,7 @@ void BombControllerComponent::AddBomb(const glm::vec3 pos)
 		auto bombwrapper = std::make_unique<engine::GameObject>();
 
 		auto bomb = std::make_unique<engine::GameObject>(pos);
-		bomb->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(bomb.get(), "Images/bomb.png"));
+		bomb->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(bomb.get(), "Images/bomb.png",levelLoader::m_Scale));
 		bomb->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(bomb.get(),
 			bomb->GetComponent<engine::TextureComponent>()->GetTextureSize(), true, CollisionType::Bomb));
 
@@ -111,15 +111,15 @@ void BombControllerComponent::ExplodeBomb(engine::GameObject* obj)
 				glm::vec3 pos;
 				switch (direction)
 				{
-				case 0: pos = glm::vec3{ m_GridSize * idx, 0, 0 }; break;
-				case 1: pos = glm::vec3{ 0, m_GridSize * idx, 0 }; break;
-				case 2: pos = glm::vec3{ -m_GridSize * idx, 0, 0 }; break;
-				case 3: pos = glm::vec3{ 0, -m_GridSize * idx, 0 }; break;
+				case 0: pos = glm::vec3{ levelLoader::m_GridSize * idx, 0, 0 }; break;
+				case 1: pos = glm::vec3{ 0, levelLoader::m_GridSize * idx, 0 }; break;
+				case 2: pos = glm::vec3{ -levelLoader::m_GridSize * idx, 0, 0 }; break;
+				case 3: pos = glm::vec3{ 0, -levelLoader::m_GridSize * idx, 0 }; break;
 				}
 
 				std::string textureDirection = (direction % 2 == 0) ? "horizontal" : "vertical";
 				auto go = std::make_unique<engine::GameObject>(pos);
-				go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/explosion " + textureDirection + ".png"));
+				go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/explosion " + textureDirection + ".png", levelLoader::m_Scale));
 				go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 					go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Explosion));
 				auto dc = std::make_unique<DataComponent>(go.get());

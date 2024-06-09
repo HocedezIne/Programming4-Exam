@@ -4,6 +4,8 @@
 #include "CollisionSystem.h"
 #include "ServiceLocator.h"
 
+#include "LevelLoader.h"
+
 #include "GameObject.h"
 #include "TextureComponent.h"
 #include "DataComponent.h"
@@ -20,7 +22,7 @@ namespace enemyController
 		int points, float speed, float chasingDistance)
 	{
 		auto go = std::make_unique<engine::GameObject>(pos);
-		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + name + ".png"));
+		go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/" + name + ".png", levelLoader::m_Scale));
 		go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
 			go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Enemy));
 		go->AddComponent<StateComponent<EnemyStateInterface>>(std::make_unique<StateComponent<EnemyStateInterface>>(go.get(),
@@ -43,7 +45,7 @@ namespace enemyController
 
 	void EnemyController::AddOnealEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene)
 	{
-		AddEnemy<WalkTillChasing>(pos, parent, scene, "oneal", 200, 50.f, 5*16.f);
+		AddEnemy<WalkTillChasing>(pos, parent, scene, "oneal", 200, 50.f, 5*levelLoader::m_GridSize);
 	}
 
 	void EnemyController::AddDollEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene)
@@ -53,7 +55,7 @@ namespace enemyController
 
 	void EnemyController::AddMinvoEnemy(glm::vec3 pos, engine::GameObject* parent, engine::Scene& scene)
 	{
-		AddEnemy<WalkTillChasing>(pos, parent, scene, "minvo", 800, 75.f);
+		AddEnemy<WalkTillChasing>(pos, parent, scene, "minvo", 800, 75.f, 4*levelLoader::m_GridSize);
 	}
 
 	void EnemyController::KillEnemy(engine::GameObject* enemy, engine::GameObject* player)
