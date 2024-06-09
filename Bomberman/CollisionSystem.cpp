@@ -170,9 +170,9 @@ namespace collisionSystem
 
 	void CollisionHandler::BlockResolve(ColliderComponent* currCollider, ColliderComponent* otherCollider)
 	{
-		auto currPos = currCollider->GetOwner()->GetWorldPosition();
-		auto otherPos = otherCollider->GetOwner()->GetWorldPosition();
-		glm::vec3 movement{};
+		auto currPos = currCollider->GetOwner()->GetLocalPosition() + currCollider->m_Position;
+		auto otherPos = otherCollider->GetOwner()->GetLocalPosition() + otherCollider->m_Position;
+		/*glm::vec3 movement{};
 		
 		if (currPos.x + currCollider->m_BoundingDimensions.x > otherPos.x ||
 			otherPos.x + otherCollider->m_BoundingDimensions.x > currPos.x)
@@ -189,12 +189,32 @@ namespace collisionSystem
 		}
 		
 		auto localPos = currCollider->GetOwner()->GetLocalPosition();
-		currCollider->GetOwner()->SetLocalPosition(localPos + movement);
+		currCollider->GetOwner()->SetLocalPosition(localPos + movement);*/
+
+		// Thank you to Maritte Kindt, aka Bobbie
+		const float overlapLeft{ currPos.x + currCollider->m_BoundingDimensions.x - otherPos.x };
+		const float overlapRight{ otherPos.x + otherCollider->m_BoundingDimensions.x - currPos.x };
+		const float overlapTop{ currPos.y + currCollider->m_BoundingDimensions.y - otherPos.y };
+		const float overlapBottom{ otherPos.y + otherCollider->m_BoundingDimensions.y - currPos.y };
+
+		const float overlapX{ std::min(overlapLeft, overlapRight) };
+		const float overlapY{ std::min(overlapTop, overlapBottom) };
+
+		if (overlapX < overlapY)
+		{
+			if (overlapLeft < overlapRight) currCollider->GetOwner()->SetLocalPosition(glm::vec3{ otherPos.x - otherCollider->m_BoundingDimensions.x, otherPos.y, 0.f });
+			else currCollider->GetOwner()->SetLocalPosition(glm::vec3{ otherPos.x + otherCollider->m_BoundingDimensions.x, otherPos.y, 0.f });
+		}
+		else
+		{
+			if(overlapTop < overlapBottom) currCollider->GetOwner()->SetLocalPosition(glm::vec3{ otherPos.x, otherPos.y - otherCollider->m_BoundingDimensions.y, 0.f });
+			else currCollider->GetOwner()->SetLocalPosition(glm::vec3{ otherPos.x, otherPos.y + otherCollider->m_BoundingDimensions.y, 0.f });
+		}
 	}
 
 	void CollisionHandler::WallResolve(ColliderComponent* currCollider)
 	{
-		auto currPos = currCollider->GetOwner()->GetLocalPosition();
+		auto currPos = currCollider->GetOwner()->GetLocalPosition() + currCollider->m_Position;
 		auto currDeltaPos = currPos - currCollider->GetOwner()->GetPreviousLocalPosition();
 		currCollider->GetOwner()->SetLocalPosition(currPos - currDeltaPos);
 	}

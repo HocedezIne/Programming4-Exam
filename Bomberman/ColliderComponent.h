@@ -25,7 +25,7 @@ namespace collisionSystem {
 class ColliderComponent final : public engine::Component, public engine::IUpdatable
 {
 public:
-	ColliderComponent(engine::GameObject* owner, glm::vec2 bounds, bool isStatic, CollisionType cm);
+	ColliderComponent(engine::GameObject* owner, glm::vec2 bounds, bool isStatic, CollisionType cm, glm::vec3 positionOffset = {});
 	~ColliderComponent();
 	ColliderComponent(const ColliderComponent& other) = delete;
 	ColliderComponent(ColliderComponent&& other) = delete;
@@ -37,6 +37,7 @@ public:
 	bool IsColliding(ColliderComponent* other);
 
 private:
+	glm::vec3 m_Position{};
 	glm::vec2 m_BoundingDimensions{ 0,0 };
 	const bool m_IsStatic;
 	const CollisionType m_CollisionType;

@@ -3,9 +3,10 @@
 #include "GameObject.h"
 #include "CollisionSystem.h"
 
-ColliderComponent::ColliderComponent(engine::GameObject* owner, glm::vec2 bounds, bool isStatic, CollisionType cm) : engine::Component(owner),
+ColliderComponent::ColliderComponent(engine::GameObject* owner, glm::vec2 bounds, bool isStatic, CollisionType cm, glm::vec3 positionOffset) : engine::Component(owner),
 	m_BoundingDimensions(bounds), m_IsStatic(isStatic), m_CollisionType(cm)
 {
+	m_Position += positionOffset;
 	collisionSystem::colliders.push_back(this);
 }
 
@@ -37,8 +38,8 @@ bool ColliderComponent::IsColliding(ColliderComponent* other)
 {
 	if (other->m_BoundingDimensions == glm::vec2{ 0,0 }) return false;
 
-	auto Position = GetOwner()->GetWorldPosition();
-	auto otherPosition = other->GetOwner()->GetWorldPosition();
+	auto Position = GetOwner()->GetWorldPosition() + m_Position;
+	auto otherPosition = other->GetOwner()->GetWorldPosition() + other->m_Position;
 
 	if (otherPosition.x + other->m_BoundingDimensions.x <= Position.x ||
 		Position.x + m_BoundingDimensions.x <= otherPosition.x)
@@ -49,58 +50,3 @@ bool ColliderComponent::IsColliding(ColliderComponent* other)
 
 	return true;
 }
-
-//void ColliderComponent::ResolveCollision(ColliderComponent* other)
-//{
-//	auto Position = GetOwner()->GetWorldPosition();
-//	auto otherPosition = other->GetOwner()->GetWorldPosition();
-//
-//	switch (m_CollisionMode)
-//	{
-//	case CollisionMode::SoftBlock:
-//		switch (other->m_CollisionMode) 
-//		{
-//		case CollisionMode::Dynamic:
-//			glm::vec3 movement{};
-//
-//			if (otherPosition.x + other->m_BoundingDimensions.x > Position.x ||
-//				Position.x + m_BoundingDimensions.x > otherPosition.x)
-//			{
-//				if (otherPosition.x < Position.x) movement.x = Position.x - other->m_BoundingDimensions.x - otherPosition.x;
-//				else movement.x = Position.x + m_BoundingDimensions.x - otherPosition.x;
-//			}
-//
-//			if (otherPosition.y + other->m_BoundingDimensions.y > Position.y ||
-//				Position.y + m_BoundingDimensions.y > otherPosition.y)
-//			{
-//				if (otherPosition.y < Position.y) movement.y = Position.y - other->m_BoundingDimensions.y - otherPosition.y;
-//				else movement.y = Position.y + m_BoundingDimensions.y - otherPosition.y;
-//			}
-//
-//			other->GetOwner()->SetLocalPosition(otherPosition + movement);
-//			break;
-//
-//		default:
-//			std::cout << "Collision type not implemented\n";
-//			break;
-//		}
-//		break;
-//	case CollisionMode::HardBlock:
-//		switch (other->m_CollisionMode)
-//		{
-//		case CollisionMode::Dynamic:
-//			auto otherDeltaPos = otherPosition - other->GetOwner()->GetPreviousLocalPosition();
-//			other->GetOwner()->SetLocalPosition(otherPosition - otherDeltaPos);
-//			break;
-//		case CollisionMode::HardBlock:
-//			break;
-//		default:
-//			std::cout << "Collision type not implemented\n";
-//			break;
-//		}
-//		break;
-//	default:
-//		std::cout << "Collision type not implemented\n";
-//		break;
-//	}
-//}

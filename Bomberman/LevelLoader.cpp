@@ -73,7 +73,7 @@ namespace levelLoader
 			auto go = std::make_unique<engine::GameObject>(glm::vec3{ m_GridSize, m_GridSize, 0.f });
 			go->AddComponent<engine::TextureComponent>(std::make_unique<engine::TextureComponent>(go.get(), "Images/bomberman.png", m_Scale));
 			go->AddComponent<ColliderComponent>(std::make_unique<ColliderComponent>(go.get(),
-				go->GetComponent<engine::TextureComponent>()->GetTextureSize(), false, CollisionType::Player));
+				go->GetComponent<engine::TextureComponent>()->GetTextureSize()-8.f, false, CollisionType::Player, glm::vec3{4.f,4.f,0.f}));
 
 			auto bc = std::make_unique<BombControllerComponent>(go.get());
 			collisionSystem::collisionHandler.AddObserver(bc.get());
